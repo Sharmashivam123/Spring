@@ -1,6 +1,7 @@
 package Bouquet;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class CostCalculator {
 	
@@ -24,16 +25,14 @@ public class CostCalculator {
 	Buttercup buttercup=new Buttercup();
 	Daffodill daffodill=new Daffodill();
 	
-	double getCostOfBouquet(int count_Flowers[])
+	double getCostOfBouquet(HashMap<String,Integer> count_Flowers)
 	{
-		double croses=(double)(count_Flowers[0]*rose.getCost());
-		double clilly=(double)(count_Flowers[1]*lilly.getCost());
-		double clarkspur=(double)(count_Flowers[2]*larkspur.getCost());
-		double cbuttercup=(double)(count_Flowers[3]*buttercup.getCost());
-		double cdaffodill=(double)(count_Flowers[4]*daffodill.getCost());
-		//System.out.println(Arrays.toString(count_Flowers));
+		double croses=count_Flowers.get("rose")==null?0:(double)count_Flowers.get("rose")*rose.getCost();
+		double clilly=count_Flowers.get("lilly")==null?0:(double)count_Flowers.get("lilly")*lilly.getCost();
+		double clarkspur=count_Flowers.get("larkspur")==null?0:(double)count_Flowers.get("larkspur")*larkspur.getCost();
+		double cbuttercup=count_Flowers.get("buttercup")==null?0:(double)count_Flowers.get("buttercup")*buttercup.getCost();
+		double cdaffodill=count_Flowers.get("daffodill")==null?0:(double)count_Flowers.get("daffodill")*daffodill.getCost();
 		double total=croses+clilly+clarkspur+cbuttercup+cdaffodill;
-		
 		return total;
 		
 	}
