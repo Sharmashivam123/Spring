@@ -2,15 +2,8 @@ package Gift;
 
 public class Chocolates implements GiftInterface{
 
-	private double price;
 	private String name;
 	private int quantity;
-
-	@Override
-	public double getPrice() {
-		return price;
-	}
-	
 	
 	@Override
 	public void setName(String Name) {
@@ -24,7 +17,7 @@ public class Chocolates implements GiftInterface{
 	
 	public void setQuantity(int quantity)
 	{
-		
+		this.quantity=quantity;
 	}
 	
 	public int getQuantity()
