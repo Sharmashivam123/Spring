@@ -6,9 +6,9 @@ import java.util.HashMap;
 public class CostCalculator {
 	
 	int single=1;
-	int tiny=4;
-	int medium=8;
-	int big=12;
+	int tiny=40;
+	int medium=80;
+	int big=120;
 	
 	int getFlowersCount(int size)
 	{
