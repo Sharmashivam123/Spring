@@ -37,4 +37,16 @@ public class SortingObject{
 		for(Map.Entry<String,Double> m:mapSweet.entrySet())total+=(double)m.getValue();
 		return total;
 	}
+
+	
+	public void printRange(List<Chocolates> chocoList, int min, int max) {
+		// TODO Auto-generated method stub
+
+		System.out.println("Name Quantity");
+		for(Chocolates c: chocoList)
+		{
+			if(c.getQuantity() >= min && c.getQuantity() <= max)
+				System.out.println(c.getName()+" "+c.getQuantity());
+		}
+	}
 }

@@ -146,5 +146,10 @@ public class Main {
 			}
 		}
 		
+		System.out.print("Enter the min and max of the quantity to display the range: min-max : ");
+		String range[]=reader.readLine().split("-");
+		int min=Integer.parseInt(range[0]);
+		int max=Integer.parseInt(range[1]);
+		so.printRange(chocoList,min, max);
 	}
 }
