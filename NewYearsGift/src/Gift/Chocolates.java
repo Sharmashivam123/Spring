@@ -1,13 +1,13 @@
 package Gift;
 
-public class Chocolates implements GiftInterface{
+public class Chocolates implements GiftInterface, Comparable<Chocolates>{
 
 	private String name;
 	private int quantity;
 	
 	@Override
-	public void setName(String Name) {
-		
+	public void setName(String name) {
+		this.name=name;
 	}	
 
 	@Override
@@ -23,6 +23,16 @@ public class Chocolates implements GiftInterface{
 	public int getQuantity()
 	{
 		return quantity;
+	}
+
+	@Override
+	public int compareTo(Chocolates c) {
+		return c.quantity-this.quantity;
+	}
+
+	@Override
+	public String toString() {
+		return "Chocolates [name=" + name + ", quantity=" + quantity + "]";
 	}
 
 }

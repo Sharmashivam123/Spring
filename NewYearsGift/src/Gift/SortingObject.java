@@ -3,13 +3,13 @@ package Gift;
 import java.util.*;
 
 public class SortingObject{
-	public void sortByQuantity(HashMap<String,Integer> unsorted)
+	public void sortByQuantity(HashMap<String,Double> unsorted)
 	{
-		List<Map.Entry<String,Integer>> list=new ArrayList(unsorted.entrySet());
+		List<Map.Entry<String,Double>> list=new ArrayList(unsorted.entrySet());
 		
-		Collections.sort(list, new Comparator<Map.Entry<String,Integer>>()
+		Collections.sort(list, new Comparator<Map.Entry<String,Double>>()
 				{
-			public int compare(Map.Entry<String, Integer> m1, Map.Entry<String, Integer> m2)
+			public int compare(Map.Entry<String, Double> m1, Map.Entry<String, Double> m2)
 			{
 				if(m2.getValue().compareTo(m1.getValue())==0)
 					return m1.getKey().compareTo(m2.getKey());
@@ -17,9 +17,9 @@ public class SortingObject{
 			}
 				});
 		
-		HashMap<String,Integer> sorted=new LinkedHashMap();
+		HashMap<String,Double> sorted=new LinkedHashMap();
 		System.out.println("Name Quantity");
-		for(Map.Entry<String,Integer> m: list)
+		for(Map.Entry<String,Double> m: list)
 			if(m.getValue()!=0)System.out.println(m.getKey()+" "+m.getValue());
 	
 	}
@@ -31,10 +31,22 @@ public class SortingObject{
 		return total;
 	}
 
-	public double getTotalWeight(HashMap<String, Integer> mapSweet) {
+	public double getTotalWeight(HashMap<String, Double> mapSweet) {
 		// TODO Auto-generated method stub
 		double total=0;
-		for(Map.Entry<String,Integer> m:mapSweet.entrySet())total+=(int)m.getValue();
+		for(Map.Entry<String,Double> m:mapSweet.entrySet())total+=(double)m.getValue();
 		return total;
+	}
+
+	
+	public void printRange(List<Chocolates> chocoList, int min, int max) {
+		// TODO Auto-generated method stub
+
+		System.out.println("Name Quantity");
+		for(Chocolates c: chocoList)
+		{
+			if(c.getQuantity() >= min && c.getQuantity() <= max)
+				System.out.println(c.getName()+" "+c.getQuantity());
+		}
 	}
 }

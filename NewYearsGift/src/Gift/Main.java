@@ -13,7 +13,6 @@ public class Main {
 		
 		List<Chocolates> chocoList=new ArrayList();
 		HashMap<String, Chocolates> chocosQuantity=new HashMap();
-		HashMap<String,Integer> map=new HashMap();
 
 		for(int chocolates=0; chocolates<availableChocolates.length; chocolates++)
 		{
@@ -22,7 +21,6 @@ public class Main {
 			c.setQuantity(0);
 			chocoList.add(c);
 			chocosQuantity.put(availableChocolates[chocolates], c);
-			map.put(c.getName(), 0);
 		}
 		
 		System.out.println("Opening a Gift ");
@@ -46,7 +44,6 @@ public class Main {
 					continue;
 				}
 				int quantity=Integer.parseInt(inputarr[1]);
-				map.compute(name, (key, value)->value==null?quantity:quantity+value);
 				Chocolates updated=chocosQuantity.get(name);
 				updated.setQuantity(updated.getQuantity()+quantity);
 				chocosQuantity.put(name,updated);
@@ -63,11 +60,11 @@ public class Main {
 		
 		
 		
-		System.out.println("Please choose the Sweets from below and type DONE when you are done : ");
+		System.out.println("Please choose the Sweets from below and type 'DONE' when you are done : ");
 		System.out.println(Arrays.toString(availableSweets));
 		System.out.println("Name Quantity");
-		HashMap<String, Integer> mapSweet=new HashMap();
-		for(String s:availableSweets)mapSweet.put(s, 0);
+		HashMap<String, Double> mapSweet=new HashMap();
+		for(String s:availableSweets)mapSweet.put(s, (double)0);
 		while(true)
 		{
 			try {
@@ -78,10 +75,10 @@ public class Main {
 				String inputarr[]=input.split(" ");
 				String name=inputarr[0];
 				if(!mapSweet.containsKey(name)) {
-					System.out.println("Please select from above Sweets or type done.");
+					System.out.println("Please select from above Sweets or type 'done'.");
 					continue;
 				}
-				int quantity=Integer.parseInt(inputarr[1]);
+				double quantity=Double.parseDouble(inputarr[1]);
 				mapSweet.compute(name, (key, value)->value==null?quantity:quantity+value);
 			}
 			catch(Exception e)
@@ -95,7 +92,7 @@ public class Main {
 		
 		
 		System.out.println("Enter the criteria to sort the chocolates");
-		System.out.println("1 for price OR 2 for quantity OR DONE to countinue.");
+		System.out.println("1 for price OR 2 for quantity OR 'DONE' to countinue.");
 		System.out.println();
 		
 		while(true)
@@ -110,7 +107,11 @@ public class Main {
 			}
 			else if(sortingtype==2)
 			{
-				so.sortByQuantity(map);
+				System.out.println("Name Quantity");
+				Collections.sort(chocoList);
+				for(Chocolates c:chocoList)
+				if(c.getQuantity()!=0)System.out.println(c.getName()+" "+c.getQuantity());
+				
 				break;
 			}
 			else
@@ -120,8 +121,8 @@ public class Main {
 			}
 		}
 	
-		System.out.println("Enter the criteria to sort the chocolates");
-		System.out.println("1 for price OR 2 for quantity OR DONE to countinue.");
+		System.out.println("Enter the criteria to sort the Sweets");
+		System.out.println("1 for price OR 2 for quantity OR 'DONE' to countinue.");
 		System.out.println();
 		while(true)
 		{
@@ -145,5 +146,10 @@ public class Main {
 			}
 		}
 		
+		System.out.print("Enter the min and max of the quantity to display the range: min-max : ");
+		String range[]=reader.readLine().split("-");
+		int min=Integer.parseInt(range[0]);
+		int max=Integer.parseInt(range[1]);
+		so.printRange(chocoList,min, max);
 	}
 }
