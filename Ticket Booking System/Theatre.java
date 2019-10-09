@@ -6,42 +6,34 @@ public class Theatre {
 	private int theatreId;
 	private String theatreName;
 	private LocalTime time;
-	
-		
-	Theatre( String theatreName)
-	{
-		//this.theatreId = theatreId;
+
+	Theatre(String theatreName) {
+		// this.theatreId = theatreId;
 		this.theatreName = theatreName;
 	}
-	
-	public int getTheatreId()
-	{
+
+	public int getTheatreId() {
 		return theatreId;
 	}
-	
-	public String getTheatreName()
-	{
+
+	public String getTheatreName() {
 		return theatreName;
 	}
-	
-	public void setId(int id)
-	{
+
+	public void setId(int id) {
 		this.theatreId = id;
 	}
-	
-	public void setName(String name)
-	{
+
+	public void setName(String name) {
 		this.theatreName = name;
 	}
-	
-	public LocalTime getMovieTime()
-	{
+
+	public LocalTime getMovieTime() {
 		return time;
 	}
-	
-	public void setMovieTime(LocalTime time)
-	{
-		this.time=time;
+
+	public void setMovieTime(LocalTime time) {
+		this.time = time;
 	}
-	
+
 }
