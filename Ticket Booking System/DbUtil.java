@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 
 class DbUtil implements Data {
 	private Movie movie1, movie2, movie3, movie4;
-	private List<Movie> movieList1, movieList2;
 	private Location location1, location2, location3, location4;
+	private List<Movie> movieList1, movieList2;
 	private List<Theatre> theatreMovie1, theatreMovie2, theatreMovie3, theatreMovie4;
 	private List<Location> listLocation;
 	private Map<String, Integer> rangeOfSeat;
@@ -21,6 +21,9 @@ class DbUtil implements Data {
 		listLocation = new ArrayList<Location>();
 		rangeOfSeat = new HashMap<String, Integer>();
 		theatreByMovie = new HashMap<Movie, List<Theatre>>();
+		setLocation();
+		setTheatreByMovie();
+		setRangeOfSeat();
 	}
 
 	public void createMovieList() {
@@ -143,17 +146,14 @@ class DbUtil implements Data {
 			return true;
 		return false;
 	}
-
-	public List<Movie> getMoviesByPin(int pin) {
+	
+	@Override
+	public List<Movie> getMoviesByPin(Integer pin) {
 		for (Location location : listLocation) {
 			if (location.getPin() == pin)
 				return location.getMoviesList();
 		}
 		return null;
-	}
-
-	public int calculatePrice(int price, int noofSeats) {
-		return price * noofSeats;
 	}
 
 }

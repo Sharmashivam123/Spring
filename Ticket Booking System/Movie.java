@@ -4,7 +4,6 @@ class Movie {
 	private String movieName;
 
 	Movie() {
-
 	}
 
 	public String getMovieName() {

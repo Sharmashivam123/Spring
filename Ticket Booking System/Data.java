@@ -17,4 +17,8 @@ interface Data {
 
 	public List<Theatre> getTheatreByMovie(Movie movie);
 
+	public boolean validatePin(Integer pin);
+
+	public List<Movie> getMoviesByPin(Integer pin);
+
 }
