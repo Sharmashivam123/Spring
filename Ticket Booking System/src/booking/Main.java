@@ -9,12 +9,7 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
 
 public class Main {
-	static int id;
-
-	static Map<String, Integer> rangeOfSeat;
-	static Integer price = 0, totalPrice = 0, noofSeats = 0;
-	static String input[];
-	static Calculation cc = new Calculation();
+	
 	static Logger console;
 
 	Main() {
@@ -22,12 +17,18 @@ public class Main {
 	}
 
 	public static void main(String[] args) throws IOException {
+		
+		Calculation cc = new Calculation();
 		Data db = new DbUtil();
 		boolean check;
-		int pin = 0;
+		int pin = 0, id=0;
+		Map<String, Integer> rangeOfSeat;
+		String input[];
 		List<Movie> moviesAtLocation;
 		List<Theatre> theatreByMovie;
 		Movie movie;
+		Integer price = 0, totalPrice = 0, noofSeats = 0;
+		
 		Main m = new Main();
 		m.callLogger();
 		try {
@@ -57,7 +58,8 @@ public class Main {
 			else {
 				m.printAllMovies(moviesAtLocation);
 			}
-			console.info("\\n Enter the movie name from above movies: ");
+			
+			console.info("\n Enter the movie name from above movies: ");
 			movie = new Movie();
 			String movieSelected = reader.readLine();
 			movie.setMovieName(movieSelected);
@@ -77,10 +79,11 @@ public class Main {
 			} else
 				throw new Exception("Invalid Input");
 
-			console.info("Select your price range and no of ticket with space between them");
+			console.info("Select your price range and no of ticket with space between them\n");
 
 			for (Map.Entry<String, Integer> ele : rangeOfSeat.entrySet())
 				console.info(ele.getKey() + " " + ele.getValue() + " \n ");
+			
 			input = reader.readLine().split(" ");
 			price = Integer.parseInt(input[0]);
 			noofSeats = Integer.parseInt(input[1]);
