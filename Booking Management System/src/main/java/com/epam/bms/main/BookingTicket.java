@@ -6,9 +6,9 @@ import java.util.logging.Logger;
 
 import com.epam.bms.services.Administrator;
 import com.epam.bms.services.Calculation;
-import com.epam.bms.services.ShowData;
+import com.epam.bms.services.PrintServices;
 
-public class BookingTicket {
+class BookingTicket {
 
 	private static final Logger log = Logger.getLogger("  skidjfnijwoeaf ");
 	
@@ -19,7 +19,7 @@ public class BookingTicket {
 		String qry = null;
 		boolean check = false;
 		try {
-			ShowData show = new ShowData();
+			PrintServices show = new PrintServices();
 			Administrator admin = new Administrator();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			admin.callLogger(log);
