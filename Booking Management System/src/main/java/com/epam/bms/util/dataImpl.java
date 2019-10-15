@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.epam.bms.dao.InitializingDataValues;
 import com.epam.bms.models.Location;
@@ -11,26 +12,29 @@ import com.epam.bms.models.Movie;
 import com.epam.bms.models.Theatre;
 
 
-public class dataImpl implements Data{
+public class DataImpl implements Data{
 
 	private InitializingDataValues data = new InitializingDataValues(); 
-	private List<Location> listLocation ;
+	private Map<Location, List<Movie>> movieListByPin ;
 	private Map<Movie, List<Theatre>> theatreListByMovie;
 	private Map<String, Integer> rangeOfSeat;
 
-	public dataImpl(){
+	public DataImpl(){
 		setLocation();
 		setTheatreListByMovie();
 		setRangeOfSeat();
 	}
 	
 	public void setLocation() {
-		listLocation = new ArrayList<Location>();
-		listLocation = data.addMoviesAtPin(listLocation);
+		movieListByPin = new HashMap<Location, List<Movie>>();
+		movieListByPin = data.addMoviesAtPin(movieListByPin);
 	}
 
 	public List<Location> getLocation() {
-		return listLocation;
+	Set<Location> set = movieListByPin.keySet();
+	List<Location> list = new ArrayList();
+	list.addAll(set);
+	return list;
 	}
 
 
@@ -51,7 +55,7 @@ public class dataImpl implements Data{
 
 	
 	public List<Movie> getMovieListByPin(Integer pin) {
-		return data.getListOfMovies(listLocation, pin);
+		return data.getListOfMovies(movieListByPin, pin);
 	}
 
 	public void setRangeOfSeat() {

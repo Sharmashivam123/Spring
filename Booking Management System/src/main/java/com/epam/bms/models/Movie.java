@@ -3,9 +3,6 @@ package com.epam.bms.models;
 public class Movie {
 	private String movieName;
 
-	public Movie() {
-	}
-
 	public String getMovieName() {
 		return movieName;
 	}
@@ -16,6 +13,3 @@ public class Movie {
 
 }
 
-enum language {
-	HINDI, ENGLISH;
-}

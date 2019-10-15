@@ -35,46 +35,50 @@ public class InitializingDataValues {
 		movieList2.addAll(Arrays.asList(movie1, movie2, movie4));
 	}
 	
-	public List<Location> addMoviesAtPin(List<Location> list) {
+	public Map<Location, List<Movie>> addMoviesAtPin(Map<Location, List<Movie>> map) {
 		createMovieList();
 		Location location1 = new Location();
 		location1.setPin(500081);
-		location1.setMovieList(movieList1);
-
+		
 		Location location2 = new Location();
 		location2.setPin(500082);
-		location2.setMovieList(movieList1);
-
+		
 		Location location3 = new Location();
 		location3.setPin(500083);
-		location3.setMovieList(movieList2);
-
+		
 		Location location4 = new Location();
 		location4.setPin(500084);
-		location4.setMovieList(movieList2);
 		
-		list.addAll(Arrays.asList(location1, location2, location3, location4));
-		return list;
+		map.put(location1, movieList1);
+		map.put(location2, movieList1);
+		map.put(location3, movieList2);
+		map.put(location4, movieList2);
+		
+		return map;
 	}
 	
 	
 	public Map<Movie, List<Theatre>> addTheatreListByMovie(Map<Movie, List<Theatre>> map) {
-		Theatre theatre1 = new Theatre("PVR cyberabad");
+		Theatre theatre1 = new Theatre();
+		theatre1.setName("PVR cyberabad");
 		LocalTime time1 = LocalTime.of(14, 00);
 		theatre1.setMovieTime(time1);
 		theatre1.setId(1);
 
-		Theatre theatre2 = new Theatre("PVR Cinemas");
+		Theatre theatre2 = new Theatre();
+		theatre2.setName("PVR Cinemas");
 		LocalTime time2 = LocalTime.of(13, 15);
 		theatre2.setMovieTime(time2);
 		theatre2.setId(2);
 
-		Theatre theatre3 = new Theatre("PVR Galleria Mall");
+		Theatre theatre3 = new Theatre();
+		theatre3.setName("PVR Galleria Mall");
 		LocalTime time3 = LocalTime.of(17, 00);
 		theatre3.setMovieTime(time3);
 		theatre3.setId(3);
 
-		Theatre theatre4 = new Theatre("BR Hitech Theatre");
+		Theatre theatre4 = new Theatre();
+		theatre4.setName("BR Hitech Theatre");
 		LocalTime time4 = LocalTime.of(21, 00);
 		theatre4.setMovieTime(time4);
 		theatre4.setId(4);
@@ -96,12 +100,15 @@ public class InitializingDataValues {
 
 	}
 
-	public List<Movie> getListOfMovies(List<Location> listLocation, int pin) {
-		for (Location location : listLocation) {
-			if (location.getPin() == pin)
-				return location.getMoviesList();
+	public List<Movie> getListOfMovies(Map<Location, List<Movie>> map, int pin) {
+		List<Movie> list = null;
+		
+		for (Map.Entry m : map.entrySet())
+		{
+			Location loc = (Location)m.getKey();
+			if (loc.getPin() == pin)list = (List<Movie>)m.getValue();
 		}
-		return null;
+		return list;
 	}
 	
 	public Map<String, Integer> addSeatRanges(Map<String, Integer> rangeOfSeat)

@@ -7,11 +7,6 @@ public class Theatre {
 	private String theatreName;
 	private LocalTime time;
 
-	public Theatre(String theatreName) {
-		// this.theatreId = theatreId;
-		this.theatreName = theatreName;
-	}
-
 	public int getTheatreId() {
 		return theatreId;
 	}

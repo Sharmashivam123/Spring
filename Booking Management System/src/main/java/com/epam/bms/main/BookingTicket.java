@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.logging.Logger;
 
-import com.epam.bms.services.Administrator;
+import com.epam.bms.services.ValidationService;
 import com.epam.bms.services.Calculation;
 import com.epam.bms.services.PrintServices;
 
@@ -20,7 +20,7 @@ class BookingTicket {
 		boolean check = false;
 		try {
 			PrintServices show = new PrintServices();
-			Administrator admin = new Administrator();
+			ValidationService admin = new ValidationService();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			admin.callLogger(log);
 			log.info("Welcome to ticket Booking System.\n\n");
