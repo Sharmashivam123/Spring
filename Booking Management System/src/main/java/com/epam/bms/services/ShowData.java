@@ -12,8 +12,8 @@ import com.epam.bms.util.dataImpl;
 
 public class ShowData {
 	
-	private static final Logger log = Logger.getLogger("  skidjfnijwoeaf ");
-	Data data = new dataImpl();
+	private static final Logger log = Logger.getLogger(ShowData.class);
+	private Data data = new dataImpl();
 
 	public void printLocation() {
 
