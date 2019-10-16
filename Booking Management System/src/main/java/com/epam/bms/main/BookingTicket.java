@@ -17,7 +17,7 @@ class BookingTicket {
 	private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
 	public static void main(String args[]) throws Exception {
-		Calculation cc = new Calculation();
+		Calculation calculation = new Calculation();
 
 		try {
 			BookingTicket booking = new BookingTicket();
@@ -31,18 +31,18 @@ class BookingTicket {
 			String movieName = booking.readMovieName(pin);
 			show.printTheatreAtMovie(movieName);
 
-			log.info("select the theatreId according to your timing ");
-			int id = booking.readId();
+			log.info("select the theatreId acalculationording to your timing ");
+			booking.readId();
 			show.printPriceRange();
 
-			booking.processTransaction(cc);
+			booking.processTransaction(calculation);
 		} catch (Exception e) {
 			log.warn("Error at " + e.getMessage());
 			throw new Exception();
 		}
 	}
 
-	private void processTransaction(Calculation cc) throws IOException {
+	private void processTransaction(Calculation calculation) throws IOException {
 		boolean check = false;
 		while(check == false) {
 			
@@ -54,12 +54,12 @@ class BookingTicket {
 			}
 			int price = Integer.parseInt(priceandticket[0]);
 			int tickets = Integer.parseInt(priceandticket[1]);
-			log.info("\n Total price for your " + tickets + " ticket is " + cc.calculatePrice(price, tickets));
+			log.info("\n Total price for your " + tickets + " ticket is " + calculation.calculatePrice(price, tickets));
 			check = true;
 		}
 	}
 
-	String readPin() throws IOException {
+	private String readPin() throws IOException {
 		boolean check = false;
 		String pin = "";
 		while (!check) {
@@ -74,7 +74,7 @@ class BookingTicket {
 		return pin;
 	}
 
-	String readMovieName(String pin) throws IOException {
+	private String readMovieName(String pin) throws IOException {
 		boolean check = false;
 		String movieName = "";
 		while (!check) {
@@ -89,7 +89,7 @@ class BookingTicket {
 		return movieName;
 	}
 
-	int readId() throws IOException {
+	private void readId() throws IOException {
 		boolean check = false;
 		int id = 0;
 		String pid = "";
@@ -103,7 +103,7 @@ class BookingTicket {
 			else
 				check = true;
 		}
-		return id;
+		return ;
 	}
 
 }

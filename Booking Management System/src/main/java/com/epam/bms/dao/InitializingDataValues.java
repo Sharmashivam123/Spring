@@ -29,7 +29,7 @@ public class InitializingDataValues {
 		movie4.setMovieName("narsimha");
 
 		movieList = new ArrayList<Movie>();
-		movieList.addAll(Arrays.asList(movie1, movie2, movie4));
+		movieList.addAll(Arrays.asList(movie1, movie2, movie3, movie4));
 	}
 	
 	public Map<Location, List<Movie>> addMoviesAtPin(Map<Location, List<Movie>> map) {
@@ -100,7 +100,7 @@ public class InitializingDataValues {
 	public List<Movie> getListOfMovies(Map<Location, List<Movie>> map, int pin) {
 		List<Movie> list = null;
 		
-		for (Map.Entry m : map.entrySet())
+		for (Map.Entry<Location, List<Movie>> m : map.entrySet())
 		{
 			Location loc = (Location)m.getKey();
 			if (loc.getPin() == pin)list = (List<Movie>)m.getValue();

@@ -34,7 +34,7 @@ public class ValidationService {
 	}
 
 	public boolean validateId(int id) {
-		if (id == 1 || id == 2 || id == 3 || id == 4) {
+		if (id <= 4 && id > 0) {
 			return true;
 		} else
 			return false;
