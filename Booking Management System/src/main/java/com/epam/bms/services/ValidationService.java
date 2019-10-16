@@ -8,7 +8,7 @@ import com.epam.bms.util.DataImpl;
 
 public class ValidationService {
 
-	Data data = new DataImpl();
+	private Data data = new DataImpl();
 
 	public boolean validatePin(String pin) {
 		boolean check = true;
