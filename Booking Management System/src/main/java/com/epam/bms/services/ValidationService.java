@@ -1,10 +1,7 @@
 package com.epam.bms.services;
 
 import java.util.List;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Logger;
-
-import com.epam.bms.main.CustomHandler;
+import com.epam.bms.models.Location;
 import com.epam.bms.models.Movie;
 import com.epam.bms.util.Data;
 import com.epam.bms.util.DataImpl;
@@ -13,20 +10,17 @@ public class ValidationService {
 
 	Data data = new DataImpl();
 
-	public void callLogger(Logger log) {
-		log.setUseParentHandlers(false);
-		CustomHandler customhandler = new CustomHandler();
-		ConsoleHandler consolehandler = new ConsoleHandler();
-		consolehandler.setFormatter(customhandler);
-		log.addHandler(consolehandler);
-	}
-
 	public boolean validatePin(String pin) {
+		boolean check = true;
 		String pattern = "^[0-9]+$";
 		if (!pin.matches(pattern)) {
-			return false;
+			check = false;
 		} else
-			return true;
+			{
+				int pincode = Integer.parseInt(pin);
+				check = containsPin(pincode);
+			}
+		return check;
 	}
 
 	public boolean validateMovieName(String movieName, String pin) {
@@ -46,4 +40,20 @@ public class ValidationService {
 			return false;
 	}
 
+	
+	public boolean containsPin(int pin)
+	{
+		boolean check = false;
+		List<Location> list = data.getLocation();
+		for (Location loc : list)
+		{
+			if(loc.getPin() == pin)
+			{
+				check = true;
+				break;
+			}
+			check = false;
+		}
+		return check;
+	}
 }

@@ -1,8 +1,5 @@
 package com.epam.bms.models;
 
-
-import java.util.List;
-
 public class Location {
 	private int pin;
 

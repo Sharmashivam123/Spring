@@ -13,26 +13,23 @@ import com.epam.bms.models.Location;
 public class InitializingDataValues {
 	
 	private Movie movie1, movie2, movie3, movie4;
-	private List<Movie> movieList1, movieList2;
+	private List<Movie> movieList;
 	
 	public void createMovieList() {
 		movie1 = new Movie();
-		movie1.setMovieName("War");
+		movie1.setMovieName("war");
 
 		movie2 = new Movie();
-		movie2.setMovieName("Saaho");
+		movie2.setMovieName("saaho");
 
 		movie3 = new Movie();
-		movie3.setMovieName("Joker");
+		movie3.setMovieName("joker");
 
 		movie4 = new Movie();
-		movie4.setMovieName("Narsimha");
+		movie4.setMovieName("narsimha");
 
-		movieList1 = new ArrayList<Movie>();
-		movieList1.addAll(Arrays.asList(movie1, movie2, movie3, movie4));
-
-		movieList2 = new ArrayList<Movie>();
-		movieList2.addAll(Arrays.asList(movie1, movie2, movie4));
+		movieList = new ArrayList<Movie>();
+		movieList.addAll(Arrays.asList(movie1, movie2, movie4));
 	}
 	
 	public Map<Location, List<Movie>> addMoviesAtPin(Map<Location, List<Movie>> map) {
@@ -49,10 +46,10 @@ public class InitializingDataValues {
 		Location location4 = new Location();
 		location4.setPin(500084);
 		
-		map.put(location1, movieList1);
-		map.put(location2, movieList1);
-		map.put(location3, movieList2);
-		map.put(location4, movieList2);
+		map.put(location1, movieList);
+		map.put(location2, movieList);
+		map.put(location3, movieList);
+		map.put(location4, movieList);
 		
 		return map;
 	}

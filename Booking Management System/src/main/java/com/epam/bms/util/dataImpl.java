@@ -32,7 +32,7 @@ public class DataImpl implements Data{
 
 	public List<Location> getLocation() {
 	Set<Location> set = movieListByPin.keySet();
-	List<Location> list = new ArrayList();
+	List<Location> list = new ArrayList<Location>();
 	list.addAll(set);
 	return list;
 	}
