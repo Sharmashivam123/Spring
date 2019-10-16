@@ -13,7 +13,7 @@ import com.epam.bms.util.DataImpl;
 
 public class PrintServices {
 	
-	private static final Logger log = Logger.getLogger("  skidjfnijwoeaf ");
+	private static final Logger log = Logger.getLogger(PrintServices.class);
 	Data data = new DataImpl();
 
 	public void printLocation() {
