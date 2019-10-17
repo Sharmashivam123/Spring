@@ -10,7 +10,7 @@ import com.epam.bms.models.Movie;
 import com.epam.bms.models.Theatre;
 import com.epam.bms.models.Location;
 
-public class InitializingDataValues {
+public class InitializingDataValues implements InitialiseData{
 	
 	private Movie movie1, movie2, movie3, movie4;
 	private List<Movie> movieList;
