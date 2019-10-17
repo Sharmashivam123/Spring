@@ -1,6 +1,8 @@
 package com.epam.bms.services;
 
 import java.util.List;
+import java.util.Map;
+
 import com.epam.bms.models.Location;
 import com.epam.bms.models.Movie;
 import com.epam.bms.util.Data;
@@ -40,6 +42,16 @@ public class ValidationService {
 			return false;
 	}
 
+	public boolean validatePrice(int price)
+	{
+		boolean check = false;
+		Map<String, Integer> range = data.getRangeOfSeat();
+		for(Map.Entry<String, Integer> map : range.entrySet())
+		{
+			if(map.getValue() == price)check = true;
+		}
+		return check;
+	}
 	
 	public boolean containsPin(int pin)
 	{

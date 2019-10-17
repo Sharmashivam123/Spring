@@ -48,12 +48,13 @@ class BookingTicket {
 			
 			log.info("\nChoose the price range you want and no of tickets with space between them.\n");
 			String priceandticket[] = reader.readLine().split(" ");
-			if(priceandticket.length < 2 || !priceandticket[0].matches("^[0-9]+$") || !priceandticket[1].matches("^[0-9]+$")) {
+			if(priceandticket.length < 2 || !priceandticket[0].matches("^[0-9]+$") || !priceandticket[1].matches("^[0-9]+$") ) {
 				check = false;
 				continue;
 			}
 			int price = Integer.parseInt(priceandticket[0]);
 			int tickets = Integer.parseInt(priceandticket[1]);
+			if(!validate.validatePrice(price))continue;
 			log.info("\n Total price for your " + tickets + " ticket is " + calculation.calculatePrice(price, tickets));
 			check = true;
 		}
