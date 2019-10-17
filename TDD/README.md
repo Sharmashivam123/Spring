@@ -1,4 +1,4 @@
-#Remove ‘A’ from a string if it is present in the first two characters.
+#This is the task to test the junit in following task where we have to remove ‘A’ from a string if it is present in the first two characters.
 
  
 
