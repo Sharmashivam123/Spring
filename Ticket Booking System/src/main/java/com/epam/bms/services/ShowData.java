@@ -3,17 +3,18 @@ package com.epam.bms.services;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import com.epam.bms.models.Location;
 import com.epam.bms.models.Movie;
 import com.epam.bms.util.Data;
-import com.epam.bms.util.dataImpl;
+import com.epam.bms.util.DataImpl;
 
 public class ShowData {
 	
 	private static final Logger log = Logger.getLogger(ShowData.class);
-	private Data data = new dataImpl();
+	private Data data = new DataImpl();
 
 	public void printLocation() {
 
