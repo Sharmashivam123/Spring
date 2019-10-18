@@ -5,12 +5,12 @@ import java.util.Map;
 
 import com.epam.bms.models.Location;
 import com.epam.bms.models.Movie;
-import com.epam.bms.util.Data;
-import com.epam.bms.util.DataImpl;
+import com.epam.bms.util.TraverseData;
+import com.epam.bms.util.TraverseDataImpl;
 
 public class ValidationService {
 
-	private Data data = new DataImpl();
+	private TraverseData data = new TraverseDataImpl();
 
 	public boolean validatePin(String pin) {
 		boolean check = true;

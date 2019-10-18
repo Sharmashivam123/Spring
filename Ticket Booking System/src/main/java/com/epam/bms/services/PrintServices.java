@@ -8,14 +8,14 @@ import org.apache.log4j.Logger;
 
 import com.epam.bms.models.Location;
 import com.epam.bms.models.Movie;
-import com.epam.bms.util.Data;
-import com.epam.bms.util.DataImpl;
+import com.epam.bms.util.TraverseData;
+import com.epam.bms.util.TraverseDataImpl;
 
 
 public class PrintServices {
 	
 	private static final Logger log = Logger.getLogger(PrintServices.class);
-	private Data data = new DataImpl();
+	private TraverseData data = new TraverseDataImpl();
 
 	public void printLocation() {
 
