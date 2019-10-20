@@ -6,23 +6,25 @@ import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
 
+import com.epam.bms.models.City;
 import com.epam.bms.models.Location;
 import com.epam.bms.models.Movie;
-import com.epam.bms.util.TraverseData;
-import com.epam.bms.util.TraverseDataImpl;
-
+import com.epam.bms.dao.TraverseData;
+import com.epam.bms.dao.TraverseDataImpl;
 
 public class PrintServices {
-	
+
 	private static final Logger log = Logger.getLogger(PrintServices.class);
 	private TraverseData data = new TraverseDataImpl();
 
-	public void printLocation() {
+	public List<Location> printLocation(String city) {
 
 		log.info("Please enter your pin code.\n");
-		List<Location> list = data.getLocation();
+		int cityId = Integer.parseInt(city);
+		List<Location> list = data.getLocationByCity(cityId);
 		list.parallelStream().forEach(location -> log.info(" " + location.getPin() + " "));
 		log.info("\n");
+		return list;
 	}
 
 	public void printMovieAtLocation(String pin) throws Exception {
@@ -59,5 +61,12 @@ public class PrintServices {
 		Map<String, Integer> range = data.getRangeOfSeat();
 		for (Entry<String, Integer> map : range.entrySet())
 			log.info("\n" + map.getKey() + " - " + map.getValue() + " \n ");
+	}
+
+	public void printCity() {
+		log.info("Please enter your the city.\n");
+		List<City> list = data.getCity();
+		list.parallelStream().forEach(city -> log.info(" " + city.getCityId() + " " + city.getCityName() + " "));
+		log.info("\n");
 	}
 }

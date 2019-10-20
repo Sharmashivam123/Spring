@@ -3,17 +3,19 @@ package com.epam.bms.dao;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import com.epam.bms.models.Movie;
 import com.epam.bms.models.Theatre;
+import com.epam.bms.models.City;
 import com.epam.bms.models.Location;
 
 public class DbOperationImpl implements DbOperation{
 	
 	private Movie movie1, movie2, movie3, movie4;
 	private List<Movie> movieList;
+	private List<Location> listLocation;
 	
 	public void createMovieList() {
 		movie1 = new Movie();
@@ -45,6 +47,8 @@ public class DbOperationImpl implements DbOperation{
 		
 		Location location4 = new Location();
 		location4.setPin(500084);
+		
+		listLocation.addAll(Arrays.asList(location1, location2, location3, location4));
 		
 		map.put(location1, movieList);
 		map.put(location2, movieList);
@@ -110,4 +114,28 @@ public class DbOperationImpl implements DbOperation{
 		
 		return rangeOfSeat;
 	}
+
+	@Override
+	public Map<City, List<Location>> addLocationByCity(Map<City, List<Location>> map) {
+		Map<City, List<Location>> locationByCity = new HashMap<City, List<Location>>();
+		List<City> cities = new ArrayList<>();
+		cities = addCity(cities);
+		listLocation = new ArrayList<Location>();
+		
+		for(City city : cities)
+		{
+			locationByCity.put(city, listLocation);
+		}
+		return locationByCity;
+	}
+
+	public List<City> addCity(List<City> cityList) {
+		City c1 = new City();
+		c1.setCityId(1);
+		c1.setCityName("Hyderabad");
+		cityList.add(c1);
+		System.out.println("list "+cityList);
+		return cityList;
+	}
+	
 }

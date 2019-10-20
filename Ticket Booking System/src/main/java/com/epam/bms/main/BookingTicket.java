@@ -1,7 +1,10 @@
 package com.epam.bms.main;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
+import com.epam.bms.models.Location;
 import com.epam.bms.services.PriceCalculation;
 import com.epam.bms.services.PrintServices;
 
@@ -14,19 +17,21 @@ class BookingTicket {
 
 		try {
 			InputReader reader = new InputReader();
-			PrintServices show = new PrintServices();
+			PrintServices print = new PrintServices();
 			log.info("Welcome to ticket Booking System.\n\n");
-
-			show.printLocation();
-			String pin = reader.readPin();
-			show.printMovieAtLocation(pin);
+			
+			print.printCity();
+			String cityId = reader.readCity();
+			List<Location> listLocation = print.printLocation(cityId);
+			String pin = reader.readPin(cityId);
+			print.printMovieAtLocation(pin);
 
 			String movieName = reader.readMovieName(pin);
-			show.printTheatreAtMovie(movieName);
+			print.printTheatreAtMovie(movieName);
 
 			log.info("select the theatreId acalculationording to your timing ");
 			reader.readId();
-			show.printPriceRange();
+			print.printPriceRange();
 
 			reader.processTransaction(calculation);
 		} catch (Exception e) {
