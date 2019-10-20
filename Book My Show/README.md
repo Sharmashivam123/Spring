@@ -1,6 +1,6 @@
-#THIS IS THE TASK TO Implementing JDBC for Movie Ticket Booking System
-# AND JUNIT for Movie Ticketing
-# work flow of the project
+#This is the task of implementing JDBC for Movie Ticket Booking System
+# And junit for Movie Ticketing
+# work flow of the project is
 
 The entire project has  been broken down into two tasks –
 
