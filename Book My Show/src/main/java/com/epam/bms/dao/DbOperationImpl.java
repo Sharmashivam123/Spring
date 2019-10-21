@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import java.sql.Time;
 
 import org.apache.log4j.Logger;
@@ -119,5 +120,7 @@ public class DbOperationImpl implements DbOperation {
 		}
 		return theatreList;
 	}
+
+	
 
 }

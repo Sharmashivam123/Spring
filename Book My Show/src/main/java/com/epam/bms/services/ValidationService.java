@@ -1,5 +1,6 @@
 package com.epam.bms.services;
 
+import java.sql.Time;
 import java.util.List;
 
 import com.epam.bms.bean.Area;
@@ -10,7 +11,8 @@ import com.epam.bms.bean.Movie;
 import com.epam.bms.bean.Theatre;
 
 public class ValidationService {
-	DbOperation dbOperation = new DbOperationImpl();
+	private DbOperation dbOperation = new DbOperationImpl();
+	private int showsCount = 0;
 
 	public boolean validateCity(String city) throws Exception {
 		boolean check = true;
@@ -98,13 +100,29 @@ public class ValidationService {
 		List<Theatre> listTheatre = dbOperation.getTheatreListByMovie(movieId);
 		for (Theatre theatre : listTheatre) {
 			int id = theatre.getTheatreId();
-			if (id == Integer.parseInt(theatreId))
-			{
+			if (id == Integer.parseInt(theatreId)) {
+				List<Time> shows = theatre.getShowtimings();
+				showsCount = shows.size();
 				check = true;
 				break;
 			}
-				
+
 		}
+		return check;
+	}
+
+	public boolean validateShowTime(String theatreId, String timeId) {
+		boolean check = false;
+		if (timeId.matches("^[0-9]+$")) {
+			check = containsTime(theatreId, timeId);
+		}
+		return check;
+	}
+
+	private boolean containsTime(String theatreId, String timeId) {
+		boolean check =false;
+		int showTimeId = Integer.parseInt(timeId);
+		if(showTimeId < (showsCount-1))check = true;
 		return check;
 	}
 

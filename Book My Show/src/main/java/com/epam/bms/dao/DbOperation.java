@@ -16,5 +16,5 @@ public interface DbOperation {
 	List<Movie> getMovieListByAreaPin(String pin);
 
 	List<Theatre> getTheatreListByMovie(String movieId);
-	
+
 }

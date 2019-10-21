@@ -3,7 +3,6 @@ package com.epam.bms.main;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
 import org.apache.log4j.Logger;
 
 import com.epam.bms.services.PrintServices;
@@ -72,6 +71,21 @@ public class InputReader {
 				check = true;
 		}
 		return theatreId;
+	}
+
+	public int readShowTime(String theatreId) throws IOException {
+		boolean check = false;
+		String timeId = "";
+		while(!check)
+		{
+			timeId = reader.readLine();
+			if(timeId.equalsIgnoreCase("x"))
+				System.exit(0);
+			if(!validate.validateShowTime(theatreId, timeId))
+				log.info("\n Choose from available options only or enter 'x' to Exit ! \\n");
+			else check =true;
+		}
+		return Integer.parseInt(timeId);
 	}
 
 }

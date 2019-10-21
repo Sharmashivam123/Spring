@@ -11,7 +11,8 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 public class PrintServices {
-
+	
+	
 	private final Logger log = Logger.getLogger(PrintServices.class);
 	DbOperation dbOperation = new DbOperationImpl();
 
@@ -46,8 +47,13 @@ public class PrintServices {
 			int actualTheatreId = Integer.parseInt(theatreId);
 			if (expectedTheatreId == actualTheatreId) {
 				List<Time> shows = theatre.getShowtimings();
-				shows.stream().forEach(show -> log.info(show));
+				int showIndex = 0;
+				for(Time time : shows)
+				{
+					log.info(++showIndex + " " + time);
+				}
 			}
 		}
 	}
+
 }
