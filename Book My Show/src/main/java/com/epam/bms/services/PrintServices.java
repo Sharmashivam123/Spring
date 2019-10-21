@@ -6,8 +6,8 @@ import com.epam.bms.bean.Theatre;
 import com.epam.bms.bean.Area;
 import com.epam.bms.dao.*;
 
+import java.sql.Time;
 import java.util.List;
-
 import org.apache.log4j.Logger;
 
 public class PrintServices {
@@ -36,7 +36,18 @@ public class PrintServices {
 
 	public void printTheatreListByMovie(String movieId) {
 		List<Theatre> listTheatre = dbOperation.getTheatreListByMovie(movieId);
-		listTheatre.stream().forEach(theatre -> log
-				.info(theatre.getTheatreId() + " " + theatre.getTheatreName() + " " + theatre.getShowtimings()));
+		listTheatre.stream().forEach(theatre -> log.info(theatre.getTheatreId() + " " + theatre.getTheatreName()));
+	}
+
+	public void printShowTiming(String theatreId, String movieId) {
+		List<Theatre> listTheatre = dbOperation.getTheatreListByMovie(movieId);
+		for (Theatre theatre : listTheatre) {
+			int expectedTheatreId = theatre.getTheatreId();
+			int actualTheatreId = Integer.parseInt(theatreId);
+			if (expectedTheatreId == actualTheatreId) {
+				List<Time> shows = theatre.getShowtimings();
+				shows.stream().forEach(show -> log.info(show));
+			}
+		}
 	}
 }

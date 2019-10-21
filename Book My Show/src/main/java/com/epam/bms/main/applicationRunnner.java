@@ -21,10 +21,10 @@ public class applicationRunnner {
 		print.printMsg("Select the movieId to get the theatre showing the movie.");
 		String movieId = inputRead.readMovieId(pin);
 		
-		print.printMsg("Select the theatreId and the respective show timing.");
+		print.printMsg("Select the theatreId.");
 		print.printTheatreListByMovie(movieId);
-		String theatreIdAndShowTime = inputRead.readShowTiming(movieId);
-		
-		print.printMsg("select the seat");
+		String theatreId = inputRead.readTheatreId(movieId);
+		print.printMsg("Select show timing.");
+		print.printShowTiming(theatreId, movieId);
 	}
 }

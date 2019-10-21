@@ -59,19 +59,19 @@ public class InputReader {
 		return movieId;
 	}
 
-	public String readShowTiming(String movieId) throws IOException {
+	public String readTheatreId(String movieId) throws IOException {
 		boolean check = false;
-		String input = "";
+		String theatreId = "";
 		while (!check) {
-			input = reader.readLine();
-			if (input.equalsIgnoreCase("x"))
+			theatreId = reader.readLine();
+			if (theatreId.equalsIgnoreCase("x"))
 				System.exit(0);
-			if (!validate.validateShowTimings(input,movieId))
+			if (!validate.validateTheatreId(theatreId, movieId))
 				log.info("\nChoose from available options only or enter 'x' to Exit ! \n");
 			else
 				check = true;
 		}
-		return input;
+		return theatreId;
 	}
 
 }

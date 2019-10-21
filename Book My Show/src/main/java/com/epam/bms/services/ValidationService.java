@@ -1,6 +1,5 @@
 package com.epam.bms.services;
 
-import java.sql.Time;
 import java.util.List;
 
 import com.epam.bms.bean.Area;
@@ -87,47 +86,24 @@ public class ValidationService {
 		return check;
 	}
 
-	public boolean validateShowTimings(String input, String movieId) {
+	public boolean validateTheatreId(String theatreId, String movieId) {
 		boolean check = false;
-		String[] theatreAndShow = input.split(" ");
-		String theatreId = "", showTime = "";
-		if (theatreAndShow.length == 2)
-			 {
-			theatreId = theatreAndShow[0];
-			showTime = theatreAndShow[1];
-			if (validateTheatre(theatreId, movieId, showTime))
-					check = true;
-		}
+		if (theatreId.matches("^[0-9]+$"))
+			check = containsTheatreId(theatreId, movieId);
 		return check;
 	}
 
-
-	
-	private boolean validateTheatre(String theatreId, String movieId, String showTime) {
-		boolean check = false;
-		if(theatreId.matches("^[0-9]+$"))
-			check = containsTheatreId(theatreId,movieId,showTime);
-		return check;
-	}
-
-	private boolean containsTheatreId(String theatreId, String movieId, String showTime) {
+	private boolean containsTheatreId(String theatreId, String movieId) {
 		boolean check = false;
 		List<Theatre> listTheatre = dbOperation.getTheatreListByMovie(movieId);
-		for(Theatre theatre: listTheatre)
-		{
-			List<Time> shows = theatre.getShowtimings();
+		for (Theatre theatre : listTheatre) {
 			int id = theatre.getTheatreId();
-			if(id == Integer.parseInt(theatreId)) {
-				Time time = Time.valueOf(showTime);
-				for(Time t : shows)
-				{
-					if(t.equals(time))
-					{
-						check = true;break;
-					}
-				}
-				if(check)break;
+			if (id == Integer.parseInt(theatreId))
+			{
+				check = true;
+				break;
 			}
+				
 		}
 		return check;
 	}

@@ -1,5 +1,6 @@
 package com.epam.bms.dao;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,8 +13,8 @@ import com.epam.bms.bean.Area;
 import com.epam.bms.bean.City;
 import com.epam.bms.bean.Movie;
 import com.epam.bms.bean.Theatre;
-import com.epam.bms.util.RetrievingData;
-import com.mysql.jdbc.Connection;
+import com.epam.bms.util.DbUtilImpl;
+
 
 public class DbOperationImpl implements DbOperation {
 
@@ -26,7 +27,7 @@ public class DbOperationImpl implements DbOperation {
 		List<City> listCity = new ArrayList<>();
 		try {
 			String query = "Select cityId, cityName from city";
-			RetrievingData resultSet = new RetrievingData();
+			DbUtilImpl resultSet = new DbUtilImpl();
 			ResultSet result = resultSet.getResulSet(query);
 			while (result.next()) {
 				int cityId = result.getInt("cityId");
@@ -49,7 +50,7 @@ public class DbOperationImpl implements DbOperation {
 		int id = Integer.parseInt(cityId);
 		try {
 			String query = "select pincode, areaName from location where cityId = '" + id + "'";
-			RetrievingData resultSet = new RetrievingData();
+			DbUtilImpl resultSet = new DbUtilImpl();
 			ResultSet result = resultSet.getResulSet(query);
 			while (result.next()) {
 				int pin = result.getInt("pincode");
@@ -72,7 +73,7 @@ public class DbOperationImpl implements DbOperation {
 		try {
 			String query = "SELECT * from movie WHERE movieId IN (SELECT movieId from moviebylocation WHERE pincode ='"
 					+ pincode + "')";
-			RetrievingData resultSet = new RetrievingData();
+			DbUtilImpl resultSet = new DbUtilImpl();
 			ResultSet result = resultSet.getResulSet(query);
 			while (result.next()) {
 				int movieId = result.getInt("movieId");
@@ -96,7 +97,7 @@ public class DbOperationImpl implements DbOperation {
 		try {
 			String query = "select * from theatrewithshow where theatreId in (SELECT theatreId from theatrebymovie WHERE movieId = '"
 					+ movieId + "')";
-			RetrievingData resultSet = new RetrievingData();
+			DbUtilImpl resultSet = new DbUtilImpl();
 			ResultSet result = resultSet.getResulSet(query);
 			while (result.next()) {
 				int theatreId = result.getInt("theatreId");

@@ -1,8 +1,7 @@
 package com.epam.bms.util;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
-
-import com.mysql.jdbc.Connection;
 
 public class DbConnection {
 	private static Connection connection = null;
@@ -12,9 +11,9 @@ public class DbConnection {
 	}
 
 	public static Connection getConnectionToDb() {
-		String url = "jdbc:mysql://localhost:3306/tbs";
+		String url = "jdbc:mysql://localhost:3306/bms";
 		String username = "root";
-		String pwd = "";
+		String pwd = "Epam123$$";
 
 		try {
 			if (connection == null || connection.isClosed())

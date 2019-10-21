@@ -1,11 +1,10 @@
 package com.epam.bms.util;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-
-public class RetrievingData {
+public class DbUtilImpl implements DbUtil{
 	public ResultSet getResulSet(String query) throws Exception {
 		ResultSet result;
 		Connection connection = DbConnection.getConnectionToDb();
