@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import com.epam.bms.bean.Area;
 import com.epam.bms.bean.City;
 import com.epam.bms.bean.Movie;
+import com.epam.bms.bean.SeatTypes;
 import com.epam.bms.bean.Theatre;
 import com.epam.bms.util.DbUtilImpl;
 
@@ -20,7 +21,8 @@ import com.epam.bms.util.DbUtilImpl;
 public class DbOperationImpl implements DbOperation {
 
 	private static final Logger log = Logger.getLogger(DbOperationImpl.class);
-
+	private DbUtilImpl resultSet = new DbUtilImpl();
+	
 	Connection connection = null;
 
 	@Override
@@ -28,7 +30,6 @@ public class DbOperationImpl implements DbOperation {
 		List<City> listCity = new ArrayList<>();
 		try {
 			String query = "Select cityId, cityName from city";
-			DbUtilImpl resultSet = new DbUtilImpl();
 			ResultSet result = resultSet.getResulSet(query);
 			while (result.next()) {
 				int cityId = result.getInt("cityId");
@@ -51,7 +52,6 @@ public class DbOperationImpl implements DbOperation {
 		int id = Integer.parseInt(cityId);
 		try {
 			String query = "select pincode, areaName from location where cityId = '" + id + "'";
-			DbUtilImpl resultSet = new DbUtilImpl();
 			ResultSet result = resultSet.getResulSet(query);
 			while (result.next()) {
 				int pin = result.getInt("pincode");
@@ -74,7 +74,6 @@ public class DbOperationImpl implements DbOperation {
 		try {
 			String query = "SELECT * from movie WHERE movieId IN (SELECT movieId from moviebylocation WHERE pincode ='"
 					+ pincode + "')";
-			DbUtilImpl resultSet = new DbUtilImpl();
 			ResultSet result = resultSet.getResulSet(query);
 			while (result.next()) {
 				int movieId = result.getInt("movieId");
@@ -98,7 +97,6 @@ public class DbOperationImpl implements DbOperation {
 		try {
 			String query = "select * from theatrewithshow where theatreId in (SELECT theatreId from theatrebymovie WHERE movieId = '"
 					+ movieId + "')";
-			DbUtilImpl resultSet = new DbUtilImpl();
 			ResultSet result = resultSet.getResulSet(query);
 			while (result.next()) {
 				int theatreId = result.getInt("theatreId");
@@ -119,6 +117,31 @@ public class DbOperationImpl implements DbOperation {
 			e.printStackTrace();
 		}
 		return theatreList;
+	}
+
+	@Override
+	public List<SeatTypes> getPriceRange() {
+		List<SeatTypes> rangeList = new ArrayList<>();
+		String query = "select * from pricerange";
+		try {
+			ResultSet result = resultSet.getResulSet(query);
+			while(result.next())
+			{
+				int rangeId = result.getInt("rangeId");
+				String tier = result.getString("tier");
+				double cost = result.getDouble("cost");
+				SeatTypes seatType = new SeatTypes();
+				seatType.setRangeId(rangeId);
+				seatType.setTier(tier);
+				seatType.setCost(cost);
+				rangeList.add(seatType);
+			}
+		}
+		catch(Exception e)
+		{
+			log.info(e.getMessage());
+		}
+		return rangeList;
 	}
 
 	

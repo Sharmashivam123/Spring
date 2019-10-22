@@ -46,6 +46,13 @@ public class RemoveCharacterTest {
 		String actual = remove.removeCharacter("lkjhgfdsa");
 		assertEquals(expected, actual);;
 	}
+	@Test
+	private void test5()
+	{
+		String expected = "131135";
+		String actual = remove.removeCharacter("131135");
+		assertEquals(expected, actual);;
+	}
 	
 	
 }

@@ -16,6 +16,37 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `bookings`
+--
+
+DROP TABLE IF EXISTS `bookings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `bookings` (
+  `bookingId` int(11) NOT NULL AUTO_INCREMENT,
+  `movieId` int(11) DEFAULT NULL,
+  `theatreId` int(11) DEFAULT NULL,
+  `showtiming` time DEFAULT NULL,
+  `showDate` date DEFAULT NULL,
+  `ticketsBooked` int(100) DEFAULT NULL,
+  PRIMARY KEY (`bookingId`),
+  KEY `theatreId` (`theatreId`),
+  KEY `movieId` (`movieId`),
+  CONSTRAINT `bookings_ibfk_1` FOREIGN KEY (`theatreId`) REFERENCES `theatre` (`theatreId`),
+  CONSTRAINT `bookings_ibfk_2` FOREIGN KEY (`movieId`) REFERENCES `movie` (`movieId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bookings`
+--
+
+LOCK TABLES `bookings` WRITE;
+/*!40000 ALTER TABLE `bookings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bookings` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `city`
 --
 
@@ -113,6 +144,31 @@ INSERT INTO `moviebylocation` VALUES (1,500081),(1,500082),(1,500083),(1,500084)
 UNLOCK TABLES;
 
 --
+-- Table structure for table `pricerange`
+--
+
+DROP TABLE IF EXISTS `pricerange`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pricerange` (
+  `rangeId` int(11) NOT NULL,
+  `tier` varchar(10) DEFAULT NULL,
+  `cost` double DEFAULT NULL,
+  PRIMARY KEY (`rangeId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pricerange`
+--
+
+LOCK TABLES `pricerange` WRITE;
+/*!40000 ALTER TABLE `pricerange` DISABLE KEYS */;
+INSERT INTO `pricerange` VALUES (1,'silver',100),(2,'gold',150),(3,'platinum',200);
+/*!40000 ALTER TABLE `pricerange` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `showtiming`
 --
 
@@ -150,7 +206,8 @@ DROP TABLE IF EXISTS `theatre`;
 CREATE TABLE `theatre` (
   `theatreId` int(11) NOT NULL,
   `theatreName` varchar(30) DEFAULT NULL,
-  `timingId` int(11) DEFAULT NULL
+  `timingId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`theatreId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -231,4 +288,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-21 18:07:27
+-- Dump completed on 2019-10-22 18:00:00

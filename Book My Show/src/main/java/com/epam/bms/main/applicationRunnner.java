@@ -13,20 +13,25 @@ public class applicationRunnner {
 
 		print.printMsg("Select your areacode.");
 		print.printAreaPinInCity(cityId);
-		String pin = inputRead.readPin(cityId);
+		String pin = inputRead.readPin();
 
 		print.printMsg("Available movies at your locations are ");
 		print.printMoviesAtLocation(pin);
 		print.printMsg("Select the movieId to get the theatre showing the movie.");
-		String movieId = inputRead.readMovieId(pin);
+		String movieId = inputRead.readMovieId();
 
 		print.printMsg("Select the theatreId.");
 		print.printTheatreListByMovie(movieId);
-		String theatreId = inputRead.readTheatreId(movieId);
-		print.printMsg("Select show timing.");
-		print.printShowTiming(theatreId, movieId);
+		String theatreId = inputRead.readTheatreId();
 
-		print.printMsg("select the respective timing of the theatre");
-		int id = inputRead.readShowTime(theatreId);
+		print.printMsg("select the date");
+		print.printAvailableDates();
+		int dateId = inputRead.readDate();
+		
+		print.printMsg("Select show timing.");
+		print.printShowTiming(theatreId, dateId);
+		int showId = inputRead.readShowId();
+		
+		print.printPriceRanges();
 	}
 }

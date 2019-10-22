@@ -2,12 +2,14 @@ package com.epam.bms.services;
 
 import java.sql.Time;
 import java.util.List;
+import java.util.Map;
 
 import com.epam.bms.bean.Area;
 import com.epam.bms.bean.City;
 import com.epam.bms.dao.DbOperation;
 import com.epam.bms.dao.DbOperationImpl;
 import com.epam.bms.bean.Movie;
+import com.epam.bms.bean.ShowTimes;
 import com.epam.bms.bean.Theatre;
 
 public class ValidationService {
@@ -120,9 +122,21 @@ public class ValidationService {
 	}
 
 	private boolean containsTime(String theatreId, String timeId) {
-		boolean check =false;
+		boolean check = false;
 		int showTimeId = Integer.parseInt(timeId);
-		if(showTimeId < (showsCount-1))check = true;
+		if (showTimeId < (showsCount - 1))
+			check = true;
+		return check;
+	}
+
+	public boolean validateShow(String show) {
+		boolean check = false;
+		ShowTimes showTime = new ShowTimes();
+		int showId = Integer.parseInt(show);
+		Map<Integer, Time> availableShow = showTime.getAvailableShow();
+		System.out.println(showId + " " + availableShow.containsKey(showId)+ " "+ availableShow);
+		if (availableShow.containsKey(showId))
+			check = true;
 		return check;
 	}
 
