@@ -14,8 +14,7 @@ import com.epam.bms.bean.Theatre;
 
 public class ValidationService {
 	private DbOperation dbOperation = new DbOperationImpl();
-	private int showsCount = 0;
-
+	
 	public boolean validateCity(String city) throws Exception {
 		boolean check = true;
 		String pattern = "^[0-9]+$";
@@ -90,21 +89,19 @@ public class ValidationService {
 		return check;
 	}
 
-	public boolean validateTheatreId(String theatreId, String movieId) {
+	public boolean validateTheatreId(String theatreId, int movieId) {
 		boolean check = false;
 		if (theatreId.matches("^[0-9]+$"))
 			check = containsTheatreId(theatreId, movieId);
 		return check;
 	}
 
-	private boolean containsTheatreId(String theatreId, String movieId) {
+	private boolean containsTheatreId(String theatreId, int movieId) {
 		boolean check = false;
 		List<Theatre> listTheatre = dbOperation.getTheatreListByMovie(movieId);
 		for (Theatre theatre : listTheatre) {
 			int id = theatre.getTheatreId();
 			if (id == Integer.parseInt(theatreId)) {
-				List<Time> shows = theatre.getShowtimings();
-				showsCount = shows.size();
 				check = true;
 				break;
 			}
@@ -113,7 +110,7 @@ public class ValidationService {
 		return check;
 	}
 
-	public boolean validateShowTime(String theatreId, String timeId) {
+	public boolean validateShowTime(int theatreId, String timeId) {
 		boolean check = false;
 		if (timeId.matches("^[0-9]+$")) {
 			check = containsTime(theatreId, timeId);
@@ -121,7 +118,7 @@ public class ValidationService {
 		return check;
 	}
 
-	private boolean containsTime(String theatreId, String timeId) {
+	private boolean containsTime(int theatreId, String timeId) {
 		boolean check = false;
 		int showTimeId = Integer.parseInt(timeId);
 		if (showTimeId < (showsCount - 1))

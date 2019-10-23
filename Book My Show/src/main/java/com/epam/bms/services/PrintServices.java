@@ -3,10 +3,11 @@ package com.epam.bms.services;
 import com.epam.bms.bean.City;
 import com.epam.bms.bean.Movie;
 import com.epam.bms.bean.SeatTypes;
-import com.epam.bms.bean.ShowTimes;
 import com.epam.bms.bean.Theatre;
 import com.epam.bms.bean.Area;
 import com.epam.bms.dao.*;
+import com.epam.bms.util.BookingDetails;
+import com.epam.bms.util.Timings;
 
 import java.sql.Time;
 import java.time.LocalDate;
@@ -21,10 +22,11 @@ import org.apache.log4j.Logger;
 public class PrintServices {
 
 	private final Logger log = Logger.getLogger(PrintServices.class);
-	DbOperation dbOperation = new DbOperationImpl();
+	private DbOperation dbOperation = new DbOperationImpl();
 	private List<Theatre> listTheatre = new ArrayList<>();
-	Map<Integer, Time> availableShowTime = new HashMap<>();
-
+	private Map<Integer, Time> availableShowTime = new HashMap<>();
+	private BookingDetails bookingDetails = BookingDetails.getInstance();
+	private int movieId = bookingDetails.getMovieId();
 	public void printMsg(String message) {
 		log.info(message);
 	}
@@ -44,45 +46,35 @@ public class PrintServices {
 		listMovie.stream().forEach(movie -> log.info(movie.getMovieId() + " " + movie.getMovieName()));
 	}
 
-	public void printTheatreListByMovie(String movieId) {
+	public void printTheatreListByMovie() {
 		listTheatre = dbOperation.getTheatreListByMovie(movieId);
 		listTheatre.stream().forEach(theatre -> log.info(theatre.getTheatreId() + " " + theatre.getTheatreName()));
 	}
-
-	public void printShowTiming(String theatreId, int dateId) {
-		for (Theatre theatre : listTheatre) {
-			BookingDates dates = new BookingDates();
-			LocalDate currentDate = LocalDate.now();
-			Map<Integer, LocalDate> map = dates.getDates();
-			LocalDate selectedDate = map.get(dateId);
-			
-			int expectedTheatreId = theatre.getTheatreId();
-			int actualTheatreId = Integer.parseInt(theatreId);
-			if (expectedTheatreId == actualTheatreId) {
-				List<Time> shows = theatre.getShowtimings();
-				int showIndex = 0;
-				for (Time time : shows) {
-					if (currentDate.compareTo(selectedDate) == 0)
-						if (LocalTime.parse(time.toString()).compareTo(LocalTime.now().plusMinutes(15)) > 0) {
-							log.info(++showIndex + " " + time);
-							
-						}else
-							;
-					else {
-						log.info(++showIndex + " " + time);
-					}
-				}
-			}
-		}
-		
-	}
-
+	
 	public void printAvailableDates() {
 		BookingDates dates = new BookingDates();
 		Map<Integer, LocalDate> dateMap = dates.getDates();
 		for (Map.Entry<Integer, LocalDate> element : dateMap.entrySet())
 			log.info(element.getKey() + "  :  " + element.getValue());
 	}
+
+	public void printShowTiming(int dateId) {
+		int theatreId = bookingDetails.getTheatreId();
+		List<Timings> shows = dbOperation.getShowtimings(movieId, theatreId);
+		int showIndex = 0;
+		for (Time time : shows) {
+			if (currentDate.compareTo(selectedDate) == 0)
+				if (LocalTime.parse(time.toString()).compareTo(LocalTime.now().plusMinutes(15)) > 0) {
+					log.info(++showIndex + " " + time);
+					
+				}else
+					;
+			else {
+				log.info(++showIndex + " " + time);
+			}
+		}
+	}
+
 
 	public void printPriceRanges() {
 		List<SeatTypes> rangeList = dbOperation.getPriceRange();

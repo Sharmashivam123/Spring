@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 import java.sql.Time;
+import java.time.LocalTime;
 
 import org.apache.log4j.Logger;
 
@@ -16,13 +18,13 @@ import com.epam.bms.bean.Movie;
 import com.epam.bms.bean.SeatTypes;
 import com.epam.bms.bean.Theatre;
 import com.epam.bms.util.DbUtilImpl;
-
+import com.epam.bms.util.Timings;
 
 public class DbOperationImpl implements DbOperation {
 
 	private static final Logger log = Logger.getLogger(DbOperationImpl.class);
 	private DbUtilImpl resultSet = new DbUtilImpl();
-	
+
 	Connection connection = null;
 
 	@Override
@@ -90,26 +92,18 @@ public class DbOperationImpl implements DbOperation {
 	}
 
 	@Override
-	public List<Theatre> getTheatreListByMovie(String movie) {
+	public List<Theatre> getTheatreListByMovie(int movieId) {
 		List<Theatre> theatreList = new ArrayList<>();
-
-		int movieId = Integer.parseInt(movie);
 		try {
-			String query = "select * from theatrewithshow where theatreId in (SELECT theatreId from theatrebymovie WHERE movieId = '"
+			String query = "select * from theatre where theatreId in (SELECT theatreId from theatrebymovie WHERE movieId = '"
 					+ movieId + "')";
 			ResultSet result = resultSet.getResulSet(query);
 			while (result.next()) {
 				int theatreId = result.getInt("theatreId");
 				String theatreName = result.getString("theatreName");
-				Time time1 = result.getTime("show1");
-				Time time2 = result.getTime("show2");
-				Time time3 = result.getTime("show3");
-				Time time4 = result.getTime("show4");
-				List<Time> showtimings = Arrays.asList(time1, time2, time3, time4);
 				Theatre theatre = new Theatre();
 				theatre.setTheatreId(theatreId);
 				theatre.setName(theatreName);
-				theatre.setShowtimings(showtimings);
 				theatreList.add(theatre);
 			}
 		} catch (Exception e) {
@@ -125,8 +119,7 @@ public class DbOperationImpl implements DbOperation {
 		String query = "select * from pricerange";
 		try {
 			ResultSet result = resultSet.getResulSet(query);
-			while(result.next())
-			{
+			while (result.next()) {
 				int rangeId = result.getInt("rangeId");
 				String tier = result.getString("tier");
 				double cost = result.getDouble("cost");
@@ -136,14 +129,33 @@ public class DbOperationImpl implements DbOperation {
 				seatType.setCost(cost);
 				rangeList.add(seatType);
 			}
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			log.info(e.getMessage());
 		}
 		return rangeList;
 	}
 
-	
+	@Override
+	public Map<Integer, LocalTime> getShowtimings(int movieId, int theatreId) {
+		Map<Integer, LocalTime> timeIndexMap = new HashMap<>();
+		try {
+			String query = "select show1, show2, show3, show4 from showtiming \r\n"
+					+ "where timingId = (select timingId from theatrebymovie \r\n"
+					+ "where theatreId = 1 and movieId = 2)";
+			ResultSet result = resultSet.getResulSet(query);
+			int index = 0;
+			while (result.next()) {
+				LocalTime show1 = LocalTime.parse(result.getTime("show1").toString());
+				LocalTime show2 = LocalTime.parse(result.getTime("show2").toString());
+				LocalTime show3 = LocalTime.parse(result.getTime("show3").toString());
+				LocalTime show4 = LocalTime.parse(result.getTime("show4").toString());		
+				timeIndexMap.put(1, show1);timeIndexMap.put(2, show2);timeIndexMap.put(3, show3);
+				timeIndexMap.put(4, show4);
+			}
+		} catch (Exception e) {
+			log.info(e.getMessage());
+		}
+		return timeIndexMap;
+	}
 
 }

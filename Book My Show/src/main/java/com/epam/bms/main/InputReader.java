@@ -3,16 +3,20 @@ package com.epam.bms.main;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.LocalDate;
+
 import org.apache.log4j.Logger;
 
 import com.epam.bms.services.PrintServices;
 import com.epam.bms.services.ValidationService;
+import com.epam.bms.util.BookingDetails;
 
 public class InputReader {
-	private String city, pin, movieId, theatreId;
+	private String city, pin;
 	int showId = 0, dateId = 0;
 	BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 	ValidationService validate = new ValidationService();
+	BookingDetails bookingDetails = BookingDetails.getInstance();
 	private static final Logger log = Logger.getLogger(PrintServices.class);
 
 	public String readCityId() throws Exception {
@@ -45,23 +49,26 @@ public class InputReader {
 		return pin;
 	}
 
-	public String readMovieId() throws IOException {
+	public int readMovieId() throws IOException {
 		boolean check = false;
-		movieId = "";
+		String  movie = "";
 		while (!check) {
-			movieId = reader.readLine();
-			if (movieId.equalsIgnoreCase("x"))
+			movie = reader.readLine();
+			if (movie.equalsIgnoreCase("x"))
 				System.exit(0);
-			if (!validate.validateMovieName(movieId, pin))
+			if (!validate.validateMovieName(movie, pin))
 				log.info("\nChoose from available option only or Enter 'X' to EXIT !\n");
 			else
 				check = true;
 		}
+		int movieId = Integer.parseInt(movie);
+		bookingDetails.setMovieId(movieId);
 		return movieId;
 	}
 
-	public String readTheatreId() throws IOException {
+	public void readTheatreId() throws IOException {
 		boolean check = false;
+		int movieId = bookingDetails.getMovieId();
 		String theatreId = "";
 		while (!check) {
 			theatreId = reader.readLine();
@@ -72,12 +79,13 @@ public class InputReader {
 			else
 				check = true;
 		}
-		return theatreId;
+		bookingDetails.setTheatreId(Integer.parseInt(theatreId));
 	}
 
 	public int readShowTime() throws IOException {
 		boolean check = false;
 		String timeId = "";
+		int theatreId = bookingDetails.getTheatreId();
 		while (!check) {
 			timeId = reader.readLine();
 			if (timeId.equalsIgnoreCase("x"))
@@ -103,6 +111,8 @@ public class InputReader {
 				log.info("\nChoose from available options only or enter 'x' to Exit ! \n");
 		}
 		dateId = Integer.parseInt(date);
+		LocalDate bookingDate = LocalDate.now().plusDays(dateId-1);
+		bookingDetails.setDate(bookingDate);
 		return dateId;
 	}
 
@@ -118,8 +128,7 @@ public class InputReader {
 			else
 				log.info("\nChoose from available options only or enter 'x' to Exit ! \n");
 		}
-		dateId = Integer.parseInt(show);
-		
+		showId = Integer.parseInt(show);
 		return showId;
 	}
 

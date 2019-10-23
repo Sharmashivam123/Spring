@@ -1,13 +1,9 @@
 package com.epam.bms.bean;
 
-import java.sql.Time;
-import java.util.List;
-
 public class Theatre {
 	private int theatreId;
 	private String theatreName;
-	private List<Time> showtimings;
-	
+
 	public int getTheatreId() {
 		return theatreId;
 	}
@@ -24,15 +20,4 @@ public class Theatre {
 		this.theatreName = name;
 	}
 
-	public List<Time> getShowtimings() {
-		return showtimings;
-	}
-
-	public void setShowtimings(List<Time> showtimings) {
-		this.showtimings = showtimings;
-	}
-	
-	
-
 }
-
