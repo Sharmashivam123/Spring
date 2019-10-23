@@ -143,7 +143,6 @@ public class DbOperationImpl implements DbOperation {
 					+ "where timingId = (select timingId from theatrebymovie \r\n"
 					+ "where theatreId = 1 and movieId = 2)";
 			ResultSet result = resultSet.getResulSet(query);
-			int index = 0;
 			while (result.next()) {
 				LocalTime show1 = LocalTime.parse(result.getTime("show1").toString());
 				LocalTime show2 = LocalTime.parse(result.getTime("show2").toString());

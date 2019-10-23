@@ -16,6 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `bookedtickets`
+--
+
+DROP TABLE IF EXISTS `bookedtickets`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `bookedtickets` (
+  `bookingId` int(11) NOT NULL,
+  `theatreId` int(11) DEFAULT NULL,
+  `movieId` int(11) DEFAULT NULL,
+  `showTime` time DEFAULT NULL,
+  `showDate` date DEFAULT NULL,
+  `ticketsBooked` int(11) DEFAULT NULL,
+  PRIMARY KEY (`bookingId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bookedtickets`
+--
+
+LOCK TABLES `bookedtickets` WRITE;
+/*!40000 ALTER TABLE `bookedtickets` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bookedtickets` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `bookings`
 --
 
@@ -33,7 +60,9 @@ CREATE TABLE `bookings` (
   KEY `theatreId` (`theatreId`),
   KEY `movieId` (`movieId`),
   CONSTRAINT `bookings_ibfk_1` FOREIGN KEY (`theatreId`) REFERENCES `theatre` (`theatreId`),
-  CONSTRAINT `bookings_ibfk_2` FOREIGN KEY (`movieId`) REFERENCES `movie` (`movieId`)
+  CONSTRAINT `bookings_ibfk_2` FOREIGN KEY (`movieId`) REFERENCES `movie` (`movieId`),
+  CONSTRAINT `bookings_ibfk_3` FOREIGN KEY (`theatreId`) REFERENCES `theatre` (`theatreId`),
+  CONSTRAINT `bookings_ibfk_4` FOREIGN KEY (`movieId`) REFERENCES `movie` (`movieId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -206,7 +235,6 @@ DROP TABLE IF EXISTS `theatre`;
 CREATE TABLE `theatre` (
   `theatreId` int(11) NOT NULL,
   `theatreName` varchar(30) DEFAULT NULL,
-  `timingId` int(11) DEFAULT NULL,
   PRIMARY KEY (`theatreId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -217,7 +245,7 @@ CREATE TABLE `theatre` (
 
 LOCK TABLES `theatre` WRITE;
 /*!40000 ALTER TABLE `theatre` DISABLE KEYS */;
-INSERT INTO `theatre` VALUES (1,'pvr cyberabad',1),(2,'PVR Galleria Mall',3),(3,'BR Hitech Theatre',2),(4,'PVR Inorbit Mall',4);
+INSERT INTO `theatre` VALUES (1,'pvr cyberabad'),(2,'PVR Galleria Mall'),(3,'BR Hitech Theatre'),(4,'PVR Inorbit Mall');
 /*!40000 ALTER TABLE `theatre` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -230,7 +258,10 @@ DROP TABLE IF EXISTS `theatrebymovie`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `theatrebymovie` (
   `theatreId` int(11) NOT NULL,
-  `movieId` int(11) NOT NULL
+  `movieId` int(11) NOT NULL,
+  `timingId` int(11) DEFAULT NULL,
+  KEY `timingId` (`timingId`),
+  CONSTRAINT `theatrebymovie_ibfk_1` FOREIGN KEY (`timingId`) REFERENCES `showtiming` (`timingId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -240,44 +271,9 @@ CREATE TABLE `theatrebymovie` (
 
 LOCK TABLES `theatrebymovie` WRITE;
 /*!40000 ALTER TABLE `theatrebymovie` DISABLE KEYS */;
-INSERT INTO `theatrebymovie` VALUES (1,1),(1,2),(1,3),(1,4),(2,1),(2,2),(2,3),(2,4),(3,1),(3,2),(3,3),(3,4),(4,1),(4,2),(4,3),(4,4);
+INSERT INTO `theatrebymovie` VALUES (1,1,1),(1,2,2),(1,3,3),(1,4,4),(2,1,1),(2,2,2),(2,3,3),(2,4,4),(3,1,1),(3,2,2),(3,3,3),(3,4,4),(4,1,1),(4,2,2),(4,3,3),(4,4,4);
 /*!40000 ALTER TABLE `theatrebymovie` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Temporary view structure for view `theatrewithshow`
---
-
-DROP TABLE IF EXISTS `theatrewithshow`;
-/*!50001 DROP VIEW IF EXISTS `theatrewithshow`*/;
-SET @saved_cs_client     = @@character_set_client;
-/*!50503 SET character_set_client = utf8mb4 */;
-/*!50001 CREATE VIEW `theatrewithshow` AS SELECT 
- 1 AS `theatreId`,
- 1 AS `theatreName`,
- 1 AS `show1`,
- 1 AS `show2`,
- 1 AS `show3`,
- 1 AS `show4`*/;
-SET character_set_client = @saved_cs_client;
-
---
--- Final view structure for view `theatrewithshow`
---
-
-/*!50001 DROP VIEW IF EXISTS `theatrewithshow`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8mb4 */;
-/*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `theatrewithshow` AS select `t`.`theatreId` AS `theatreId`,`t`.`theatreName` AS `theatreName`,`s`.`show1` AS `show1`,`s`.`show2` AS `show2`,`s`.`show3` AS `show3`,`s`.`show4` AS `show4` from (`theatre` `t` join `showtiming` `s` on((`t`.`timingId` = `s`.`timingId`))) */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -288,4 +284,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-22 18:00:00
+-- Dump completed on 2019-10-23 19:53:57
