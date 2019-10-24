@@ -8,8 +8,10 @@ public class BookingDetails {
 	private int bookingId;
 	private int theatreId;
 	private int movieId;
+	private int seatCount;
 	private LocalTime time;
 	private LocalDate date;
+	private int priceRangeId;
 
 	private BookingDetails() {
 
@@ -59,6 +61,22 @@ public class BookingDetails {
 
 	public void setDate(LocalDate date) {
 		this.date = date;
+	}
+
+	public int getPriceRangeId() {
+		return priceRangeId;
+	}
+
+	public void setPriceRangeId(int priceId) {
+		this.priceRangeId = priceId;
+	}
+
+	public int getSeatCount() {
+		return seatCount;
+	}
+
+	public void setSeatCount(int seatCount) {
+		this.seatCount = seatCount;
 	}
 
 }

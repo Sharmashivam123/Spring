@@ -1,20 +1,19 @@
 package com.epam.bms.services;
 
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
 import com.epam.bms.bean.Area;
 import com.epam.bms.bean.City;
+import com.epam.bms.bean.Movie;
+import com.epam.bms.util.ShowTimes;
+import com.epam.bms.bean.Theatre;
 import com.epam.bms.dao.DbOperation;
 import com.epam.bms.dao.DbOperationImpl;
-import com.epam.bms.bean.Movie;
-import com.epam.bms.bean.ShowTimes;
-import com.epam.bms.bean.Theatre;
 
 public class ValidationService {
 	private DbOperation dbOperation = new DbOperationImpl();
-	
 	public boolean validateCity(String city) throws Exception {
 		boolean check = true;
 		String pattern = "^[0-9]+$";
@@ -110,29 +109,42 @@ public class ValidationService {
 		return check;
 	}
 
-	public boolean validateShowTime(int theatreId, String timeId) {
-		boolean check = false;
-		if (timeId.matches("^[0-9]+$")) {
-			check = containsTime(theatreId, timeId);
-		}
-		return check;
-	}
+//	public boolean validateShowTime(int theatreId, String timeId) {
+//		boolean check = false;
+//		if (timeId.matches("^[0-9]+$")) {
+//			check = containsTime(theatreId, timeId);
+//		}
+//		return check;
+//	}
+//
+//	private boolean containsTime(int theatreId, String timeId) {
+//		boolean check = false;
+//		int showTimeId = Integer.parseInt(timeId);
+//		if (showTimeId < (showsCount - 1))
+//			check = true;
+//		return check;
+//	}
 
-	private boolean containsTime(int theatreId, String timeId) {
+	public boolean validateShow(String show) {
 		boolean check = false;
-		int showTimeId = Integer.parseInt(timeId);
-		if (showTimeId < (showsCount - 1))
+		ShowTimes showTime = ShowTimes.getInstatnce();
+		int showId = Integer.parseInt(show);
+		Map<Integer, LocalTime> availableShow = showTime.getAvailableShow();
+		if (availableShow.containsKey(showId))
 			check = true;
 		return check;
 	}
 
-	public boolean validateShow(String show) {
+	public boolean validateRange(String range) {
 		boolean check = false;
-		ShowTimes showTime = new ShowTimes();
-		int showId = Integer.parseInt(show);
-		Map<Integer, Time> availableShow = showTime.getAvailableShow();
-		System.out.println(showId + " " + availableShow.containsKey(showId)+ " "+ availableShow);
-		if (availableShow.containsKey(showId))
+		if (range.matches("[1-3]"))
+			check = true;
+		return check;
+	}
+
+	public boolean validateSeatCount(String numberOfTickets) {
+		boolean check = false;
+		if (numberOfTickets.matches("^[0-9]$"))
 			check = true;
 		return check;
 	}

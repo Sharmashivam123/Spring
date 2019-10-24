@@ -2,8 +2,8 @@ package com.epam.bms.bean;
 
 public class Movie {
 	private String movieName;
-	private int movieId ;
-	
+	private int movieId;
+
 	public String getMovieName() {
 		return movieName;
 	}

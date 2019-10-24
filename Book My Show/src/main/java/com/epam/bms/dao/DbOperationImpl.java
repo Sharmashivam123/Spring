@@ -2,13 +2,13 @@ package com.epam.bms.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.sql.Time;
-import java.time.LocalTime;
 
 import org.apache.log4j.Logger;
 
@@ -17,13 +17,14 @@ import com.epam.bms.bean.City;
 import com.epam.bms.bean.Movie;
 import com.epam.bms.bean.SeatTypes;
 import com.epam.bms.bean.Theatre;
+import com.epam.bms.util.BookingDetails;
 import com.epam.bms.util.DbUtilImpl;
-import com.epam.bms.util.Timings;
 
 public class DbOperationImpl implements DbOperation {
 
 	private static final Logger log = Logger.getLogger(DbOperationImpl.class);
 	private DbUtilImpl resultSet = new DbUtilImpl();
+	private BookingDetails bookingDetails = BookingDetails.getInstance();
 
 	Connection connection = null;
 
@@ -136,25 +137,58 @@ public class DbOperationImpl implements DbOperation {
 	}
 
 	@Override
-	public Map<Integer, LocalTime> getShowtimings(int movieId, int theatreId) {
+	public Map<Integer, LocalTime> getShowtimings(int dateId) {
+		int index = 0;
+		int movieId = bookingDetails.getMovieId();
+		int theatreId = bookingDetails.getTheatreId();
+		BookingDates bookingDates = new BookingDates();
+		Map<Integer, LocalDate> dateMap = bookingDates.getDates();
+		LocalDate currentDate = LocalDate.now();
+		LocalDate selectedDate = dateMap.get(dateId);
+		List<LocalTime> timeList = new ArrayList<>();
+
 		Map<Integer, LocalTime> timeIndexMap = new HashMap<>();
 		try {
 			String query = "select show1, show2, show3, show4 from showtiming \r\n"
-					+ "where timingId = (select timingId from theatrebymovie \r\n"
-					+ "where theatreId = 1 and movieId = 2)";
+					+ "where timingId = (select timingId from theatrebymovie \r\n" + "where theatreId = '" + theatreId
+					+ "' and movieId = '" + movieId + "')";
 			ResultSet result = resultSet.getResulSet(query);
 			while (result.next()) {
 				LocalTime show1 = LocalTime.parse(result.getTime("show1").toString());
 				LocalTime show2 = LocalTime.parse(result.getTime("show2").toString());
 				LocalTime show3 = LocalTime.parse(result.getTime("show3").toString());
-				LocalTime show4 = LocalTime.parse(result.getTime("show4").toString());		
-				timeIndexMap.put(1, show1);timeIndexMap.put(2, show2);timeIndexMap.put(3, show3);
-				timeIndexMap.put(4, show4);
+				LocalTime show4 = LocalTime.parse(result.getTime("show4").toString());
+				timeList.addAll(Arrays.asList(show1, show2, show3, show4));
 			}
 		} catch (Exception e) {
 			log.info(e.getMessage());
 		}
+			
+		for(LocalTime time : timeList)
+		{
+			if (currentDate.compareTo(selectedDate) == 0)
+				if (time.compareTo(LocalTime.now().plusMinutes(15)) > 0) 
+					timeIndexMap.put(++index, time);
+				else;
+			else
+				timeIndexMap.put(++index, time);
+		}
 		return timeIndexMap;
+	}
+
+	@Override
+	public double getCost(int rangeId) {
+		double cost = 0;
+		String query = "select cost from pricerange where rangeId= '"+rangeId+"' ";
+		try {
+			ResultSet result = resultSet.getResulSet(query);
+			while (result.next()) {
+				cost = result.getDouble("cost");
+			}
+		} catch (Exception e) {
+			log.info(e.getMessage());
+		}
+		return cost;
 	}
 
 }

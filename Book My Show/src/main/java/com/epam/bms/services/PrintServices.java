@@ -1,32 +1,29 @@
 package com.epam.bms.services;
 
-import com.epam.bms.bean.City;
-import com.epam.bms.bean.Movie;
-import com.epam.bms.bean.SeatTypes;
-import com.epam.bms.bean.Theatre;
-import com.epam.bms.bean.Area;
-import com.epam.bms.dao.*;
-import com.epam.bms.util.BookingDetails;
-import com.epam.bms.util.Timings;
-
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+
+import com.epam.bms.bean.Area;
+import com.epam.bms.bean.City;
+import com.epam.bms.bean.Movie;
+import com.epam.bms.bean.SeatTypes;
+import com.epam.bms.util.ShowTimes;
+import com.epam.bms.bean.Theatre;
+import com.epam.bms.dao.*;
+import com.epam.bms.util.BookingDetails;
 
 public class PrintServices {
 
 	private final Logger log = Logger.getLogger(PrintServices.class);
 	private DbOperation dbOperation = new DbOperationImpl();
 	private List<Theatre> listTheatre = new ArrayList<>();
-	private Map<Integer, Time> availableShowTime = new HashMap<>();
 	private BookingDetails bookingDetails = BookingDetails.getInstance();
-	private int movieId = bookingDetails.getMovieId();
+	
 	public void printMsg(String message) {
 		log.info(message);
 	}
@@ -47,10 +44,11 @@ public class PrintServices {
 	}
 
 	public void printTheatreListByMovie() {
+		int movieId = bookingDetails.getMovieId();
 		listTheatre = dbOperation.getTheatreListByMovie(movieId);
 		listTheatre.stream().forEach(theatre -> log.info(theatre.getTheatreId() + " " + theatre.getTheatreName()));
 	}
-	
+
 	public void printAvailableDates() {
 		BookingDates dates = new BookingDates();
 		Map<Integer, LocalDate> dateMap = dates.getDates();
@@ -59,26 +57,26 @@ public class PrintServices {
 	}
 
 	public void printShowTiming(int dateId) {
-		int theatreId = bookingDetails.getTheatreId();
-		List<Timings> shows = dbOperation.getShowtimings(movieId, theatreId);
-		int showIndex = 0;
-		for (Time time : shows) {
-			if (currentDate.compareTo(selectedDate) == 0)
-				if (LocalTime.parse(time.toString()).compareTo(LocalTime.now().plusMinutes(15)) > 0) {
-					log.info(++showIndex + " " + time);
-					
-				}else
-					;
-			else {
-				log.info(++showIndex + " " + time);
-			}
-		}
+		Map<Integer, LocalTime> availableShows = dbOperation.getShowtimings(dateId);
+		for (Map.Entry<Integer, LocalTime> showsElement : availableShows.entrySet()) 
+					log.info(showsElement.getKey()+" "+ showsElement.getValue());
+		ShowTimes showTimes =ShowTimes.getInstatnce();
+		showTimes.setAvailableShow(availableShows);
 	}
-
 
 	public void printPriceRanges() {
 		List<SeatTypes> rangeList = dbOperation.getPriceRange();
-		rangeList.stream().forEach(range -> log.info(range.getRangeId()+" "+range.getTier()+" "+range.getCost()));
+		rangeList.stream()
+				.forEach(range -> log.info(range.getRangeId() + " " + range.getTier() + " " + range.getCost()));
+	}
+
+	public void priceCalculation() {
+		int seatCount = bookingDetails.getSeatCount();
+		int rangeId = bookingDetails.getPriceRangeId();
+		double cost = dbOperation.getCost(rangeId);
+		PriceCalculation calculation = new PriceCalculation();
+		double total = calculation.calculatePrice(cost, seatCount);
+		log.info("Total cost for the "+seatCount+" is "+ total);
 	}
 
 }
