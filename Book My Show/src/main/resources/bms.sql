@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 25, 2019 at 03:49 PM
+-- Generation Time: Oct 25, 2019 at 04:29 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -19,8 +19,23 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `test`
+-- Database: `bms`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bookings`
+--
+
+CREATE TABLE `bookings` (
+  `bookingId` int(11) NOT NULL,
+  `movieId` int(11) DEFAULT NULL,
+  `theatreId` int(11) DEFAULT NULL,
+  `showtiming` time DEFAULT NULL,
+  `showDate` date DEFAULT NULL,
+  `ticketsBooked` int(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -124,6 +139,27 @@ INSERT INTO `moviebylocation` (`movieId`, `pincode`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pricerange`
+--
+
+CREATE TABLE `pricerange` (
+  `rangeId` int(11) NOT NULL,
+  `tier` varchar(10) DEFAULT NULL,
+  `cost` double DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pricerange`
+--
+
+INSERT INTO `pricerange` (`rangeId`, `tier`, `cost`) VALUES
+(1, 'silver', 100),
+(2, 'gold', 150),
+(3, 'platinum', 200);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `showtiming`
 --
 
@@ -206,6 +242,14 @@ INSERT INTO `theatrebymovie` (`theatreId`, `movieId`, `timingId`) VALUES
 --
 
 --
+-- Indexes for table `bookings`
+--
+ALTER TABLE `bookings`
+  ADD PRIMARY KEY (`bookingId`),
+  ADD KEY `theatreId` (`theatreId`),
+  ADD KEY `movieId` (`movieId`);
+
+--
 -- Indexes for table `city`
 --
 ALTER TABLE `city`
@@ -223,6 +267,12 @@ ALTER TABLE `location`
 --
 ALTER TABLE `movie`
   ADD PRIMARY KEY (`movieId`);
+
+--
+-- Indexes for table `pricerange`
+--
+ALTER TABLE `pricerange`
+  ADD PRIMARY KEY (`rangeId`);
 
 --
 -- Indexes for table `showtiming`
@@ -243,14 +293,14 @@ ALTER TABLE `theatrebymovie`
   ADD KEY `timingId` (`timingId`);
 
 --
--- Constraints for dumped tables
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- Constraints for table `theatrebymovie`
+-- AUTO_INCREMENT for table `bookings`
 --
-ALTER TABLE `theatrebymovie`
-  ADD CONSTRAINT `theatrebymovie_ibfk_1` FOREIGN KEY (`timingId`) REFERENCES `showtiming` (`timingId`);
+ALTER TABLE `bookings`
+  MODIFY `bookingId` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
