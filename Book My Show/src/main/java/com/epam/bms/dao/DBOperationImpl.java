@@ -3,11 +3,9 @@ package com.epam.bms.dao;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.sql.Time;
 import java.time.LocalTime;
 
 import org.apache.log4j.Logger;
@@ -17,13 +15,12 @@ import com.epam.bms.bean.City;
 import com.epam.bms.bean.Movie;
 import com.epam.bms.bean.SeatTypes;
 import com.epam.bms.bean.Theatre;
-import com.epam.bms.util.DbUtilImpl;
-import com.epam.bms.util.Timings;
+import com.epam.bms.util.DBUtilImpl;
 
-public class DbOperationImpl implements DbOperation {
+public class DBOperationImpl implements DBOperation {
 
-	private static final Logger log = Logger.getLogger(DbOperationImpl.class);
-	private DbUtilImpl resultSet = new DbUtilImpl();
+	private static final Logger log = Logger.getLogger(DBOperationImpl.class);
+	private DBUtilImpl resultSet = new DBUtilImpl();
 
 	Connection connection = null;
 

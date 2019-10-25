@@ -6,14 +6,14 @@ import java.util.Map;
 
 import com.epam.bms.bean.Area;
 import com.epam.bms.bean.City;
-import com.epam.bms.dao.DbOperation;
-import com.epam.bms.dao.DbOperationImpl;
+import com.epam.bms.dao.DBOperation;
+import com.epam.bms.dao.DBOperationImpl;
 import com.epam.bms.bean.Movie;
 import com.epam.bms.bean.ShowTimes;
 import com.epam.bms.bean.Theatre;
 
 public class ValidationService {
-	private DbOperation dbOperation = new DbOperationImpl();
+	private DBOperation dBOperation = new DBOperationImpl();
 	
 	public boolean validateCity(String city) throws Exception {
 		boolean check = true;
@@ -29,7 +29,7 @@ public class ValidationService {
 
 	private boolean containsCity(int cityId) throws Exception {
 		boolean check = false;
-		List<City> list = dbOperation.getCityList();
+		List<City> list = dBOperation.getCityList();
 		for (City loc : list) {
 			if (loc.getCityId() == cityId) {
 				check = true;
@@ -54,7 +54,7 @@ public class ValidationService {
 
 	private boolean containsPin(int pin, String cityId) {
 		boolean check = false;
-		List<Area> listArea = dbOperation.getAreaListByCity(cityId);
+		List<Area> listArea = dBOperation.getAreaListByCity(cityId);
 		for (Area loc : listArea) {
 			if (loc.getPin() == pin) {
 				check = true;
@@ -77,7 +77,7 @@ public class ValidationService {
 	}
 
 	private boolean containsMovie(String movieId, String pin) {
-		List<Movie> list = dbOperation.getMovieListByAreaPin(pin);
+		List<Movie> list = dBOperation.getMovieListByAreaPin(pin);
 		boolean check = false;
 		int id = Integer.parseInt(movieId);
 		for (Movie movie : list) {
@@ -98,7 +98,7 @@ public class ValidationService {
 
 	private boolean containsTheatreId(String theatreId, int movieId) {
 		boolean check = false;
-		List<Theatre> listTheatre = dbOperation.getTheatreListByMovie(movieId);
+		List<Theatre> listTheatre = dBOperation.getTheatreListByMovie(movieId);
 		for (Theatre theatre : listTheatre) {
 			int id = theatre.getTheatreId();
 			if (id == Integer.parseInt(theatreId)) {

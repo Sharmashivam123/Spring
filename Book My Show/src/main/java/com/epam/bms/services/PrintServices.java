@@ -22,7 +22,7 @@ import org.apache.log4j.Logger;
 public class PrintServices {
 
 	private final Logger log = Logger.getLogger(PrintServices.class);
-	private DbOperation dbOperation = new DbOperationImpl();
+	private DBOperation dBOperation = new DBOperationImpl();
 	private List<Theatre> listTheatre = new ArrayList<>();
 	private Map<Integer, Time> availableShowTime = new HashMap<>();
 	private BookingDetails bookingDetails = BookingDetails.getInstance();
@@ -32,22 +32,22 @@ public class PrintServices {
 	}
 
 	public void showAvailableCities() throws Exception {
-		List<City> cityList = dbOperation.getCityList();
+		List<City> cityList = dBOperation.getCityList();
 		cityList.stream().forEach(city -> printMsg(city.getCityId() + " " + city.getCityName()));
 	}
 
 	public void printAreaPinInCity(String cityId) {
-		List<Area> listLocation = dbOperation.getAreaListByCity(cityId);
+		List<Area> listLocation = dBOperation.getAreaListByCity(cityId);
 		listLocation.stream().forEach(area -> printMsg(area.getPin() + " " + area.getAreaName()));
 	}
 
 	public void printMoviesAtLocation(String pin) {
-		List<Movie> listMovie = dbOperation.getMovieListByAreaPin(pin);
+		List<Movie> listMovie = dBOperation.getMovieListByAreaPin(pin);
 		listMovie.stream().forEach(movie -> log.info(movie.getMovieId() + " " + movie.getMovieName()));
 	}
 
 	public void printTheatreListByMovie() {
-		listTheatre = dbOperation.getTheatreListByMovie(movieId);
+		listTheatre = dBOperation.getTheatreListByMovie(movieId);
 		listTheatre.stream().forEach(theatre -> log.info(theatre.getTheatreId() + " " + theatre.getTheatreName()));
 	}
 	
@@ -60,7 +60,7 @@ public class PrintServices {
 
 	public void printShowTiming(int dateId) {
 		int theatreId = bookingDetails.getTheatreId();
-		List<Timings> shows = dbOperation.getShowtimings(movieId, theatreId);
+		List<Timings> shows = dBOperation.getShowtimings(movieId, theatreId);
 		int showIndex = 0;
 		for (Time time : shows) {
 			if (currentDate.compareTo(selectedDate) == 0)
@@ -77,7 +77,7 @@ public class PrintServices {
 
 
 	public void printPriceRanges() {
-		List<SeatTypes> rangeList = dbOperation.getPriceRange();
+		List<SeatTypes> rangeList = dBOperation.getPriceRange();
 		rangeList.stream().forEach(range -> log.info(range.getRangeId()+" "+range.getTier()+" "+range.getCost()));
 	}
 

@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class DbUtilImpl implements DbUtil{
+public class DBUtilImpl implements DBUtil{
 	public ResultSet getResulSet(String query) throws Exception {
 		ResultSet result;
 		Connection connection = DbConnection.getConnectionToDb();

@@ -11,7 +11,7 @@ import com.epam.bms.bean.Theatre;
 import com.epam.bms.util.Timings;
 import com.epam.bms.bean.SeatTypes;
 
-public interface DbOperation {
+public interface DBOperation {
 
 	List<City> getCityList() throws Exception;
 
