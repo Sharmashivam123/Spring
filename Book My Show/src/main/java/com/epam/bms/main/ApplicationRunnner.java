@@ -2,7 +2,7 @@ package com.epam.bms.main;
 
 import com.epam.bms.services.PrintServices;
 
-public class applicationRunnner {
+public class ApplicationRunnner {
 	public static void main(String args[]) throws Exception {
 		InputReader inputRead = new InputReader();
 		PrintServices print = new PrintServices();

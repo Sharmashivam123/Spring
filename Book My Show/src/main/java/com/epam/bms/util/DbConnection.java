@@ -11,9 +11,9 @@ public class DbConnection {
 	}
 
 	public static Connection getConnectionToDb() {
-		String url = "jdbc:mysql://localhost:3306/bms";
+		String url = "jdbc:mysql://localhost:3306/test";
 		String username = "root";
-		String pwd = "Epam123$$";
+		String pwd = "";
 
 		try {
 			if (connection == null || connection.isClosed())
