@@ -2,7 +2,6 @@ package com.epam.bms.services;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,8 +19,7 @@ import com.epam.bms.util.BookingDetails;
 public class PrintServices {
 
 	private final Logger log = Logger.getLogger(PrintServices.class);
-	private DbOperation dbOperation = new DbOperationImpl();
-	private List<Theatre> listTheatre = new ArrayList<>();
+	private DBOperation dBOperation = new DBOperationImpl();
 	private BookingDetails bookingDetails = BookingDetails.getInstance();
 	
 	public void printMsg(String message) {
@@ -29,23 +27,23 @@ public class PrintServices {
 	}
 
 	public void showAvailableCities() throws Exception {
-		List<City> cityList = dbOperation.getCityList();
+		List<City> cityList = dBOperation.getCityList();
 		cityList.stream().forEach(city -> printMsg(city.getCityId() + " " + city.getCityName()));
 	}
 
 	public void printAreaPinInCity(String cityId) {
-		List<Area> listLocation = dbOperation.getAreaListByCity(cityId);
+		List<Area> listLocation = dBOperation.getAreaListByCity(cityId);
 		listLocation.stream().forEach(area -> printMsg(area.getPin() + " " + area.getAreaName()));
 	}
 
 	public void printMoviesAtLocation(String pin) {
-		List<Movie> listMovie = dbOperation.getMovieListByAreaPin(pin);
+		List<Movie> listMovie = dBOperation.getMovieListByAreaPin(pin);
 		listMovie.stream().forEach(movie -> log.info(movie.getMovieId() + " " + movie.getMovieName()));
 	}
 
 	public void printTheatreListByMovie() {
 		int movieId = bookingDetails.getMovieId();
-		listTheatre = dbOperation.getTheatreListByMovie(movieId);
+		List<Theatre> listTheatre = dBOperation.getTheatreListByMovie(movieId);
 		listTheatre.stream().forEach(theatre -> log.info(theatre.getTheatreId() + " " + theatre.getTheatreName()));
 	}
 
@@ -57,15 +55,19 @@ public class PrintServices {
 	}
 
 	public void printShowTiming(int dateId) {
-		Map<Integer, LocalTime> availableShows = dbOperation.getShowtimings(dateId);
+		Map<Integer, LocalTime> availableShows = dBOperation.getShowtimings(dateId);
 		for (Map.Entry<Integer, LocalTime> showsElement : availableShows.entrySet()) 
 					log.info(showsElement.getKey()+" "+ showsElement.getValue());
 		ShowTimes showTimes =ShowTimes.getInstatnce();
 		showTimes.setAvailableShow(availableShows);
+		if(availableShows.size()==0) {
+			log.info("No show available at this time");
+			System.exit(0);
+		}
 	}
 
 	public void printPriceRanges() {
-		List<SeatTypes> rangeList = dbOperation.getPriceRange();
+		List<SeatTypes> rangeList = dBOperation.getPriceRange();
 		rangeList.stream()
 				.forEach(range -> log.info(range.getRangeId() + " " + range.getTier() + " " + range.getCost()));
 	}
@@ -73,7 +75,7 @@ public class PrintServices {
 	public void priceCalculation() {
 		int seatCount = bookingDetails.getSeatCount();
 		int rangeId = bookingDetails.getPriceRangeId();
-		double cost = dbOperation.getCost(rangeId);
+		double cost = dBOperation.getCost(rangeId);
 		PriceCalculation calculation = new PriceCalculation();
 		double total = calculation.calculatePrice(cost, seatCount);
 		log.info("Total cost for the "+seatCount+" is "+ total);

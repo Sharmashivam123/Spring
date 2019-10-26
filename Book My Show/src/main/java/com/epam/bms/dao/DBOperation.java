@@ -10,7 +10,7 @@ import com.epam.bms.bean.Movie;
 import com.epam.bms.bean.SeatTypes;
 import com.epam.bms.bean.Theatre;
 
-public interface DbOperation {
+public interface DBOperation {
 
 	List<City> getCityList() throws Exception;
 

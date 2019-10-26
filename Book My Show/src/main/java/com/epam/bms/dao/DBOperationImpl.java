@@ -1,6 +1,5 @@
 package com.epam.bms.dao;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -20,16 +19,17 @@ import com.epam.bms.bean.Theatre;
 import com.epam.bms.util.BookingDetails;
 import com.epam.bms.util.DbUtilImpl;
 
-public class DbOperationImpl implements DbOperation {
+public class DBOperationImpl implements DBOperation {
 
-	private static final Logger log = Logger.getLogger(DbOperationImpl.class);
+	private static final Logger log = Logger.getLogger(DBOperationImpl.class);
 	private DbUtilImpl resultSet = new DbUtilImpl();
 	private BookingDetails bookingDetails = BookingDetails.getInstance();
 
-	Connection connection = null;
-
+	
+	
 	@Override
 	public List<City> getCityList() throws Exception {
+		log.info("DBOperation is called");
 		List<City> listCity = new ArrayList<>();
 		try {
 			String query = "Select cityId, cityName from city";
@@ -49,6 +49,8 @@ public class DbOperationImpl implements DbOperation {
 		return listCity;
 	}
 
+	
+	
 	@Override
 	public List<Area> getAreaListByCity(String cityId) {
 		List<Area> list = new ArrayList<>();
@@ -70,6 +72,8 @@ public class DbOperationImpl implements DbOperation {
 		return list;
 	}
 
+	
+	
 	@Override
 	public List<Movie> getMovieListByAreaPin(String pin) {
 		List<Movie> listMovie = new ArrayList<>();
@@ -92,6 +96,8 @@ public class DbOperationImpl implements DbOperation {
 		return listMovie;
 	}
 
+	
+	
 	@Override
 	public List<Theatre> getTheatreListByMovie(int movieId) {
 		List<Theatre> theatreList = new ArrayList<>();
@@ -114,6 +120,8 @@ public class DbOperationImpl implements DbOperation {
 		return theatreList;
 	}
 
+	
+	
 	@Override
 	public List<SeatTypes> getPriceRange() {
 		List<SeatTypes> rangeList = new ArrayList<>();
@@ -136,6 +144,8 @@ public class DbOperationImpl implements DbOperation {
 		return rangeList;
 	}
 
+	
+	
 	@Override
 	public Map<Integer, LocalTime> getShowtimings(int dateId) {
 		int index = 0;
@@ -163,23 +173,25 @@ public class DbOperationImpl implements DbOperation {
 		} catch (Exception e) {
 			log.info(e.getMessage());
 		}
-			
-		for(LocalTime time : timeList)
-		{
+
+		for (LocalTime time : timeList) {
 			if (currentDate.compareTo(selectedDate) == 0)
-				if (time.compareTo(LocalTime.now().plusMinutes(15)) > 0) 
+				if (time.compareTo(LocalTime.now().plusMinutes(15)) > 0)
 					timeIndexMap.put(++index, time);
-				else;
+				else
+					;
 			else
 				timeIndexMap.put(++index, time);
 		}
 		return timeIndexMap;
 	}
 
+	
+	
 	@Override
 	public double getCost(int rangeId) {
 		double cost = 0;
-		String query = "select cost from pricerange where rangeId= '"+rangeId+"' ";
+		String query = "select cost from pricerange where rangeId= '" + rangeId + "' ";
 		try {
 			ResultSet result = resultSet.getResulSet(query);
 			while (result.next()) {
