@@ -49,13 +49,13 @@ public class PrintServicesTest {
 
 	@Test
 	public void testShowAvailableCities() throws Exception {
-		List<City> actualCityList = new ArrayList<City>();
+		List<City> expectedCityList = new ArrayList<City>();
 		City city = new City();
 		city.setCityId(1);
 		city.setCityName("Hyderabad");
-		actualCityList.add(city);
-		Mockito.when(dBOperation.getCityList()).thenReturn(actualCityList);
-		List<City> expectedCityList = dBOperation.getCityList();
+		expectedCityList.add(city);
+		Mockito.when(dBOperation.getCityList()).thenReturn(expectedCityList);
+		List<City> actualCityList = dBOperation.getCityList();
 		assertEquals(expectedCityList, actualCityList);
 	}
 
@@ -195,10 +195,10 @@ public class PrintServicesTest {
 		double expectedCost = 150.00;
 		Mockito.when(dBOperation.getCost(2)).thenReturn(expectedCost);
 		double actualCost = dBOperation.getCost(2);
-		PriceCalculation priceCalculation = null;
-		double expectedTotalCost = 750.00;
+		PriceCalculation priceCalculation = new PriceCalculation();
+		double expectedTotalCost = 885.00;
 		Mockito.when(priceCalculation.calculatePrice(150, 5)).thenReturn(expectedTotalCost);
-		double actualTotalCost = priceCalculation.calculatePrice(150, 5);
+		double actualTotalCost = priceCalculation.calculatePrice(150, 5);System.out.println(actualTotalCost);
 		assertEquals(expectedCost, actualCost);
 		assertEquals(expectedTotalCost, actualTotalCost);	
 	}
