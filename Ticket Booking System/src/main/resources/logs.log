@@ -1,0 +1,48 @@
+2019-10-17 14:24:17 INFO  BookingTicket:25 - Welcome to ticket Booking System.
+
+
+2019-10-17 14:24:17 INFO  PrintServices:22 - Please enter your pin code.
+
+2019-10-17 14:24:17 INFO  PrintServices:24 -  500081 
+2019-10-17 14:24:17 INFO  PrintServices:24 -  500082 
+2019-10-17 14:24:17 INFO  PrintServices:24 -  500083 
+2019-10-17 14:24:17 INFO  PrintServices:24 -  500084 
+2019-10-17 14:24:17 INFO  PrintServices:25 - 
+
+2019-10-17 14:24:22 INFO  PrintServices:32 - 
+ List of movies showing at this location are .. 
+
+2019-10-17 14:24:22 INFO  PrintServices:37 -    war
+
+2019-10-17 14:24:22 INFO  PrintServices:37 -    saaho
+
+2019-10-17 14:24:22 INFO  PrintServices:37 -    joker
+
+2019-10-17 14:24:22 INFO  PrintServices:37 -    narsimha
+
+2019-10-17 14:24:25 INFO  PrintServices:46 - 
+ Theatre showing this moving are 
+
+2019-10-17 14:24:25 INFO  PrintServices:50 -  1 PVR cyberabad 14:00
+ 
+2019-10-17 14:24:25 INFO  PrintServices:50 -  2 PVR Cinemas 13:15
+ 
+2019-10-17 14:24:25 INFO  PrintServices:50 -  3 PVR Galleria Mall 17:00
+ 
+2019-10-17 14:24:25 INFO  PrintServices:50 -  4 BR Hitech Theatre 21:00
+ 
+2019-10-17 14:24:25 INFO  BookingTicket:34 - select the theatreId acalculationording to your timing 
+2019-10-17 14:24:27 INFO  PrintServices:61 - 
+Silver - 100 
+ 
+2019-10-17 14:24:27 INFO  PrintServices:61 - 
+Gold - 150 
+ 
+2019-10-17 14:24:27 INFO  PrintServices:61 - 
+Platinum - 200 
+ 
+2019-10-17 14:24:27 INFO  BookingTicket:49 - 
+Choose the price range you want and no of tickets with space between them.
+
+2019-10-17 14:24:33 INFO  BookingTicket:57 - 
+ Total price for your 65 ticket is 6500
