@@ -28,6 +28,7 @@ import com.epam.bms.services.PriceCalculation;
 import com.epam.bms.services.PrintServices;
 import com.epam.bms.util.BookingDetails;
 
+
 public class PrintServicesTest {
 
 	@InjectMocks
