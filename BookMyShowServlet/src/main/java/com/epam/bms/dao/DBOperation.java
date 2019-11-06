@@ -26,4 +26,6 @@ public interface DBOperation {
 
 	double getCost(int rangeId);
 
+	boolean processBooking();
+
 }

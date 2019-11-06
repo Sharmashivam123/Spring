@@ -59,6 +59,12 @@ public class Services {
 		return rangeList;
 	}
 
+	public boolean processBooking() {
+		boolean check = false;
+		check = dBOperation.processBooking();
+		return check;
+	}
+
 	
 
 	

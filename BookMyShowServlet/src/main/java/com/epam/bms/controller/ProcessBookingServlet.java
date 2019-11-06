@@ -26,6 +26,6 @@ public class ProcessBookingServlet extends HttpServlet {
 		Services services = new Services();
 		PrintWriter out = response.getWriter();
 		BookingDetails bookingDetails = BookingDetails.getInstance();
-		
+		boolean bookingStatus = services.processBooking();
 	}
 }
