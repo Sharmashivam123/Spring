@@ -8,7 +8,7 @@ import java.util.Map;
 import com.epam.bms.bean.Area;
 import com.epam.bms.bean.City;
 import com.epam.bms.bean.Movie;
-import com.epam.bms.bean.SeatTypes;
+import com.epam.bms.bean.SeatRange;
 import com.epam.bms.bean.Theatre;
 import com.epam.bms.dao.*;
 import com.epam.bms.util.BookingDetails;
@@ -54,18 +54,13 @@ public class Services {
 		return availableShows;
 	}
 
-	public List<SeatTypes> printPriceRanges() {
-		List<SeatTypes> rangeList = dBOperation.getPriceRange();
+	public List<SeatRange> getPriceRanges(String tier) {
+		List<SeatRange> rangeList = dBOperation.getPriceRange(tier);
 		return rangeList;
 	}
 
-	public double priceCalculation() {
-		int seatCount = bookingDetails.getSeatCount();
-		int rangeId = bookingDetails.getPriceRangeId();
-		double cost = dBOperation.getCost(rangeId);
-		PriceCalculation calculation = new PriceCalculation();
-		double total = calculation.calculatePrice(cost, seatCount);
-		return total;
-	}
+	
+
+	
 
 }

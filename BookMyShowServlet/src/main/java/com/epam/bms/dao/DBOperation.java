@@ -7,7 +7,7 @@ import java.util.Map;
 import com.epam.bms.bean.Area;
 import com.epam.bms.bean.City;
 import com.epam.bms.bean.Movie;
-import com.epam.bms.bean.SeatTypes;
+import com.epam.bms.bean.SeatRange;
 import com.epam.bms.bean.Theatre;
 
 public interface DBOperation {
@@ -20,7 +20,7 @@ public interface DBOperation {
 
 	List<Theatre> getTheatreListByMovie(int movieId);
 
-	List<SeatTypes> getPriceRange();
+	List<SeatRange> getPriceRange(String tier);
 
 	Map<Integer, LocalTime> getShowtimings(int dateId);
 

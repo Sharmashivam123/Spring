@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 import com.epam.bms.bean.Area;
 import com.epam.bms.bean.City;
 import com.epam.bms.bean.Movie;
-import com.epam.bms.bean.SeatTypes;
+import com.epam.bms.bean.SeatRange;
 import com.epam.bms.bean.Theatre;
 import com.epam.bms.util.BookingDetails;
 import com.epam.bms.util.DbUtilImpl;
@@ -121,25 +121,24 @@ public class DBOperationImpl implements DBOperation {
 	
 	
 	@Override
-	public List<SeatTypes> getPriceRange() {
-		List<SeatTypes> rangeList = new ArrayList<>();
-		String query = "select * from pricerange";
+	public List<SeatRange> getPriceRange(String tier) {
+	String query = "select * from seatarrangements where tier = '"+tier+"'";
+	List<SeatRange> seatRangeList = new ArrayList<>();
 		try {
 			ResultSet result = resultSet.getResulSet(query);
 			while (result.next()) {
-				int rangeId = result.getInt("rangeId");
-				String tier = result.getString("tier");
 				double cost = result.getDouble("cost");
-				SeatTypes seatType = new SeatTypes();
-				seatType.setRangeId(rangeId);
-				seatType.setTier(tier);
-				seatType.setCost(cost);
-				rangeList.add(seatType);
+				String seatId = result.getString("seatId");
+				SeatRange seat = new SeatRange();
+				seat.setSeatId(seatId);
+				seat.setCost(cost);
+				seat.setTier(tier);
+				seatRangeList.add(seat);
 			}
 		} catch (Exception e) {
 			log.info(e.getMessage());
 		}
-		return rangeList;
+		return seatRangeList;
 	}
 
 	
@@ -202,5 +201,9 @@ public class DBOperationImpl implements DBOperation {
 		}
 		return cost;
 	}
+
+
+
+	
 
 }

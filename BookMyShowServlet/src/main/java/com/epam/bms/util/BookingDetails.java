@@ -9,12 +9,14 @@ public class BookingDetails {
 	private int theatreId;
 	private int movieId;
 	private int seatCount;
+	private String[] costAndSeatId;
+	private int cityId;
+	private int pincode;
+	private int showId;
 	private int dateId;
 	private LocalTime time;
 	private LocalDate date;
-	private int priceRangeId;
-	private int cityId;
-	private int pincode;
+
 	private BookingDetails() {
 
 	}
@@ -65,14 +67,6 @@ public class BookingDetails {
 		this.date = date;
 	}
 
-	public int getPriceRangeId() {
-		return priceRangeId;
-	}
-
-	public void setPriceRangeId(int priceId) {
-		this.priceRangeId = priceId;
-	}
-
 	public int getSeatCount() {
 		return seatCount;
 	}
@@ -103,5 +97,21 @@ public class BookingDetails {
 
 	public void setDateId(int dateId) {
 		this.dateId = dateId;
+	}
+
+	public int getShowId() {
+		return showId;
+	}
+
+	public void setShowId(int showId) {
+		this.showId = showId;
+	}
+
+	public String[] getCostAndSeatId() {
+		return costAndSeatId;
+	}
+
+	public void setCostAndSeatId(String[] costAndId) {
+		this.costAndSeatId = costAndId;
 	}
 }
