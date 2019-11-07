@@ -41,18 +41,22 @@ public class SeatRangeServlet extends HttpServlet {
 		out.println("<br>");
 		String seatIdList[]= request.getParameterValues("seatId");
 		String seatCostList[]=request.getParameterValues("cost");
+		String name = request.getParameter("fullname");
+		String phone = request.getParameter("phone");
 		int tickets = seatIdList.length;
 		String costAndSeatId[] = new String[tickets];
 		for(int ticket=0; ticket<tickets; ticket++)
 			costAndSeatId[ticket]=seatIdList[ticket]+" "+seatCostList[ticket];
 		bookingDetails.setCostAndSeatId(costAndSeatId);		
 		bookingDetails.setSeatCount(tickets);
+		bookingDetails.setUserName(name);
+		bookingDetails.setPhone(phone);
 		if(bookingDetails.getSeatCount()!=0)
 		{
-			RequestDispatcher rd = request.getRequestDispatcher("/PriceCalculation?");
+			RequestDispatcher rd = request.getRequestDispatcher("/ProcessBooking");
 			rd.forward(request, response);
 		}
-		RequestDispatcher rd = request.getRequestDispatcher("/Error");
+		RequestDispatcher rd = request.getRequestDispatcher("/Error?error=processBoking");
 		rd.include(request, response);
 	}
 

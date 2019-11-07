@@ -23,6 +23,6 @@ public class ErrorServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
-		out.println("invalid input");
+		out.println("invalid input"+request.getParameter("error"));
 	}
 }

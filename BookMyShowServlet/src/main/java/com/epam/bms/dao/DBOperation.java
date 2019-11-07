@@ -12,7 +12,7 @@ import com.epam.bms.bean.Theatre;
 
 public interface DBOperation {
 
-	List<City> getCityList() throws Exception;
+	List<City> getCityList() ;
 
 	List<Area> getAreaListByCity(int cityId);
 

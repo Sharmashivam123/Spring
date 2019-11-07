@@ -1,6 +1,6 @@
 package com.epam.bms.bean;
 
-public class SeatTypes {
+public class SeatRange {
 	private int rangeId;
 	private String tier;
 	private double cost;

@@ -1,6 +1,6 @@
-package com.epam.services;
+package com.epam.bms.services;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -24,22 +24,19 @@ import com.epam.bms.bean.SeatRange;
 import com.epam.bms.bean.Theatre;
 import com.epam.bms.dao.BookingDates;
 import com.epam.bms.dao.DBOperation;
-import com.epam.bms.services.PriceCalculation;
-import com.epam.bms.services.PrintServices;
 import com.epam.bms.util.BookingDetails;
 
-
-public class PrintServicesTest {
+class ServicesTest {
 
 	@InjectMocks
-	private PrintServices mock;
+	private Services mock;
 
 	@Mock
 	private DBOperation dBOperation;
 
 	@Mock
 	private BookingDates dates;
-	
+
 	@Mock
 	private BookingDetails bookingDetails;
 
@@ -49,19 +46,19 @@ public class PrintServicesTest {
 	}
 
 	@Test
-	public void testShowAvailableCities() throws Exception {
+	public void testGetAvailableCities() throws Exception {
 		List<City> expectedCityList = new ArrayList<City>();
 		City city = new City();
 		city.setCityId(1);
 		city.setCityName("Hyderabad");
 		expectedCityList.add(city);
 		Mockito.when(dBOperation.getCityList()).thenReturn(expectedCityList);
-		List<City> actualCityList = dBOperation.getCityList();
+		List<City> actualCityList = mock.getAvailableCities();
 		assertEquals(expectedCityList, actualCityList);
 	}
 
 	@Test
-	public void testPrintAreaPinInCity() {
+	public void testGetAreaPinInCity() {
 		Area area1 = new Area();
 		area1.setPin(500081);
 		area1.setAreaName("Gachibowli");
@@ -83,13 +80,13 @@ public class PrintServicesTest {
 		area5.setAreaName("Ameerpet");
 
 		List<Area> expectedAreaList = new ArrayList<>(Arrays.asList(area1, area2, area3, area4, area5));
-		Mockito.when(dBOperation.getAreaListByCity("1")).thenReturn(expectedAreaList);
-		List<Area> actualAreaList = dBOperation.getAreaListByCity("1");
+		Mockito.when(dBOperation.getAreaListByCity(1)).thenReturn(expectedAreaList);
+		List<Area> actualAreaList = mock.getAreaPinInCity();
 		assertEquals(expectedAreaList, actualAreaList);
 	}
 
 	@Test
-	public void testPrintMoviesAtLocation() {
+	public void testGetMoviesAtLocation() {
 		Movie movie1 = new Movie();
 		movie1.setMovieId(1);
 		movie1.setMovieName("war");
@@ -107,13 +104,13 @@ public class PrintServicesTest {
 		movie4.setMovieName("terminator");
 
 		List<Movie> expectedMovieList = Arrays.asList(movie1, movie2, movie3, movie4);
-		Mockito.when(dBOperation.getMovieListByAreaPin("500085")).thenReturn(expectedMovieList);
-		List<Movie> actualMovieList = dBOperation.getMovieListByAreaPin("500085");
+		Mockito.when(dBOperation.getMovieListByAreaPin(500085)).thenReturn(expectedMovieList);
+		List<Movie> actualMovieList = mock.getMoviesAtLocation();
 		assertEquals(expectedMovieList, actualMovieList);
 	}
 
 	@Test
-	public void testPrintTheatreListByMovie() {
+	public void testGetTheatreListByMovie() {
 		Theatre theatre1 = new Theatre();
 		theatre1.setTheatreId(1);
 		;
@@ -134,24 +131,24 @@ public class PrintServicesTest {
 		List<Theatre> expectedTheatreList = Arrays.asList(theatre1, theatre2, theatre3, theatre4);
 
 		Mockito.when(dBOperation.getTheatreListByMovie(4)).thenReturn(expectedTheatreList);
-		List<Theatre> actualTheatreList = dBOperation.getTheatreListByMovie(4);
+		List<Theatre> actualTheatreList = mock.getTheatreListByMovie();
 		assertEquals(expectedTheatreList, actualTheatreList);
 
 	}
 
 	@Test
-	public void testPrintAvailableDates() {
+	public void testGetAvailableDates() {
 		Map<Integer, LocalDate> expectedDatesMap = new HashMap<>();
 		expectedDatesMap.put(1, LocalDate.now());
 		expectedDatesMap.put(2, LocalDate.now().plusDays(1));
 		expectedDatesMap.put(3, LocalDate.now().plusDays(2));
 		Mockito.when(dates.getDates()).thenReturn(expectedDatesMap);
-		Map<Integer, LocalDate> actualDatesMap = dates.getDates();
+		Map<Integer, LocalDate> actualDatesMap = mock.getAvailableDates();
 		assertEquals(expectedDatesMap, actualDatesMap);
 	}
 
 	@Test
-	public void testPrintShowTiming() {
+	public void testGetShowTiming() {
 		Map<Integer, LocalTime> expectedShowTime = new HashMap<>();
 		LocalTime time1 = LocalTime.parse("12:00");
 		expectedShowTime.put(1, time1);
@@ -163,45 +160,84 @@ public class PrintServicesTest {
 		expectedShowTime.put(4, time4);
 
 		Mockito.when(dBOperation.getShowtimings(2)).thenReturn(expectedShowTime);
-		Map<Integer, LocalTime> actualShowTime = dBOperation.getShowtimings(2);
+		Map<Integer, LocalTime> actualShowTime = mock.getShowTiming(2);
 		assertEquals(expectedShowTime, actualShowTime);
 	}
 
 	@Test
-	public void testPriceRange() {
+	public void testGetPriceRange() {
 		SeatRange seatType1 = new SeatRange();
-		seatType1.setRangeId(1);
+		seatType1.setSeatId("A1");
 		seatType1.setCost(100);
 		seatType1.setTier("silver");
 
 		SeatRange seatType2 = new SeatRange();
-		seatType2.setRangeId(2);
-		seatType2.setCost(150);
-		seatType2.setTier("gold");
+		seatType2.setSeatId("A2");
+		seatType2.setCost(100);
+		seatType2.setTier("silver");
 
 		SeatRange seatType3 = new SeatRange();
-		seatType3.setRangeId(3);
-		seatType3.setCost(200);
-		seatType3.setTier("platinum");
+		seatType3.setSeatId("A3");
+		seatType3.setCost(100);
+		seatType3.setTier("silver");
 
-		List<SeatRange> expectedSeatList = Arrays.asList(seatType1, seatType2, seatType3);
-		Mockito.when(dBOperation.getPriceRange()).thenReturn(expectedSeatList);
-		List<SeatRange> actualSeatList = dBOperation.getPriceRange();
+		SeatRange seatType4 = new SeatRange();
+		seatType3.setSeatId("A4");
+		seatType3.setCost(100);
+		seatType3.setTier("silver");
+
+		SeatRange seatType5 = new SeatRange();
+		seatType3.setSeatId("A5");
+		seatType3.setCost(100);
+		seatType3.setTier("silver");
+
+		SeatRange seatType6 = new SeatRange();
+		seatType3.setSeatId("A6");
+		seatType3.setCost(100);
+		seatType3.setTier("silver");
+
+		SeatRange seatType7 = new SeatRange();
+		seatType3.setSeatId("A7");
+		seatType3.setCost(100);
+		seatType3.setTier("silver");
+
+		SeatRange seatType8 = new SeatRange();
+		seatType3.setSeatId("A8");
+		seatType3.setCost(100);
+		seatType3.setTier("silver");
+
+		SeatRange seatType9 = new SeatRange();
+		seatType3.setSeatId("A9");
+		seatType3.setCost(100);
+		seatType3.setTier("silver");
+
+		SeatRange seatType10 = new SeatRange();
+		seatType3.setSeatId("A10");
+		seatType3.setCost(100);
+		seatType3.setTier("silver");
+
+		List<SeatRange> expectedSeatList = Arrays.asList(seatType1, seatType2, seatType3, seatType4, seatType5,
+				seatType6, seatType7, seatType8, seatType9, seatType10);
+		Mockito.when(dBOperation.getPriceRange("silver")).thenReturn(expectedSeatList);
+		List<SeatRange> actualSeatList = mock.getPriceRanges("silver");
 		assertEquals(expectedSeatList, actualSeatList);
 	}
+
+	@Test
+	public void testProcessBooking() {
+		Mockito.when(dBOperation.processBooking()).thenReturn(true);
+		boolean bool = mock.processBooking();
+		assertTrue(bool);
+	}
+
 	
 	@Test
-	public void testPriceCalculation() 
-	{
-		double expectedCost = 150.00;
-		Mockito.when(dBOperation.getCost(2)).thenReturn(expectedCost);
-		double actualCost = dBOperation.getCost(2);
-		PriceCalculation priceCalculation = new PriceCalculation();
-		double expectedTotalCost = 885.00;
-		Mockito.when(priceCalculation.calculatePrice(150, 5)).thenReturn(expectedTotalCost);
-		double actualTotalCost = priceCalculation.calculatePrice(150, 5);System.out.println(actualTotalCost);
+	public void testGetTotalCost() {
+		PriceCalculation priceCalculation = Mockito.mock(PriceCalculation.class);
+		Mockito.when(priceCalculation.calculatePrice()).thenReturn(385.333);
+		double expectedCost = 385.333;
+		double actualCost = mock.getTotalCost();
 		assertEquals(expectedCost, actualCost);
-		assertEquals(expectedTotalCost, actualTotalCost);	
 	}
 
 }

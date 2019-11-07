@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import com.epam.bms.bean.Area;
 import com.epam.bms.bean.City;
 import com.epam.bms.bean.Movie;
-import com.epam.bms.bean.SeatTypes;
+import com.epam.bms.bean.SeatRange;
 import com.epam.bms.util.ShowTimes;
 import com.epam.bms.bean.Theatre;
 import com.epam.bms.dao.*;
@@ -67,7 +67,7 @@ public class PrintServices {
 	}
 
 	public void printPriceRanges() {
-		List<SeatTypes> rangeList = dBOperation.getPriceRange();
+		List<SeatRange> rangeList = dBOperation.getPriceRange();
 		rangeList.stream()
 				.forEach(range -> log.info(range.getRangeId() + " " + range.getTier() + " " + range.getCost()));
 	}

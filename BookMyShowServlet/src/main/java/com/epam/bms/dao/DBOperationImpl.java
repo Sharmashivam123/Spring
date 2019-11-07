@@ -17,23 +17,22 @@ import com.epam.bms.bean.Movie;
 import com.epam.bms.bean.SeatRange;
 import com.epam.bms.bean.Theatre;
 import com.epam.bms.util.BookingDetails;
+import com.epam.bms.util.DbUtil;
 import com.epam.bms.util.DbUtilImpl;
 import com.epam.bms.util.ShowTimes;
 
 public class DBOperationImpl implements DBOperation {
 
 	private static final Logger log = Logger.getLogger(DBOperationImpl.class);
-	private DbUtilImpl resultSet = new DbUtilImpl();
+	private DbUtil dbUtil = new DbUtilImpl();
 	private BookingDetails bookingDetails = BookingDetails.getInstance();
 
-	
-	
 	@Override
-	public List<City> getCityList() throws Exception {
+	public List<City> getCityList() {
 		List<City> listCity = new ArrayList<>();
-		try {
+		try { 
 			String query = "Select cityId, cityName from city";
-			ResultSet result = resultSet.getResulSet(query);
+			ResultSet result = dbUtil.getResulSet(query);
 			while (result.next()) {
 				int cityId = result.getInt("cityId");
 				String cityName = result.getString("cityName");
@@ -43,20 +42,18 @@ public class DBOperationImpl implements DBOperation {
 				listCity.add(city);
 			}
 		} catch (Exception e) {
-			log.info(e.getMessage());
+			log.info(e.getMessage()); 
 			e.printStackTrace();
 		}
 		return listCity;
 	}
 
-	
-	
 	@Override
 	public List<Area> getAreaListByCity(int cityId) {
 		List<Area> list = new ArrayList<>();
 		try {
 			String query = "select pincode, areaName from location where cityId = '" + cityId + "'";
-			ResultSet result = resultSet.getResulSet(query);
+			ResultSet result = dbUtil.getResulSet(query);
 			while (result.next()) {
 				int pin = result.getInt("pincode");
 				String areaName = result.getString("areaName");
@@ -71,15 +68,13 @@ public class DBOperationImpl implements DBOperation {
 		return list;
 	}
 
-	
-	
 	@Override
 	public List<Movie> getMovieListByAreaPin(int pin) {
 		List<Movie> listMovie = new ArrayList<>();
 		try {
 			String query = "SELECT * from movie WHERE movieId IN (SELECT movieId from moviebylocation WHERE pincode ='"
 					+ pin + "')";
-			ResultSet result = resultSet.getResulSet(query);
+			ResultSet result = dbUtil.getResulSet(query);
 			while (result.next()) {
 				int movieId = result.getInt("movieId");
 				String movieName = result.getString("movieName");
@@ -94,15 +89,13 @@ public class DBOperationImpl implements DBOperation {
 		return listMovie;
 	}
 
-	
-	
 	@Override
 	public List<Theatre> getTheatreListByMovie(int movieId) {
 		List<Theatre> theatreList = new ArrayList<>();
 		try {
 			String query = "select * from theatre where theatreId in (SELECT theatreId from theatrebymovie WHERE movieId = '"
 					+ movieId + "')";
-			ResultSet result = resultSet.getResulSet(query);
+			ResultSet result = dbUtil.getResulSet(query);
 			while (result.next()) {
 				int theatreId = result.getInt("theatreId");
 				String theatreName = result.getString("theatreName");
@@ -118,14 +111,19 @@ public class DBOperationImpl implements DBOperation {
 		return theatreList;
 	}
 
-	
-	
 	@Override
 	public List<SeatRange> getPriceRange(String tier) {
-	String query = "select * from seatarrangements where tier = '"+tier+"'";
-	List<SeatRange> seatRangeList = new ArrayList<>();
+		int movieId = bookingDetails.getMovieId();
+		int theatreId = bookingDetails.getTheatreId();
+		LocalTime time = bookingDetails.getTime();
+		LocalDate date = bookingDetails.getDate();
+		String query = "select seatId, tier, cost from seatarrangements where\r\n"
+				+ " seatId Not In (select seatId from bookings where \r\n" + " showDate = '" + date
+				+ "' and showtiming = '" + time + "' and theatreId = '" + theatreId + "'  and movieId = '" + movieId
+				+ "' ) and tier ='" + tier + "';";
+		List<SeatRange> seatRangeList = new ArrayList<>();
 		try {
-			ResultSet result = resultSet.getResulSet(query);
+			ResultSet result = dbUtil.getResulSet(query);
 			while (result.next()) {
 				double cost = result.getDouble("cost");
 				String seatId = result.getString("seatId");
@@ -141,8 +139,6 @@ public class DBOperationImpl implements DBOperation {
 		return seatRangeList;
 	}
 
-	
-	
 	@Override
 	public Map<Integer, LocalTime> getShowtimings(int dateId) {
 		int index = 0;
@@ -159,7 +155,7 @@ public class DBOperationImpl implements DBOperation {
 			String query = "select show1, show2, show3, show4 from showtiming \r\n"
 					+ "where timingId = (select timingId from theatrebymovie \r\n" + "where theatreId = '" + theatreId
 					+ "' and movieId = '" + movieId + "')";
-			ResultSet result = resultSet.getResulSet(query);
+			ResultSet result = dbUtil.getResulSet(query);
 			while (result.next()) {
 				LocalTime show1 = LocalTime.parse(result.getTime("show1").toString());
 				LocalTime show2 = LocalTime.parse(result.getTime("show2").toString());
@@ -180,19 +176,17 @@ public class DBOperationImpl implements DBOperation {
 			else
 				timeIndexMap.put(++index, time);
 		}
-		ShowTimes showTimes =ShowTimes.getInstatnce();
+		ShowTimes showTimes = ShowTimes.getInstatnce();
 		showTimes.setAvailableShow(timeIndexMap);
 		return timeIndexMap;
 	}
 
-	
-	
 	@Override
 	public double getCost(int rangeId) {
 		double cost = 0;
 		String query = "select cost from pricerange where rangeId= '" + rangeId + "' ";
 		try {
-			ResultSet result = resultSet.getResulSet(query);
+			ResultSet result = dbUtil.getResulSet(query);
 			while (result.next()) {
 				cost = result.getDouble("cost");
 			}
@@ -202,16 +196,50 @@ public class DBOperationImpl implements DBOperation {
 		return cost;
 	}
 
-
-
 	@Override
 	public boolean processBooking() {
 		boolean check = false;
+		int movieId = bookingDetails.getMovieId();
+		int theatreId = bookingDetails.getTheatreId();
+		int ticketsBooked = bookingDetails.getSeatCount();
+		int bookingId = 0;
+		String seatIdAndCost[] = bookingDetails.getCostAndSeatId();
+		LocalTime showTiming = bookingDetails.getTime();
+		LocalDate showDate = bookingDetails.getDate();
+		String phone = bookingDetails.getPhone();
+		String name = bookingDetails.getUserName();
+		double totalCost = bookingDetails.getTotalCost();
+		String seatIds = "";
+		for (int seat = 0; seat < ticketsBooked; seat++) {
+			String seatIdAndCostArray[] = seatIdAndCost[seat].split(" ");
+			String seatId = seatIdAndCostArray[0] + " ";
+			seatIds += seatId;
+		}
+		String query = "insert into bookings (movieId,theatreId, showtiming, showDate, ticketBooked, seatId) values('"
+				+ movieId + "','" + theatreId + "','" + showTiming + "','" + showDate + "','" + ticketsBooked + "','"
+				+ seatIds + "')";
+		try {
+			
+			int columnUpdated = dbUtil.insertData(query);
+			
+			if (columnUpdated != 0)
+				{
+				log.info("bookings updated");
+				String qry ="select bookingId from bookings order by bookingId desc limit 1;";
+				ResultSet result = dbUtil.getResulSet(qry);
+				while(result.next())
+				bookingId = result.getInt("bookingId");log.info("bookingId "+ bookingId);
+				String qy = "insert into userdetails values('"+phone+"','"+name+"','"+bookingId+"','"+totalCost+"')";
+				columnUpdated=dbUtil.insertData(qy);
+				if(columnUpdated!=0)check = true;
+				}
+			else
+				log.warn("value already in the database");
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			e.printStackTrace();
+		}
 		return check;
 	}
-
-
-
-	
 
 }

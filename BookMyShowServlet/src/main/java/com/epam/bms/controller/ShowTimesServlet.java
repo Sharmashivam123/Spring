@@ -46,7 +46,7 @@ public class ShowTimesServlet extends HttpServlet {
 		bookingDetails.setShowId(showId);
 		bookingDetails.setTime(availableShows.get(showId));
 		if (bookingDetails.getTime() != null) {
-			RequestDispatcher rd = request.getRequestDispatcher("/SeatRange?seatId=A1&cost=150&seatId=B2&cost=150");
+			RequestDispatcher rd = request.getRequestDispatcher("/SeatRange?seatId=A1&cost=150&seatId=B1&cost=150&fullname=shivam&phone=9691061996");
 			rd.forward(request, response);
 		}
 		RequestDispatcher rd = request.getRequestDispatcher("/Error");

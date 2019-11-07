@@ -28,7 +28,7 @@ public class CityServlet extends HttpServlet {
 	public CityServlet() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
+	}  
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -37,22 +37,25 @@ public class CityServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Services services = new Services();
-		PrintWriter out = response.getWriter();
+		PrintWriter out = response.getWriter(); 
 		try {
 			out.println("Select your choice of city.");
-			List<City> cityList = services.getShowAvailableCities();
-			cityList.stream().forEach(city -> out.println(city.getCityId() + " " + city.getCityName()));
-			String cityId = request.getParameter("id");
-			BookingDetails bookingDetails = BookingDetails.getInstance();
-			bookingDetails.setCityId(Integer.parseInt(cityId));
-			if (bookingDetails.getCityId() != 0) {
-				RequestDispatcher rd = request.getRequestDispatcher("/Location?pin=500081");
-				rd.forward(request, response);
-			}
-			RequestDispatcher rd = request.getRequestDispatcher("/Error");
-			rd.include(request, response);
+			List<City> cityList = services.getAvailableCities();
+			request.setAttribute("cityList", cityList);
+			RequestDispatcher rd = request.getRequestDispatcher("City.jsp");
+			rd.forward(request, response);
+//			String cityId = request.getParameter("id");
+//			BookingDetails bookingDetails = BookingDetails.getInstance();
+//			bookingDetails.setCityId(Integer.parseInt(cityId));
+//			if (bookingDetails.getCityId() == 0) {
+//				RequestDispatcher rd = request.getRequestDispatcher("/Location?pin=500081");
+//				rd.forward(request, response);
+//			}
+//			RequestDispatcher rd = request.getRequestDispatcher("/Error?error=errorinselectionofcity");
+//			rd.include(request, response);
 		} catch (Exception e) {
-			out.println(e.getMessage());
+			out.println(e.getMessage()+"eror heheheheh");
+			e.printStackTrace();
 		}
 	}
 

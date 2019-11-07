@@ -34,7 +34,7 @@ public class LocationServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Services services = new Services();
+		Services services = new Services(); 
 		PrintWriter out = response.getWriter();
 		BookingDetails bookingDetails = BookingDetails.getInstance();
 		String pin = request.getParameter("pin");

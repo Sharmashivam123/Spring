@@ -16,8 +16,8 @@ import com.epam.bms.util.BookingDetails;
 public class Services {
 	private DBOperation dBOperation = new DBOperationImpl();
 	private BookingDetails bookingDetails = BookingDetails.getInstance();
-	
-	public List<City> getShowAvailableCities() throws Exception {
+
+	public List<City> getAvailableCities() throws Exception {
 		List<City> cityList = dBOperation.getCityList();
 		return cityList;
 	}
@@ -38,7 +38,6 @@ public class Services {
 
 	public List<Theatre> getTheatreListByMovie() {
 		int movieId = bookingDetails.getMovieId();
-		System.out.println(movieId);
 		List<Theatre> listTheatre = dBOperation.getTheatreListByMovie(movieId);
 		return listTheatre;
 	}
@@ -65,8 +64,10 @@ public class Services {
 		return check;
 	}
 
-	
-
-	
+	public double getTotalCost() {
+		PriceCalculation priceCalculation = new PriceCalculation();
+		double totalCost = priceCalculation.calculatePrice();
+		return totalCost;
+	}
 
 }

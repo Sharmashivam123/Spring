@@ -16,6 +16,25 @@ public class BookingDetails {
 	private int dateId;
 	private LocalTime time;
 	private LocalDate date;
+	private double totalCost;
+	private String phone;
+	private String userName;
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
 	private BookingDetails() {
 
@@ -113,5 +132,13 @@ public class BookingDetails {
 
 	public void setCostAndSeatId(String[] costAndId) {
 		this.costAndSeatId = costAndId;
+	}
+
+	public double getTotalCost() {
+		return totalCost;
+	}
+
+	public void setTotalCost(double totalCost) {
+		this.totalCost = totalCost;
 	}
 }
