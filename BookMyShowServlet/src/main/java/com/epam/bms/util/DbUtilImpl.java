@@ -26,7 +26,7 @@ public class DbUtilImpl implements DbUtil {
 			PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query);
 			result = stmt.executeUpdate();
 		} catch (Exception e) {
-			throw new Exception();
+			e.printStackTrace();
 		}
 		return result;
 	}

@@ -9,6 +9,7 @@ import com.epam.bms.bean.City;
 import com.epam.bms.bean.Movie;
 import com.epam.bms.bean.SeatRange;
 import com.epam.bms.bean.Theatre;
+import com.epam.bms.util.TicketsDetails;
 
 public interface DBOperation {
 
@@ -27,5 +28,7 @@ public interface DBOperation {
 	double getCost(int rangeId);
 
 	boolean processBooking();
+
+	TicketsDetails getTicketDetails();
 
 }

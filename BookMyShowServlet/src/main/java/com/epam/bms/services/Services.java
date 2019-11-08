@@ -12,6 +12,7 @@ import com.epam.bms.bean.SeatRange;
 import com.epam.bms.bean.Theatre;
 import com.epam.bms.dao.*;
 import com.epam.bms.util.BookingDetails;
+import com.epam.bms.util.TicketsDetails;
 
 public class Services {
 	private DBOperation dBOperation = new DBOperationImpl();
@@ -68,6 +69,11 @@ public class Services {
 		PriceCalculation priceCalculation = new PriceCalculation();
 		double totalCost = priceCalculation.calculatePrice();
 		return totalCost;
+	}
+
+	public TicketsDetails getTicketDetails() {
+		TicketsDetails ticketDetails = dBOperation.getTicketDetails();
+		return ticketDetails;
 	}
 
 }

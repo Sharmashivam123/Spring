@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.epam.bms.bean.City;
 import com.epam.bms.services.Services;
-import com.epam.bms.util.BookingDetails;
 
 /**
  * Servlet implementation class ApplicationBooking
@@ -34,25 +33,15 @@ public class CityServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Services services = new Services();
 		PrintWriter out = response.getWriter(); 
 		try {
-			out.println("Select your choice of city.");
 			List<City> cityList = services.getAvailableCities();
 			request.setAttribute("cityList", cityList);
 			RequestDispatcher rd = request.getRequestDispatcher("City.jsp");
 			rd.forward(request, response);
-//			String cityId = request.getParameter("id");
-//			BookingDetails bookingDetails = BookingDetails.getInstance();
-//			bookingDetails.setCityId(Integer.parseInt(cityId));
-//			if (bookingDetails.getCityId() == 0) {
-//				RequestDispatcher rd = request.getRequestDispatcher("/Location?pin=500081");
-//				rd.forward(request, response);
-//			}
-//			RequestDispatcher rd = request.getRequestDispatcher("/Error?error=errorinselectionofcity");
-//			rd.include(request, response);
 		} catch (Exception e) {
 			out.println(e.getMessage()+"eror heheheheh");
 			e.printStackTrace();

@@ -1,7 +1,6 @@
 package com.epam.bms.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -29,25 +28,20 @@ public class LocationServlet extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-
+ 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Services services = new Services(); 
-		PrintWriter out = response.getWriter();
 		BookingDetails bookingDetails = BookingDetails.getInstance();
-		String pin = request.getParameter("pin");
-		out.println("Select your areacode in city ");
-		List<Area> listLocation = services.getAreaPinInCity();
-		listLocation.stream().forEach(p->out.println(p.getPin()+" "+p.getAreaName()));
-		bookingDetails.setPincode(Integer.parseInt(pin));
-		if (bookingDetails.getCityId() != 0) {
-			RequestDispatcher rd = request.getRequestDispatcher("/Movie?movieId=1");
-			rd.forward(request, response);
-		}
-		RequestDispatcher rd = request.getRequestDispatcher("/Error");
-		rd.include(request, response);
+		String cityId = request.getParameter("city");
+		bookingDetails.setCityId(Integer.parseInt(cityId));
+		List<Area> listLocation = services.getAreaPinInCity(); 
+		request.setAttribute("locations", listLocation);
+		RequestDispatcher rd = request.getRequestDispatcher("Location.jsp");
+		rd.forward(request, response);
+
 	}
 
 

@@ -1,4 +1,4 @@
-package com.epam.bms.util;
+package com.epam.bms.bean;
 
 import java.time.LocalTime;
 import java.util.Map;

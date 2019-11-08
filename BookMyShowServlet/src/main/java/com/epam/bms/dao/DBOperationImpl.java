@@ -15,11 +15,12 @@ import com.epam.bms.bean.Area;
 import com.epam.bms.bean.City;
 import com.epam.bms.bean.Movie;
 import com.epam.bms.bean.SeatRange;
+import com.epam.bms.bean.ShowTimes;
 import com.epam.bms.bean.Theatre;
 import com.epam.bms.util.BookingDetails;
 import com.epam.bms.util.DbUtil;
 import com.epam.bms.util.DbUtilImpl;
-import com.epam.bms.util.ShowTimes;
+import com.epam.bms.util.TicketsDetails;
 
 public class DBOperationImpl implements DBOperation {
 
@@ -215,6 +216,7 @@ public class DBOperationImpl implements DBOperation {
 			String seatId = seatIdAndCostArray[0] + " ";
 			seatIds += seatId;
 		}
+		
 		String query = "insert into bookings (movieId,theatreId, showtiming, showDate, ticketBooked, seatId) values('"
 				+ movieId + "','" + theatreId + "','" + showTiming + "','" + showDate + "','" + ticketsBooked + "','"
 				+ seatIds + "')";
@@ -240,6 +242,43 @@ public class DBOperationImpl implements DBOperation {
 			e.printStackTrace();
 		}
 		return check;
+	}
+
+	
+	@Override
+	public TicketsDetails getTicketDetails() {
+		TicketsDetails ticketsDetails = new TicketsDetails();
+		String query = "select * from ticketreport where bookingId = (select bookingId from bookings order by bookingId desc limit 1) ";
+		try {
+			ResultSet resultSet = dbUtil.getResulSet(query);
+			while(resultSet.next())
+			{
+				String fullName = resultSet.getString("fullName");
+				String phone = resultSet.getString("phone");
+				int bookingId = resultSet.getInt("bookingId");
+				String movieName = resultSet.getString("movieName");
+				LocalTime showTiming = LocalTime.parse(resultSet.getTime("showTiming").toString());
+				LocalDate showDate = LocalDate.parse(resultSet.getDate("showDate").toString());
+				int ticketBooked = resultSet.getInt("ticketBooked");
+				String seatId = resultSet.getString("seatId");
+				double totalCost = resultSet.getDouble("totalCost");
+				
+				ticketsDetails.setBookingId(bookingId);
+				ticketsDetails.setFullName(fullName);
+				ticketsDetails.setMovieName(movieName);
+				ticketsDetails.setPhone(phone);
+				ticketsDetails.setSeatId(seatId);
+				ticketsDetails.setShowDate(showDate);
+				ticketsDetails.setShowTiming(showTiming);
+				ticketsDetails.setTicketBooked(ticketBooked);
+				ticketsDetails.setTotalCost(totalCost);
+			}
+		}catch(Exception e)
+		{
+			log.info(e.getMessage());
+			e.printStackTrace();
+		}
+		return ticketsDetails;
 	}
 
 }

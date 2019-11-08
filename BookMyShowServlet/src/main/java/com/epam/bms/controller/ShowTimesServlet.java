@@ -1,7 +1,7 @@
 package com.epam.bms.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Map;
 
@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.epam.bms.dao.BookingDates;
 import com.epam.bms.services.Services;
 import com.epam.bms.util.BookingDetails;
 
@@ -30,26 +31,21 @@ public class ShowTimesServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Services services = new Services();
-		PrintWriter out = response.getWriter();
+		
+		String date = request.getParameter("date");
 		BookingDetails bookingDetails = BookingDetails.getInstance();
-		out.println("Select show timing.");
-		int dateId = bookingDetails.getDateId();
+		int dateId = Integer.parseInt(date);
+		bookingDetails.setDateId(dateId); 
+		BookingDates bookingDates = new BookingDates();
+		Map<Integer, LocalDate> dates = bookingDates.getDates();
+		LocalDate selectedDate = dates.get(dateId);
+		bookingDetails.setDate(selectedDate);
+		Services services = new Services();
 		Map<Integer, LocalTime> availableShows = services.getShowTiming(dateId);
-		for (Map.Entry<Integer, LocalTime> element : availableShows.entrySet())
-			out.println(element.getKey() + "  :  " + element.getValue());
-		int showId = Integer.parseInt(request.getParameter("showId"));
-		bookingDetails.setShowId(showId);
-		bookingDetails.setTime(availableShows.get(showId));
-		if (bookingDetails.getTime() != null) {
-			RequestDispatcher rd = request.getRequestDispatcher("/SeatRange?seatId=A1&cost=150&seatId=B1&cost=150&fullname=shivam&phone=9691061996");
-			rd.forward(request, response);
-		}
-		RequestDispatcher rd = request.getRequestDispatcher("/Error");
-		rd.include(request, response);
+		request.setAttribute("shows", availableShows);
+		RequestDispatcher rd = request.getRequestDispatcher("Shows.jsp");
+		rd.forward(request, response);
+
 	}	
 }

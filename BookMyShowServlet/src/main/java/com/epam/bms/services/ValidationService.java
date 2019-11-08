@@ -7,7 +7,7 @@ import java.util.Map;
 import com.epam.bms.bean.Area;
 import com.epam.bms.bean.City;
 import com.epam.bms.bean.Movie;
-import com.epam.bms.util.ShowTimes;
+import com.epam.bms.bean.ShowTimes;
 import com.epam.bms.bean.Theatre;
 import com.epam.bms.dao.DBOperation;
 import com.epam.bms.dao.DBOperationImpl;

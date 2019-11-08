@@ -6,18 +6,18 @@
 <head>
 <link rel="stylesheet" href="Registration.css">
 <meta charset="ISO-8859-1">
-<title>City Available</title>
+<title>Available Locations</title>
 </head>
 <body>
 
 	<div id="header">
-		<h1>Choose from Available cities</h1>
+		<h1>Choose from Available Locations</h1>
 	</div>
 	<div id="registeration">
-		<form action="Location" method="get">
-			<select name="city">
-				<c:forEach var="city" items="${cityList}">
-					<option value="${city.cityId}">${city.cityName}</option>
+		<form action="Movie" method="get">
+			<select name="location">
+				<c:forEach var="location" items="${locations}">
+					<option value="${location.pin}">${location.areaName}</option>
                                                                                                             
 				</c:forEach>
 			</select> <input type="submit" value="submit">

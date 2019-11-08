@@ -1,7 +1,6 @@
 package com.epam.bms.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -15,9 +14,6 @@ import com.epam.bms.bean.Theatre;
 import com.epam.bms.services.Services;
 import com.epam.bms.util.BookingDetails;
 
-/**
- * Servlet implementation class TheatreServlet
- */
 @WebServlet("/Theatre")
 public class TheatreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -28,26 +24,21 @@ public class TheatreServlet extends HttpServlet {
 	public TheatreServlet() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
+	} 
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Services services = new Services();
-		PrintWriter out = response.getWriter();
+		String movieId = request.getParameter("movie"); 
 		BookingDetails bookingDetails = BookingDetails.getInstance();
-		out.println("Select the theatreId.");
-		List<Theatre> listTheatre = services.getTheatreListByMovie();
-		listTheatre.stream().forEach(theatre->out.println(theatre.getTheatreId()+" "+theatre.getTheatreName()+" "));
-		int theatreId = Integer.parseInt(request.getParameter("theatreId"));
-		bookingDetails.setTheatreId(theatreId);
-		if (bookingDetails.getTheatreId() != 0) {
-			RequestDispatcher rd = request.getRequestDispatcher("/Date?dateId=1");
-			rd.forward(request, response);
+		bookingDetails.setMovieId(Integer.parseInt(movieId));
+		Services services = new Services();
+		List<Theatre> theatreList = services.getTheatreListByMovie();
+		if (bookingDetails.getPincode() == 0) {
+			RequestDispatcher rd = request.getRequestDispatcher("/Error");
+			rd.forward(request, response);  
 		}
-		RequestDispatcher rd = request.getRequestDispatcher("/Error");
-		rd.include(request, response);
-	}
+		request.setAttribute("theatres", theatreList);
+		RequestDispatcher rd = request.getRequestDispatcher("Theatre.jsp");
+		rd.forward(request, response);
+		}
 
 }

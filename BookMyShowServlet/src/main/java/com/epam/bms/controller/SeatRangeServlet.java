@@ -1,8 +1,9 @@
 package com.epam.bms.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -27,37 +28,40 @@ public class SeatRangeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Services services = new Services();
-		PrintWriter out = response.getWriter();
 		BookingDetails bookingDetails = BookingDetails.getInstance();
-		out.println("select the priceRange" + "<br>");
+		int showId = Integer.parseInt(request.getParameter("showTime"));
+		bookingDetails.setShowId(showId);
+		int dateId = bookingDetails.getDateId();
+		Map<Integer, LocalTime> availableShows = services.getShowTiming(dateId);
+		bookingDetails.setTime(availableShows.get(showId));
 		List<SeatRange> silverSeats = services.getPriceRanges("silver");
 		List<SeatRange> goldSeats = services.getPriceRanges("gold");
 		List<SeatRange> platinumSeats = services.getPriceRanges("platinum");
-		silverSeats.stream().forEach(seat -> out.println(seat.getSeatId() + " " + seat.getCost() + " "));
-		out.println("<br>");
-		goldSeats.stream().forEach(seat -> out.println(seat.getSeatId() + " " + seat.getCost() + " "));
-		out.println("<br>");
-		platinumSeats.stream().forEach(seat -> out.println(seat.getSeatId() + " " + seat.getCost() + " "));
-		out.println("<br>");
-		String seatIdList[]= request.getParameterValues("seatId");
-		String seatCostList[]=request.getParameterValues("cost");
-		String name = request.getParameter("fullname");
-		String phone = request.getParameter("phone");
-		int tickets = seatIdList.length;
-		String costAndSeatId[] = new String[tickets];
-		for(int ticket=0; ticket<tickets; ticket++)
-			costAndSeatId[ticket]=seatIdList[ticket]+" "+seatCostList[ticket];
-		bookingDetails.setCostAndSeatId(costAndSeatId);		
-		bookingDetails.setSeatCount(tickets);
-		bookingDetails.setUserName(name);
-		bookingDetails.setPhone(phone);
-		if(bookingDetails.getSeatCount()!=0)
-		{
-			RequestDispatcher rd = request.getRequestDispatcher("/ProcessBooking");
-			rd.forward(request, response);
-		}
-		RequestDispatcher rd = request.getRequestDispatcher("/Error?error=processBoking");
-		rd.include(request, response);
+		request.setAttribute("silverSeats", silverSeats);
+		request.setAttribute("goldSeats", goldSeats);
+		request.setAttribute("platinumSeats", platinumSeats);
+		RequestDispatcher rd = request.getRequestDispatcher("SeatRange.jsp");
+		rd.forward(request, response);
+//		
+//		String seatIdList[]= request.getParameterValues("seatId");
+//		String seatCostList[]=request.getParameterValues("cost");
+//		String name = request.getParameter("fullname");
+//		String phone = request.getParameter("phone");
+//		int tickets = seatIdList.length;
+//		String costAndSeatId[] = new String[tickets];
+//		for(int ticket=0; ticket<tickets; ticket++)
+//			costAndSeatId[ticket]=seatIdList[ticket]+" "+seatCostList[ticket];
+//		bookingDetails.setCostAndSeatId(costAndSeatId);		
+//		bookingDetails.setSeatCount(tickets);
+//		bookingDetails.setUserName(name);
+//		bookingDetails.setPhone(phone);
+//		if(bookingDetails.getSeatCount()!=0)
+//		{
+//			RequestDispatcher rd = request.getRequestDispatcher("/ProcessBooking");
+//			rd.forward(request, response);
+//		}
+//		RequestDispatcher rd = request.getRequestDispatcher("/Error?error=processBoking");
+//		rd.include(request, response);
 	}
 
 }

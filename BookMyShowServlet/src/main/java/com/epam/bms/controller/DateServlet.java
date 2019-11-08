@@ -1,7 +1,6 @@
-package com.epam.bms.controller;
+ package com.epam.bms.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.Map;
 
@@ -29,22 +28,16 @@ public class DateServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Services services = new Services();
-		PrintWriter out = response.getWriter();
+		String theatreId = request.getParameter("theatre");
 		BookingDetails bookingDetails = BookingDetails.getInstance();
-		out.println("select the date");
+		bookingDetails.setTheatreId(Integer.parseInt(theatreId));
+		Services services = new Services();
 		Map<Integer, LocalDate> dateMap = services.getAvailableDates();
-		for (Map.Entry<Integer, LocalDate> element : dateMap.entrySet())
-			out.println(element.getKey() + "  :  " + element.getValue());
-		int dateId = Integer.parseInt(request.getParameter("dateId"));
-		bookingDetails.setDate(dateMap.get(dateId));
-		bookingDetails.setDateId(dateId);
-		if (bookingDetails.getDate() != null) {
-			RequestDispatcher rd = request.getRequestDispatcher("/Timings?showId=1");
-			rd.forward(request, response);
-		}
-		RequestDispatcher rd = request.getRequestDispatcher("/Error");
-		rd.include(request, response);
+		request.setAttribute("dates", dateMap);
+		RequestDispatcher rd = request.getRequestDispatcher("Date.jsp");
+		rd.forward(request, response);
+		
+
 	}
 
 }

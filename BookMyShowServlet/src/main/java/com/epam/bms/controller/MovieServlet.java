@@ -36,20 +36,17 @@ public class MovieServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Services services = new Services();
-		PrintWriter out = response.getWriter();
+		String pin = request.getParameter("location");
 		BookingDetails bookingDetails = BookingDetails.getInstance();
-		out.println("Available movies at your locations are ");
-		List<Movie> listMovie = services.getMoviesAtLocation();
-		out.println("Select the movieId to get the theatre showing the movie.");
-		listMovie.stream().forEach(movie -> out.println(movie.getMovieId() + " " + movie.getMovieName()));
-		String movieId = request.getParameter("movieId");
-		bookingDetails.setMovieId(Integer.parseInt(movieId));
-		if (bookingDetails.getMovieId() != 0) {
-			RequestDispatcher rd = request.getRequestDispatcher("/Theatre?theatreId=1");
-			rd.forward(request, response);
+		bookingDetails.setPincode(Integer.parseInt(pin));
+		Services services = new Services();
+		List<Movie> listMovie = services.getMoviesAtLocation();  
+		if (bookingDetails.getPincode() == 0) {
+			RequestDispatcher rd = request.getRequestDispatcher("/Error"); 
+			rd.forward(request, response);  
 		}
-		RequestDispatcher rd = request.getRequestDispatcher("/Error");
-		rd.include(request, response);
+		request.setAttribute("movies", listMovie);
+		RequestDispatcher rd = request.getRequestDispatcher("Movie.jsp");
+		rd.forward(request, response);
 	}
 }
