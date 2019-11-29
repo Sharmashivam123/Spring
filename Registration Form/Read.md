@@ -1,1 +1,0 @@
-This is the simple registeration form example where user can register.
