@@ -2,6 +2,7 @@ package com.epam.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,6 +17,7 @@ public class LocationController {
 	@Autowired
 	private LocationServices services;
 
+	@ExceptionHandler(value = CityLayerException.class)
 	@GetMapping(value="/location")
 	public ModelAndView doGet(@RequestParam int city) {
 		bookingDetails.setCityId(city);

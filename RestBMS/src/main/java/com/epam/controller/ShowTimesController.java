@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.epam.bean.BookingDetails;
 import com.epam.services.ShowTimingServices;
 
-
 @Controller
 public class ShowTimesController {
 
