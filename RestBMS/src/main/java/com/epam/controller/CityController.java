@@ -13,10 +13,10 @@ import com.epam.services.RestClientService;
 public class CityController {
 	@Autowired
 	private RestClientService rest;
-	private List<City> cityList;
 
 	@GetMapping("/city")
 	public ModelAndView doGet() throws Exception {
+		List<City> cityList;
 		cityList = rest.getAllCities();
 		ModelAndView model = new ModelAndView();
 		model.setViewName("city");

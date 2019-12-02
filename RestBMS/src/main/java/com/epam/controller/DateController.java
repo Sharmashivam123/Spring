@@ -8,21 +8,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.epam.bean.BookingDetails;
-import com.epam.services.DateServices;
+import com.epam.services.RestClientService;
 
 @Controller
 public class DateController {
 	@Autowired
 	private BookingDetails bookingDetails;
 	@Autowired
-	private DateServices services;
+	private RestClientService service;
 	private List<String> dateMap;
 
 	@GetMapping("/date")
 	public ModelAndView doGet(@RequestParam int theatre) {
 		bookingDetails.setTheatreId(theatre);
 		ModelAndView model = new ModelAndView();
-		dateMap = services.getAvailableDates();
+		dateMap = service.getAllDates();
 		model.addObject("dates", dateMap);
 		model.setViewName("date");
 		return model;

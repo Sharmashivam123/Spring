@@ -10,14 +10,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.epam.bean.BookingDetails;
 import com.epam.bean.Theatre;
-import com.epam.services.TheatreServices;
+import com.epam.services.RestClientService;
 
 @Controller
 public class TheatreController {
 	@Autowired
 	private BookingDetails bookingDetails;
 	@Autowired
-	private TheatreServices services;
+	private RestClientService service;
 	private String[] movieIdandName;
 	private List<Theatre> theatreList;
 
@@ -26,7 +26,7 @@ public class TheatreController {
 		movieIdandName = movie.split(",");
 		bookingDetails.setMovieId(Integer.parseInt(movieIdandName[0]));
 		bookingDetails.setMovieName(movieIdandName[1]);
-		theatreList = services.getTheatreListByMovie();
+		theatreList = service.getAllTheatresForMovieSelected();
 		ModelAndView model = new ModelAndView();
 		model.addObject("theatres", theatreList);
 		model.setViewName("theatre");

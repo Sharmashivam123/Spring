@@ -7,20 +7,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.epam.bean.TicketsDetails;
-import com.epam.services.TicketServices;
+import com.epam.services.RestClientService;
 
 @Controller
 public class TicketsDetailController {
 	@Autowired
 	private TicketsDetails ticketDetails;
 	@Autowired
-	private TicketServices rest;
+	private RestClientService service;
 
 	@GetMapping("/tickets")
 	public ModelAndView doGet(@RequestParam boolean bookingStatus) {
 		ModelAndView model = new ModelAndView();
 		if (bookingStatus) {
-			ticketDetails = rest.getTicketDetails();
+			ticketDetails = service.getTicketDetails();
 			model.addObject("tickets", ticketDetails);
 		} else {
 			model.setViewName("index");

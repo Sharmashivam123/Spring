@@ -25,37 +25,37 @@ import com.epam.bean.Movie;
 import com.epam.bean.SeatArrangements;
 import com.epam.bean.Theatre;
 import com.epam.bean.TicketsDetails;
-import com.epam.services.servicesImpl.BookingServicesImpl;
-import com.epam.services.servicesImpl.CityServicesImpl;
-import com.epam.services.servicesImpl.DateServicesImpl;
-import com.epam.services.servicesImpl.LocationServicesImpl;
-import com.epam.services.servicesImpl.MovieServicesImpl;
-import com.epam.services.servicesImpl.SeatsServicesImpl;
-import com.epam.services.servicesImpl.ShowTimingServicesImpl;
-import com.epam.services.servicesImpl.TheatreServicesImpl;
-import com.epam.services.servicesImpl.TicketServicesImpl;
+import com.epam.services.BookingServices;
+import com.epam.services.CityServices;
+import com.epam.services.DateServices;
+import com.epam.services.LocationServices;
+import com.epam.services.MovieServices;
+import com.epam.services.SeatsServices;
+import com.epam.services.ShowTimingServices;
+import com.epam.services.TheatreServices;
+import com.epam.services.TicketServices;
 
 @RestController
 public class MyRestController {
 
 	@Autowired
-	private CityServicesImpl cityServices;
+	private CityServices cityServices;
 	@Autowired
-	private LocationServicesImpl locationServices;
+	private LocationServices locationServices;
 	@Autowired
-	private MovieServicesImpl movieServices;
+	private MovieServices movieServices;
 	@Autowired
-	private TheatreServicesImpl theatreServices;
+	private TheatreServices theatreServices;
 	@Autowired
-	private DateServicesImpl dateServices;
+	private DateServices dateServices;
 	@Autowired
-	private ShowTimingServicesImpl showTimingServices;
+	private ShowTimingServices showTimingServices;
 	@Autowired
-	private SeatsServicesImpl seatServices;
+	private SeatsServices seatServices;
 	@Autowired
-	private TicketServicesImpl ticketServices;
+	private TicketServices ticketServices;
 	@Autowired
-	private BookingServicesImpl bookingServices;
+	private BookingServices bookingServices;
 
 	@GetMapping(value = "/rstcity", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<City>> getAllCities() throws RuntimeException {

@@ -10,20 +10,20 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.epam.bean.BookingDetails;
 import com.epam.bean.Movie;
-import com.epam.services.MovieServices;
+import com.epam.services.RestClientService;
 
 @Controller
 public class MovieController {
 	@Autowired
 	private BookingDetails bookingDetails;
 	@Autowired
-	private MovieServices services;
+	private RestClientService services;
 	private List<Movie> listMovie;
 
 	@GetMapping("/movie")
 	public ModelAndView doGet(@RequestParam int location) {
 		bookingDetails.setPincode(location);
-		listMovie = services.getMoviesAtLocation();
+		listMovie = services.getAllMoviesAtLocation();
 		ModelAndView model = new ModelAndView();
 		model.addObject("movies", listMovie);
 		model.setViewName("movie");

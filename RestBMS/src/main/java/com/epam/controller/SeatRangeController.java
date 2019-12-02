@@ -18,15 +18,15 @@ public class SeatRangeController {
 	@Autowired
 	private BookingDetails bookingDetails;
 	@Autowired
-	private SeatsServices rest;
+	private SeatsServices service;
 	private List<SeatArrangements> silverSeats, goldSeats, platinumSeats;
 
 	@GetMapping("/seats")
 	public ModelAndView doGet(@RequestParam String showTime) {
 		bookingDetails.setTime(LocalTime.parse(showTime));
-		silverSeats = rest.getSeatRanges("silver");
-		goldSeats = rest.getSeatRanges("gold");
-		platinumSeats = rest.getSeatRanges("platinum");
+		silverSeats = service.getSeatRanges("silver");
+		goldSeats = service.getSeatRanges("gold");
+		platinumSeats = service.getSeatRanges("platinum");
 		ModelAndView model = new ModelAndView();
 		model.addObject("silverSeats", silverSeats);
 		model.addObject("goldSeats", goldSeats);
