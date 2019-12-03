@@ -2,9 +2,6 @@ package com.epam.restcontroller;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.LocalDate;
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 
 import io.restassured.RestAssured;

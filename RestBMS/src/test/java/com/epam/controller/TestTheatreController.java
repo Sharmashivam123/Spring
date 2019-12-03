@@ -53,7 +53,7 @@ class TestTheatreController {
 
 		List<Theatre> theatreList = Arrays.asList(theatre1, theatre2, theatre3, theatre4);
 		when(service.getAllTheatresForMovieSelected()).thenReturn(theatreList);
-		mockmvc.perform(get("/theatre?movie=1%2Cwar")).andExpect(status().isOk())
+		mockmvc.perform(get("/theatre?movie=1,war")).andExpect(status().isOk())
 				.andExpect(model().attribute("theatres", theatreList)).andExpect((forwardedUrl("theatre.jsp")));
 	}
 

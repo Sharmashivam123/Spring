@@ -27,7 +27,6 @@ class TestLocation {
 		assertEquals(response.getContentType(), "application/json");
 		JsonPath jsonPath = response.jsonPath();
 		List<Integer> areaList = new ArrayList<>(Arrays.asList(500081, 500082, 500083, 500084, 500085));
-
 		List<Integer> jsonLocation = jsonPath.getList("pin");
 		for (Integer str : jsonLocation) {
 			assertEquals(str, areaList.get(i++));
