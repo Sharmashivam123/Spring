@@ -20,7 +20,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.epam.bean.BookingDetails;
 import com.epam.bean.SeatArrangements;
-import com.epam.services.RestClientService;
 import com.epam.services.SeatsServices;
 
 @SpringBootTest

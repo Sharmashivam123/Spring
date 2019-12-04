@@ -3,7 +3,6 @@ package com.epam.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.epam.bean.TicketsDetails;
@@ -17,14 +16,10 @@ public class TicketsDetailController {
 	private RestClientService service;
 
 	@GetMapping("/tickets")
-	public ModelAndView doGet(@RequestParam boolean bookingStatus) {
+	public ModelAndView doGet() {
 		ModelAndView model = new ModelAndView();
-		if (bookingStatus) {
-			ticketDetails = service.getTicketDetails();
-			model.addObject("tickets", ticketDetails);
-		} else {
-			model.setViewName("index");
-		}
+		ticketDetails = service.getTicketDetails();
+		model.addObject("tickets", ticketDetails);
 		model.setViewName("ticket");
 		return model;
 	}

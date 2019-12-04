@@ -42,7 +42,7 @@ class TestTicketDetailsController {
 		ticketDetails.setTotalCost(1087);
 
 		when(service.getTicketDetails()).thenReturn(ticketDetails);
-		mockmvc.perform(get("/tickets")).andExpect(status().isOk())
+		mockmvc.perform(get("/tickets?bookingStatus=true")).andExpect(status().isOk())
 				.andExpect(model().attribute("tickets", ticketDetails)).andExpect((forwardedUrl("ticket.jsp")));
 	}
 

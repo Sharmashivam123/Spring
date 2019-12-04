@@ -16,14 +16,9 @@ public class LocationServicesImpl implements LocationServices {
 	private LocationDao areaDao;
 	@Autowired
 	private BookingDetails bookingDetails;
-	@Autowired
-	private Location location;
 
 	public List<Location> getAreaPinInCity() throws RuntimeException {
 		int cityId = bookingDetails.getCityId();
-		location.setAreaName("error in city code");
-		location.setPin(00000);
-		location.setCityId(cityId);
 		List<Location> listLocation = areaDao.findAllByCityId(cityId);
 		return listLocation;
 	}

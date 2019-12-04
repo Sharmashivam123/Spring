@@ -2,8 +2,6 @@ package com.epam.restcontroller;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.LocalDate;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,7 @@ class TestTicket {
 
 	@Test
 	void test() {
-		RestAssured.baseURI = "http://localhost:8083/rstticket";
+		RestAssured.baseURI = "http://localhost:8083/rsttickets";
 		RequestSpecification reqspecs = RestAssured.given();
 		Response response = reqspecs.get();
 		assertEquals(response.getStatusCode(), 200);

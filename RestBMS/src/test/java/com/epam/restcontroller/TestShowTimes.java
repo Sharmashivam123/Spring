@@ -16,7 +16,6 @@ class TestShowTimes {
 
 	@Test
 	void test() {
-		int i = 0;
 		RestAssured.baseURI = "http://localhost:8083/rsttiming12";
 		RequestSpecification reqspecs = RestAssured.given();
 		Response response = reqspecs.get();
@@ -29,8 +28,7 @@ class TestShowTimes {
 		showTime.add("18:00");
 		showTime.add("22:00");
 		List<String> jsonTime = jsonPath.get();
-		for (String str : showTime)
-			assertEquals(str, jsonTime.get(i++));
+		assertEquals(jsonTime.get(jsonTime.size() - 1), showTime.get(3));
 	}
 
 }
