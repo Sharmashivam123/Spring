@@ -1,6 +1,7 @@
 package com.epam.restcontroller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -66,7 +67,8 @@ public class MyRestController {
 			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<Location>> getAllLocationPinByCity() {
 		List<Location> listLocation = locationServices.getAreaPinInCity();
-		if (listLocation == null)
+		Optional<List<Location>> optional = Optional.ofNullable(listLocation);
+		if (!optional.isPresent())
 			throw new CityNotfoundException();
 		return new ResponseEntity<List<Location>>(listLocation, HttpStatus.OK);
 	}
@@ -74,7 +76,8 @@ public class MyRestController {
 	@GetMapping(value = "/rstmovie", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<Movie>> getAllMoviesAtLocation() throws RuntimeException {
 		List<Movie> movieList = movieServices.getMoviesAtLocation();
-		if (movieList == null)
+		Optional<List<Movie>> optional = Optional.ofNullable(movieList);
+		if (!optional.isPresent())
 			throw new LocationNotfoundException();
 		return new ResponseEntity<List<Movie>>(movieList, HttpStatus.OK);
 	}
@@ -82,7 +85,9 @@ public class MyRestController {
 	@GetMapping(value = "/rsttheatre", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<Theatre>> getAllTheatresForMovie() throws RuntimeException {
 		List<Theatre> theatreList = theatreServices.getTheatreListByMovie();
-		if (theatreList == null)
+		Optional<List<Theatre>> optional = Optional.ofNullable(theatreList);
+
+		if (!optional.isPresent())
 			throw new MovieNotfoundException();
 		return new ResponseEntity<List<Theatre>>(theatreList, HttpStatus.OK);
 	}
@@ -91,7 +96,8 @@ public class MyRestController {
 	public ResponseEntity<String[]> getAllDatesForMovie() throws RuntimeException {
 		String[] dateArray = (String[]) dateServices.getAvailableDates()
 				.toArray(new String[dateServices.getAvailableDates().size()]);
-		if (dateArray == null)
+		Optional<String[]> optional = Optional.ofNullable(dateArray);
+		if (!optional.isPresent())
 			throw new TheatreNotfoundException();
 		return new ResponseEntity<String[]>(dateArray, HttpStatus.OK);
 	}
@@ -100,7 +106,9 @@ public class MyRestController {
 	public ResponseEntity<String[]> getAllTimingsForShows() throws RuntimeException {
 		String[] timeList = (String[]) showTimingServices.getShowTiming()
 				.toArray(new String[showTimingServices.getShowTiming().size()]);
-		if (timeList == null)
+		Optional<String[]> optional = Optional.ofNullable(timeList);
+
+		if (!optional.isPresent())
 			throw new DateNotfoundException();
 		return new ResponseEntity<String[]>(timeList, HttpStatus.OK);
 	}
@@ -109,7 +117,9 @@ public class MyRestController {
 			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<SeatArrangements>> getSeats(@PathVariable String tier) throws RuntimeException {
 		List<SeatArrangements> seatList = seatServices.getSeatRanges(tier);
-		if (seatList == null)
+		Optional<List<SeatArrangements>> optional = Optional.ofNullable(seatList);
+
+		if (!optional.isPresent())
 			throw new ShowTimeNotfoundException();
 		return new ResponseEntity<List<SeatArrangements>>(seatList, HttpStatus.OK);
 	}
@@ -128,7 +138,9 @@ public class MyRestController {
 	@GetMapping(value = "/rsttickets", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<TicketsDetails> getTicketDetails() throws RuntimeException {
 		TicketsDetails ticketsDetails = ticketServices.getTicketDetails();
-		if (ticketsDetails == null)
+		Optional<TicketsDetails> optional = Optional.ofNullable(ticketsDetails);
+
+		if (!optional.isPresent())
 			throw new TicketDetailsException();
 		return new ResponseEntity<TicketsDetails>(ticketsDetails, HttpStatus.OK);
 	}
