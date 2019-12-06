@@ -12,13 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.epam.bean.SeatArrangements;
+import com.epam.ExceptionHandler.Exception.ServiceLayerException;
 import com.epam.bean.BookingDetails;
 import com.epam.dao.BookingsDao;
 import com.epam.dao.SeatArrangementsDao;
 import com.epam.services.SeatsServices;
+import com.epam.util.ApplicationConstants;
 
 @Service
-public class SeatsServicesImpl implements SeatsServices{
+public class SeatsServicesImpl implements SeatsServices {
 	@Autowired
 	private BookingDetails bookingDetails;
 	@Autowired
@@ -63,6 +65,8 @@ public class SeatsServicesImpl implements SeatsServices{
 		});
 		Optional<List<SeatArrangements>> optionalMap = Optional.of(unBookedSeatsList);
 		unBookedSeatsList = optionalMap.get();
+		Optional.ofNullable(unBookedSeatsList).orElseThrow(
+				() -> new ServiceLayerException(ApplicationConstants.SELECTED_ELEMENT_NOT_FOUND.toString()));
 		return unBookedSeatsList;
 	}
 }

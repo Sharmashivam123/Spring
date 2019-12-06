@@ -17,7 +17,7 @@ class TestMovie {
 	@Test
 	void test() {
 		int i = 0;
-		RestAssured.baseURI = "http://localhost:8083/rstmovie";
+		RestAssured.baseURI = "http://localhost:8080/rstmovie";
 		RequestSpecification reqspecs = RestAssured.given();
 		Response response = reqspecs.get();
 		assertEquals(response.getStatusCode(), 200);

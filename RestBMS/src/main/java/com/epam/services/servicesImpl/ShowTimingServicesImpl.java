@@ -5,17 +5,20 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.epam.ExceptionHandler.Exception.ServiceLayerException;
 import com.epam.bean.BookingDetails;
 import com.epam.bean.ShowTimings;
 import com.epam.dao.ShowTimesDao;
 import com.epam.services.ShowTimingServices;
+import com.epam.util.ApplicationConstants;
 
 @Service
-public class ShowTimingServicesImpl implements ShowTimingServices{
+public class ShowTimingServicesImpl implements ShowTimingServices {
 	@Autowired
 	private ShowTimesDao showTimesDao;
 	@Autowired
@@ -34,7 +37,6 @@ public class ShowTimingServicesImpl implements ShowTimingServices{
 		LocalTime show4 = availableShows.getShow4();
 		timeList = new ArrayList<>();
 		timeList.addAll(Arrays.asList(show1, show2, show3, show4));
-		System.out.println(timeList);
 		LocalDate currDate = LocalDate.now();
 		int index = 0;
 		timeIndexList = new ArrayList<>();
@@ -46,7 +48,8 @@ public class ShowTimingServicesImpl implements ShowTimingServices{
 			} else
 				timeIndexList.add(index++, time.toString());
 		}
-		System.out.println(timeIndexList);
+		Optional.ofNullable(timeIndexList).orElseThrow(
+				() -> new ServiceLayerException(ApplicationConstants.SELECTED_ELEMENT_NOT_FOUND.toString()));
 		return timeIndexList;
 	}
 }

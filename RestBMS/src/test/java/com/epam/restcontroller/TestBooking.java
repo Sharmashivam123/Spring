@@ -13,7 +13,7 @@ class TestBooking {
 
 	@Test
 	void test() {
-		RestAssured.baseURI = "http://localhost:8083/rstbooking";
+		RestAssured.baseURI = "http://localhost:8080/rstbooking";
 		RequestSpecification reqspecs = RestAssured.given();
 		Response response = reqspecs.get();
 		assertEquals(response.getStatusCode(), 200);

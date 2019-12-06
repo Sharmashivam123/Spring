@@ -17,17 +17,17 @@ class TestSeats {
 
 	@Test
 	void test() {
-		RestAssured.baseURI = "http://localhost:8083//rstseats/silver";
+		RestAssured.baseURI = "http://localhost:8080/rstseats/silver";
 		RequestSpecification reqspecs = RestAssured.given();
 		Response response = reqspecs.request(Method.GET);
 		assertEquals(200, response.getStatusCode());
-//		assertEquals(response.getContentType(), "application/json");
-//		JsonPath jsonPath = response.jsonPath();
-//		List<String> seats = new ArrayList<>();
-//		seats.add("A1");
-//		seats.add("A2");
-//		List<String> jsonSeats = jsonPath.get("seatId");
-//		assertEquals(jsonSeats.get(0),seats.get(0));
+		assertEquals(response.getContentType(), "application/json");
+		JsonPath jsonPath = response.jsonPath();
+		List<String> seats = new ArrayList<>();
+		seats.add("A01");
+		seats.add("A02");
+		List<String> jsonSeats = jsonPath.get("seatId");
+		assertEquals(jsonSeats.get(0),seats.get(0));
 	}
 
 }

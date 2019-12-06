@@ -12,13 +12,13 @@ public class Constants {
 	public static final String THEATRE_BY_MOVIE_QUERY = "select * from theatre "
 			+ "where theatreId in (SELECT theatreId from theatrebymovie WHERE movieId =?1)";
 
-	public static final String CITY_URL = "http://localhost:8083/rstcity";
-	public static final String LOCATION_URL = "http://localhost:8083/rstlocation";
-	public static final String MOVIE_URL = "http://localhost:8083/rstmovie";
-	public static final String THEATRE_URL = "http://localhost:8083/rsttheatre";
-	public static final String DATE_URL = "http://localhost:8083/rstdate";
-	public static final String SHOW_TIME_URL = "http://localhost:8083/rsttiming12";
-	public static final String SEATRANGE_URL = "http://localhost:8083/rstseats";
-	public static final String BOOKING_URL = "http://localhost:8083/rstbooking";
-	public static final String TICKET_URL = "http://localhost:8083/rsttickets";
+	public static final String CITY_URL = "http://localhost:8080/rstcity";
+	public static final String LOCATION_URL = "http://localhost:8080/rstlocation";
+	public static final String MOVIE_URL = "http://localhost:8080/rstmovie";
+	public static final String THEATRE_URL = "http://localhost:8080/rsttheatre";
+	public static final String DATE_URL = "http://localhost:8080/rstdate";
+	public static final String SHOW_TIME_URL = "http://localhost:8080/rsttiming12";
+	public static final String SEATRANGE_URL = "http://localhost:8080/rstseats/";
+	public static final String BOOKING_URL = "http://localhost:8080/rstbooking";
+	public static final String TICKET_URL = "http://localhost:8080/rsttickets";
 }

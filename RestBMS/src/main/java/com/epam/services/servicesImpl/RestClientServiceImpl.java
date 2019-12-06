@@ -68,9 +68,11 @@ public class RestClientServiceImpl implements RestClientService {
 		StringBuilder str = new StringBuilder();
 		str.append(Constants.SEATRANGE_URL);
 		str.append(tier);
+		log.info(str.toString());
 		ResponseEntity<List<SeatArrangements>> responseList = rest.exchange(str.toString(), HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<SeatArrangements>>() {
 				});
+		responseList.getBody().stream().forEach(s->log.info(s.getSeatId()));
 		return responseList.getBody();
 	}
 

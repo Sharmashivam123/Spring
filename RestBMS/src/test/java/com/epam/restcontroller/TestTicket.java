@@ -2,7 +2,6 @@ package com.epam.restcontroller;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,15 +19,15 @@ class TestTicket {
 
 	@Test
 	void test() {
-		RestAssured.baseURI = "http://localhost:8083/rsttickets";
+		RestAssured.baseURI = "http://localhost:8080/rsttickets";
 		RequestSpecification reqspecs = RestAssured.given();
 		Response response = reqspecs.get();
 		assertEquals(response.getStatusCode(), 200);
 		assertEquals(response.getContentType(), "application/json");
 		JsonPath jsonPath = response.jsonPath();
-		int bookingIdJson = jsonPath.getInt("bookingId");
-		int bookingId = ticketDetails.getBookingId();
-		assertEquals(bookingId, bookingIdJson);
+		String phone = ticketDetails.getPhone();
+		String jsonName = jsonPath.getString("phone");
+		assertEquals(phone, jsonName);
 	}
 
 }

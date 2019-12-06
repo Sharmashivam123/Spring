@@ -10,13 +10,17 @@
 <body>
 
 	<div id="header">
-		<h1>Enter User Details to proceed</h1><br><br>
+		<h1>Enter User Details to proceed</h1>
+		<br> <br>
 	</div>
 	<div id="registeration">
 		<form action="booking" method="post">
-			userName:   <input type="text" name = "userName" placeholder = "Enter your name" pattern="^[a-zA-Z\s]+$" required><br><br>
-			Phone   :   <input type="text" name = "phone" placeholder = "Enter your phone" maxlength="10" pattern = "^[0-9]+$" required><br><br>
-			<input type="submit" value="submit">
+			userName: <input type="text" name="userName"
+				placeholder="Enter your name" pattern="^[a-zA-Z\s]+$" min="6"
+				max="20" required><br> <br> Phone : <input
+				type="tel" name="phone" placeholder="Enter your phone"
+				pattern="^[0-9]+$" required><br> <br> <input
+				type="submit" value="submit">
 		</form>
 	</div>
 

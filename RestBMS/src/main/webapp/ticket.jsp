@@ -34,6 +34,9 @@ text-align:center;
 			<form action="index.jsp" method="get">
 			<input type="submit" value="home">
 			</form>
+			<form action = "logout" method = "get">
+			<input type = "submit" value= "logout">
+			</form>
 		</div>
 	</div>
 

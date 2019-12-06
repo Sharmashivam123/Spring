@@ -1,7 +1,6 @@
 package com.epam.restcontroller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,14 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.epam.ExceptionHandler.Exception.BookingFailException;
-import com.epam.ExceptionHandler.Exception.CityNotfoundException;
-import com.epam.ExceptionHandler.Exception.DateNotfoundException;
-import com.epam.ExceptionHandler.Exception.LocationNotfoundException;
-import com.epam.ExceptionHandler.Exception.MovieNotfoundException;
-import com.epam.ExceptionHandler.Exception.ShowTimeNotfoundException;
-import com.epam.ExceptionHandler.Exception.TheatreNotfoundException;
-import com.epam.ExceptionHandler.Exception.TicketDetailsException;
+import com.epam.ExceptionHandler.Exception.ServiceLayerException;
 import com.epam.bean.City;
 import com.epam.bean.Location;
 import com.epam.bean.Movie;
@@ -63,65 +55,74 @@ public class MyRestController {
 		return new ResponseEntity<List<City>>(cityServices.getAvailableCities(), HttpStatus.OK);
 	}
 
+	@SuppressWarnings("unchecked")
 	@GetMapping(value = "/rstlocation", produces = { MediaType.APPLICATION_JSON_VALUE,
 			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<Location>> getAllLocationPinByCity() {
 		List<Location> listLocation = locationServices.getAreaPinInCity();
-		Optional<List<Location>> optional = Optional.ofNullable(listLocation);
-		if (!optional.isPresent())
-			throw new CityNotfoundException();
-		return new ResponseEntity<List<Location>>(listLocation, HttpStatus.OK);
+		try {
+			return ResponseEntity.ok(listLocation);
+		} catch (ServiceLayerException e) {
+			return (ResponseEntity<List<Location>>) ResponseEntity.badRequest();
+		}
+
 	}
 
+	@SuppressWarnings("unchecked")
 	@GetMapping(value = "/rstmovie", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<Movie>> getAllMoviesAtLocation() throws RuntimeException {
 		List<Movie> movieList = movieServices.getMoviesAtLocation();
-		Optional<List<Movie>> optional = Optional.ofNullable(movieList);
-		if (!optional.isPresent())
-			throw new LocationNotfoundException();
-		return new ResponseEntity<List<Movie>>(movieList, HttpStatus.OK);
+		try {
+			return ResponseEntity.ok(movieList);
+		} catch (ServiceLayerException e) {
+			return (ResponseEntity<List<Movie>>) ResponseEntity.badRequest();
+		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@GetMapping(value = "/rsttheatre", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<Theatre>> getAllTheatresForMovie() throws RuntimeException {
 		List<Theatre> theatreList = theatreServices.getTheatreListByMovie();
-		Optional<List<Theatre>> optional = Optional.ofNullable(theatreList);
-
-		if (!optional.isPresent())
-			throw new MovieNotfoundException();
-		return new ResponseEntity<List<Theatre>>(theatreList, HttpStatus.OK);
+		try {
+			return ResponseEntity.ok(theatreList);
+		} catch (ServiceLayerException e) {
+			return (ResponseEntity<List<Theatre>>) ResponseEntity.badRequest();
+		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@GetMapping(value = "/rstdate", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<String[]> getAllDatesForMovie() throws RuntimeException {
 		String[] dateArray = (String[]) dateServices.getAvailableDates()
 				.toArray(new String[dateServices.getAvailableDates().size()]);
-		Optional<String[]> optional = Optional.ofNullable(dateArray);
-		if (!optional.isPresent())
-			throw new TheatreNotfoundException();
-		return new ResponseEntity<String[]>(dateArray, HttpStatus.OK);
+		try {
+			return ResponseEntity.ok(dateArray);
+		} catch (ServiceLayerException e) {
+			return (ResponseEntity<String[]>) ResponseEntity.badRequest();
+		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@GetMapping(value = "/rsttiming12")
 	public ResponseEntity<String[]> getAllTimingsForShows() throws RuntimeException {
 		String[] timeList = (String[]) showTimingServices.getShowTiming()
 				.toArray(new String[showTimingServices.getShowTiming().size()]);
-		Optional<String[]> optional = Optional.ofNullable(timeList);
-
-		if (!optional.isPresent())
-			throw new DateNotfoundException();
-		return new ResponseEntity<String[]>(timeList, HttpStatus.OK);
+		try {
+			return ResponseEntity.ok(timeList);
+		} catch (ServiceLayerException e) {
+			return (ResponseEntity<String[]>) ResponseEntity.badRequest();
+		}
 	}
 
-	@GetMapping(value = "/rstseats/{tier}", produces = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@SuppressWarnings("unchecked")
+	@GetMapping(value = "/rstseats/{tier}")
 	public ResponseEntity<List<SeatArrangements>> getSeats(@PathVariable String tier) throws RuntimeException {
 		List<SeatArrangements> seatList = seatServices.getSeatRanges(tier);
-		Optional<List<SeatArrangements>> optional = Optional.ofNullable(seatList);
-
-		if (!optional.isPresent())
-			throw new ShowTimeNotfoundException();
-		return new ResponseEntity<List<SeatArrangements>>(seatList, HttpStatus.OK);
+		try {
+			return ResponseEntity.ok(seatList);
+		} catch (ServiceLayerException e) {
+			return (ResponseEntity<List<SeatArrangements>>) ResponseEntity.badRequest();
+		}
 	}
 
 	@PostMapping(value = "/rstbooking")
@@ -130,19 +131,18 @@ public class MyRestController {
 		String bookingStatus = "false";
 		if (status)
 			bookingStatus = "true";
-		else
-			throw new BookingFailException();
 		return new ResponseEntity<String>(bookingStatus, HttpStatus.OK);
 	}
 
+	@SuppressWarnings("unchecked")
 	@GetMapping(value = "/rsttickets", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<TicketsDetails> getTicketDetails() throws RuntimeException {
 		TicketsDetails ticketsDetails = ticketServices.getTicketDetails();
-		Optional<TicketsDetails> optional = Optional.ofNullable(ticketsDetails);
-
-		if (!optional.isPresent())
-			throw new TicketDetailsException();
-		return new ResponseEntity<TicketsDetails>(ticketsDetails, HttpStatus.OK);
+		try {
+			return ResponseEntity.ok(ticketsDetails);
+		} catch (ServiceLayerException e) {
+			return (ResponseEntity<TicketsDetails>) ResponseEntity.badRequest();
+		}
 	}
 
 }

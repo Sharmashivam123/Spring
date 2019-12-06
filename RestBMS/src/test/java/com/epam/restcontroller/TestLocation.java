@@ -20,7 +20,7 @@ class TestLocation {
 	@Test
 	void test() {
 		int i = 0;
-		RestAssured.baseURI = "http://localhost:8083/rstlocation?location=2";
+		RestAssured.baseURI = "http://localhost:8080/rstlocation?location=2";
 		RequestSpecification reqspecs = RestAssured.given();
 		Response response = reqspecs.get();
 		assertEquals(response.getStatusCode(), 200);

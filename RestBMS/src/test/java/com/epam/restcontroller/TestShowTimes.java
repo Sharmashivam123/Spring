@@ -16,7 +16,7 @@ class TestShowTimes {
 
 	@Test
 	void test() {
-		RestAssured.baseURI = "http://localhost:8083/rsttiming12";
+		RestAssured.baseURI = "http://localhost:8080/rsttiming12";
 		RequestSpecification reqspecs = RestAssured.given();
 		Response response = reqspecs.get();
 		assertEquals(response.getStatusCode(), 200);
