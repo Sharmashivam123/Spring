@@ -2,6 +2,7 @@ package com.epam.restcontroller;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -126,12 +127,13 @@ public class MyRestController {
 
 	@SuppressWarnings("unchecked")
 	@GetMapping(value = "/rstseats/{tier}")
-	public ResponseEntity<List<SeatArrangements>> getSeats(@PathVariable String tier) throws RuntimeException {
-		List<SeatArrangements> seatList = seatServices.getSeatRanges(tier);
+	public ResponseEntity<Map<SeatArrangements, Boolean>> getSeats(@PathVariable String tier) throws RuntimeException {
 		try {
-			return ResponseEntity.ok(seatList);
+			ResponseEntity<Map<SeatArrangements, Boolean>> response = new ResponseEntity<Map<SeatArrangements, Boolean>>(
+					seatServices.getSeatRanges(tier), HttpStatus.OK);
+			return response;
 		} catch (ServiceLayerException e) {
-			return (ResponseEntity<List<SeatArrangements>>) ResponseEntity.badRequest();
+			return (ResponseEntity<Map<SeatArrangements, Boolean>>) ResponseEntity.badRequest();
 		}
 	}
 

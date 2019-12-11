@@ -15,12 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.epam.bean.BookingDetails;
 import com.epam.bean.Movie;
 import com.epam.services.RestClientService;
-
+@WithMockUser("Spring")
 @SpringBootTest
 @AutoConfigureMockMvc
 class TestMovieController {
@@ -53,7 +54,7 @@ class TestMovieController {
 		List<Movie> movieList = Arrays.asList(movie1, movie2, movie3, movie4);
 
 		when(service.getAllMoviesAtLocation(1)).thenReturn(movieList);
-		mockmvc.perform(get("/movie")).andExpect(status().isOk())
+		mockmvc.perform(get("/movie?location=1")).andExpect(status().isOk())
 				.andExpect(model().attribute("movies", movieList)).andExpect((forwardedUrl("movie.jsp")));
 	}
 }

@@ -8,20 +8,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.epam.bean.BookingDetails;
 import com.epam.bean.SeatArrangements;
 import com.epam.services.SeatsServices;
-
+@WithMockUser("Spring")
 @SpringBootTest
 @AutoConfigureMockMvc
 class TestSeatController {
@@ -36,11 +37,11 @@ class TestSeatController {
 	@Test
 	public void testSeatController() throws Exception {
 		doNothing().when(bookingDetails).setTime(LocalTime.parse("22:15"));
-		List<SeatArrangements> silverList = new ArrayList<SeatArrangements>();
+		Map<SeatArrangements, Boolean> silverList = new HashMap<>();
 
-		List<SeatArrangements> goldList = new ArrayList<SeatArrangements>();
+		Map<SeatArrangements, Boolean> goldList = new HashMap<>();
 
-		List<SeatArrangements> platinumList = new ArrayList<SeatArrangements>();
+		Map<SeatArrangements, Boolean> platinumList = new HashMap<>();
 
 		when(service.getSeatRanges("silver")).thenReturn(silverList);
 		when(service.getSeatRanges("gold")).thenReturn(goldList);

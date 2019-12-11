@@ -2,6 +2,7 @@ package com.epam.restcontroller;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ class TestShowTimes {
 
 	@Test
 	void test() {
-		RestAssured.baseURI = "http://localhost:8080/rsttiming12";
+		RestAssured.baseURI = "http://localhost:8080/rest/rsttiming12/1/1/" + LocalDate.now();
 		RequestSpecification reqspecs = RestAssured.given();
 		Response response = reqspecs.get();
 		assertEquals(response.getStatusCode(), 200);

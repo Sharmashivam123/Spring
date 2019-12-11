@@ -18,7 +18,7 @@ class TestCity {
 	void test() {
 
 		int i = 0;
-		RestAssured.baseURI = "http://localhost:8080/rstcity";
+		RestAssured.baseURI = "http://localhost:8080/rest/rstcity";
 		RequestSpecification reqspecs = RestAssured.given();
 		Response response = reqspecs.get();
 		assertEquals(response.getStatusCode(), 200);

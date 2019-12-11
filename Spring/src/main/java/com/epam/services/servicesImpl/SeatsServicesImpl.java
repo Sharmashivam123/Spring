@@ -6,14 +6,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.epam.bean.SeatArrangements;
 import com.epam.ExceptionHandler.Exception.ServiceLayerException;
 import com.epam.bean.BookingDetails;
+import com.epam.bean.SeatArrangements;
 import com.epam.dao.BookingsDao;
 import com.epam.dao.SeatArrangementsDao;
 import com.epam.services.SeatsServices;
@@ -32,7 +34,7 @@ public class SeatsServicesImpl implements SeatsServices {
 	private LocalDate date;
 	private String[] seatArray;
 
-	public List<SeatArrangements> getSeatRanges(String tier) {
+	public Map<SeatArrangements, Boolean> getSeatRanges(String tier) {
 		movieId = bookingDetails.getMovieId();
 		theatreId = bookingDetails.getTheatreId();
 		time = bookingDetails.getTime();
@@ -67,6 +69,13 @@ public class SeatsServicesImpl implements SeatsServices {
 		unBookedSeatsList = optionalMap.get();
 		Optional.ofNullable(unBookedSeatsList).orElseThrow(
 				() -> new ServiceLayerException(ApplicationConstants.SELECTED_ELEMENT_NOT_FOUND.toString()));
-		return unBookedSeatsList;
+
+		Map<SeatArrangements, Boolean> seatStatusMap = new TreeMap<>();
+		for (SeatArrangements seat : seatList)
+			seatStatusMap.put(seat, true);
+
+		for (SeatArrangements seat : unBookedSeatsList)
+			seatStatusMap.put(seat, false);
+		return seatStatusMap;
 	}
 }

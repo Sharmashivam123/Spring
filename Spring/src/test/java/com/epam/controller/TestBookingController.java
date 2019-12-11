@@ -14,12 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.epam.bean.BookingDetails;
 import com.epam.bean.Bookings;
 import com.epam.services.RestClientService;
 
+@WithMockUser("Spring")
 @SpringBootTest
 @AutoConfigureMockMvc
 class TestBookingController {
@@ -46,8 +48,7 @@ class TestBookingController {
 		doNothing().when(bookingDetails).setUserName("shivam");
 		doNothing().when(bookingDetails).setPhone("9691061996");
 		when(service.processBooking(booking)).thenReturn("true");
-		mockmvc.perform(post("/booking")).andExpect(status().isOk())
-				.andExpect((forwardedUrl("booking.jsp")));
+		mockmvc.perform(post("/booking")).andExpect(status().isOk()).andExpect((forwardedUrl("booking.jsp")));
 	}
 
 }

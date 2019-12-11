@@ -17,7 +17,7 @@ class TestSeats {
 
 	@Test
 	void test() {
-		RestAssured.baseURI = "http://localhost:8080/rstseats/silver";
+		RestAssured.baseURI = "http://localhost:8080/rest/rstseats/silver";
 		RequestSpecification reqspecs = RestAssured.given();
 		Response response = reqspecs.request(Method.GET);
 		assertEquals(200, response.getStatusCode());

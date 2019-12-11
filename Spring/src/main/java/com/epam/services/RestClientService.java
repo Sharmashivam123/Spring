@@ -2,6 +2,7 @@ package com.epam.services;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import com.epam.bean.Bookings;
 import com.epam.bean.City;
@@ -24,7 +25,7 @@ public interface RestClientService {
 
 	public List<String> getAllTimings(int movieId, int theatreId, LocalDate selectedDate);
 
-	public List<SeatArrangements> getSeatRanges(String tier);
+	public Map<SeatArrangements, Boolean> getSeatRanges(String tier) throws Exception;
 
 	public String processBooking(Bookings bookings);
 

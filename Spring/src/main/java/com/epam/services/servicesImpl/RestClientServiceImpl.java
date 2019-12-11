@@ -1,8 +1,10 @@
 package com.epam.services.servicesImpl;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.jboss.logging.Logger;
 import org.springframework.core.ParameterizedTypeReference;
@@ -20,9 +22,11 @@ import com.epam.bean.Theatre;
 import com.epam.bean.TicketsDetails;
 import com.epam.services.RestClientService;
 import com.epam.util.Constants;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.KeyDeserializer;
 
 @Service
-public class RestClientServiceImpl implements RestClientService {
+public class RestClientServiceImpl extends KeyDeserializer implements RestClientService {
 
 	private static final Logger log = Logger.getLogger(RestClientServiceImpl.class);
 	RestTemplate rest = new RestTemplate();
@@ -84,13 +88,20 @@ public class RestClientServiceImpl implements RestClientService {
 		return Arrays.asList(responseList);
 	}
 
-	public List<SeatArrangements> getSeatRanges(String tier) {
+	public Map<SeatArrangements, Boolean> getSeatRanges(String tier) throws Exception {
 		StringBuilder str = new StringBuilder();
 		str.append(Constants.SEATRANGE_URL);
 		str.append(tier);
-		ResponseEntity<List<SeatArrangements>> responseList = rest.exchange(str.toString(), HttpMethod.GET, null,
-				new ParameterizedTypeReference<List<SeatArrangements>>() {
-				});
+		ResponseEntity<Map<SeatArrangements, Boolean>> responseList = null;
+		try {
+
+			responseList = rest.exchange(str.toString(), HttpMethod.GET, null,
+					new ParameterizedTypeReference<Map<SeatArrangements, Boolean>>() {
+					});
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		return responseList.getBody();
 	}
 
@@ -101,6 +112,12 @@ public class RestClientServiceImpl implements RestClientService {
 
 	public TicketsDetails getTicketDetails() {
 		return rest.getForObject(Constants.TICKET_URL, TicketsDetails.class);
+	}
+
+	@Override
+	public Map<SeatArrangements, Boolean> deserializeKey(String key, DeserializationContext ctxt) throws IOException {
+
+		return null;
 	}
 
 }

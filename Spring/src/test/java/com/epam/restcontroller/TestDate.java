@@ -17,7 +17,7 @@ class TestDate {
 	@Test
 	void test() {
 		int i = 0;
-		RestAssured.baseURI = "http://localhost:8080/rstdate";
+		RestAssured.baseURI = "http://localhost:8080/rest/rstdate";
 		RequestSpecification reqspecs = RestAssured.given();
 		Response response = reqspecs.get();
 		assertEquals(response.getStatusCode(), 200);

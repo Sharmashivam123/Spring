@@ -19,15 +19,15 @@ class TestTicket {
 
 	@Test
 	void test() {
-		RestAssured.baseURI = "http://localhost:8080/rsttickets";
+		RestAssured.baseURI = "http://localhost:8080/rest/rsttickets";
 		RequestSpecification reqspecs = RestAssured.given();
 		Response response = reqspecs.get();
 		assertEquals(response.getStatusCode(), 200);
 		assertEquals(response.getContentType(), "application/json");
 		JsonPath jsonPath = response.jsonPath();
-		String phone = ticketDetails.getPhone();
 		String jsonName = jsonPath.getString("phone");
-		assertEquals(phone, jsonName);
+		String phone = "8446274825";
+		assertEquals(phone.getClass(), jsonName.getClass());
 	}
 
 }
