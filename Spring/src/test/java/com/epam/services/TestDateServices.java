@@ -1,5 +1,6 @@
 package com.epam.services;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
@@ -12,8 +13,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.epam.dao.BookingDatesDao;
-import com.epam.services.servicesImpl.DateServicesImpl;
+import com.epam.repo.BookingDatesDao;
+import com.epam.services.impl.DateServicesImpl;
 
 class TestDateServices {
 	@InjectMocks
@@ -36,6 +37,7 @@ class TestDateServices {
 			dateList.add(index++, date.toString());
 		}
 		when(dates.getDates()).thenReturn(dateList);
+		assertThat(dateList);
 	}
 
 }

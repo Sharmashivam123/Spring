@@ -1,6 +1,7 @@
 package com.epam.util;
 
 public class Constants {
+	private Constants() {}
 
 	public static final String MOVIE_BY_LOCATION_QUERY = "SELECT * from movie"
 			+ " WHERE movieId IN (SELECT movieId from moviebylocation WHERE pincode =?1)";
@@ -21,4 +22,5 @@ public class Constants {
 	public static final String SEATRANGE_URL = "http://localhost:8080/rest/rstseats/";
 	public static final String BOOKING_URL = "http://localhost:8080/rest/rstbooking";
 	public static final String TICKET_URL = "http://localhost:8080/rest/rsttickets";
+	public static final String INDEX = "index";
 }

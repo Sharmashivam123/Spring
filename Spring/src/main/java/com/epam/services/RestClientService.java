@@ -25,7 +25,7 @@ public interface RestClientService {
 
 	public List<String> getAllTimings(int movieId, int theatreId, LocalDate selectedDate);
 
-	public Map<SeatArrangements, Boolean> getSeatRanges(String tier) throws Exception;
+	public Map<SeatArrangements, Boolean> getSeatRanges(String tier) ;
 
 	public String processBooking(Bookings bookings);
 

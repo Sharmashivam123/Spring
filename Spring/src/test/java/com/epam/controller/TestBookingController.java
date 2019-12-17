@@ -2,8 +2,7 @@ package com.epam.controller;
 
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDate;
@@ -48,7 +47,7 @@ class TestBookingController {
 		doNothing().when(bookingDetails).setUserName("shivam");
 		doNothing().when(bookingDetails).setPhone("9691061996");
 		when(service.processBooking(booking)).thenReturn("true");
-		mockmvc.perform(post("/booking")).andExpect(status().isOk()).andExpect((forwardedUrl("booking.jsp")));
+		mockmvc.perform(get("/booking")).andExpect(status().isBadRequest());
 	}
 
 }

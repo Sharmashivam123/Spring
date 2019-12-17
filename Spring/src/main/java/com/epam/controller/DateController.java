@@ -2,8 +2,6 @@ package com.epam.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,14 +18,14 @@ public class DateController {
 	private BookingDetails bookingDetails;
 	@Autowired
 	private RestClientService service;
-	private List<String> dateMap;
+
 	@Autowired
 	Credentials credentials;
 
 	@GetMapping("/date")
-	public ModelAndView doGet(HttpSession session, @RequestParam int theatre) {
+	public ModelAndView doGet(@RequestParam int theatre) {
 		ModelAndView model = new ModelAndView();
-
+		List<String> dateMap;
 		bookingDetails.setTheatreId(theatre);
 		dateMap = service.getAllDates();
 		model.addObject("dates", dateMap);

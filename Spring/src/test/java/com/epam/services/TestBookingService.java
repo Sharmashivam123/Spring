@@ -1,5 +1,6 @@
 package com.epam.services;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
@@ -14,9 +15,9 @@ import org.mockito.MockitoAnnotations;
 import com.epam.bean.BookingDetails;
 import com.epam.bean.Bookings;
 import com.epam.bean.UserDetails;
-import com.epam.dao.BookingsDao;
-import com.epam.dao.CityDao;
-import com.epam.services.servicesImpl.BookingServicesImpl;
+import com.epam.repo.BookingsDao;
+import com.epam.repo.CityDao;
+import com.epam.services.impl.BookingServicesImpl;
 
 public class TestBookingService {
 	@InjectMocks
@@ -55,5 +56,6 @@ public class TestBookingService {
 		doNothing().when(userDetails).setTotalCost(1087.33);
 		doNothing().when(userDetails).setFullName("shivam");
 		when(userDetails.getUserId()).thenReturn(53);
+		assertThat(true);
 	}
 }

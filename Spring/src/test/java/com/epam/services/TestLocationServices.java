@@ -15,8 +15,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import com.epam.bean.BookingDetails;
 import com.epam.bean.Location;
-import com.epam.dao.LocationDao;
-import com.epam.services.servicesImpl.LocationServicesImpl;
+import com.epam.repo.LocationDao;
+import com.epam.services.impl.LocationServicesImpl;
 
 class TestLocationServices {
 

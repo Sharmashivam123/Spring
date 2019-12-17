@@ -5,5 +5,5 @@ import java.util.List;
 import com.epam.bean.City;
 
 public interface CityServices {
-	public List<City> getAvailableCities()  throws RuntimeException;
+	public List<City> getAvailableCities() ;
 }

@@ -22,10 +22,9 @@ public class BookingController {
 	@Autowired
 	Bookings bookings;
 
-	@GetMapping(value = "/booking")
-	public ModelAndView doPost(@RequestParam String userName, String phone) {
+	@GetMapping(value = "booking")
+	public ModelAndView doPost(@RequestParam String userName, @RequestParam String phone) {
 		ModelAndView model = new ModelAndView();
-
 		bookingDetails.setUserName(userName);
 		bookingDetails.setPhone(phone);
 		bookings.setMovieId(bookingDetails.getMovieId());
@@ -33,22 +32,23 @@ public class BookingController {
 		bookings.setShowtiming(bookingDetails.getTime());
 		bookings.setShowdate(bookingDetails.getDate());
 		bookings.setTicketBooked(bookingDetails.getSeatCount());
-		String seatIds = "";
+		StringBuilder seatIds = new StringBuilder();
 		int ticketBooked = bookingDetails.getSeatCount();
-		String seatIdAndCost[] = bookingDetails.getCostAndSeatId();
+		String[] seatIdAndCost = bookingDetails.getCostAndSeatId();
 		for (int seat = 0; seat < ticketBooked; seat++) {
-			String seatIdAndCostArray[] = seatIdAndCost[seat].split(" ");
+			String[] seatIdAndCostArray = seatIdAndCost[seat].split(" ");
 			String seatId = seatIdAndCostArray[0] + " ";
-			seatIds += seatId;
+			seatIds.append(seatId);
 		}
-		bookings.setSeatId(seatIds);
+		bookings.setSeatId(seatIds.toString());
 
-		boolean bookingStatus = service.processBooking(bookings).equals("true") ? true : false;
+		boolean bookingStatus = false;
+		if (service.processBooking(bookings).equals("true"))
+			bookingStatus = true;
 
-		if (bookingStatus == true) {
+		if (bookingStatus) {
 			model.setViewName("booking");
 		}
-
 		return model;
 
 	}

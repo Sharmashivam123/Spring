@@ -13,8 +13,8 @@ import org.mockito.MockitoAnnotations;
 
 import com.epam.bean.BookingDetails;
 import com.epam.bean.Movie;
-import com.epam.dao.MovieDao;
-import com.epam.services.servicesImpl.MovieServicesImpl;
+import com.epam.repo.MovieDao;
+import com.epam.services.impl.MovieServicesImpl;
 
 class TestMovieServices {
 	@InjectMocks

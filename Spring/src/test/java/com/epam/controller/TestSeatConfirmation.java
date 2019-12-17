@@ -16,7 +16,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.epam.bean.BookingDetails;
-import com.epam.services.SeatConfirmationService;
+import com.epam.services.impl.SeatConfirmationServiceImpl;
 @WithMockUser("Spring")
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -27,7 +27,7 @@ class TestSeatConfirmation {
 	@MockBean
 	private BookingDetails bookingDetails;
 	@MockBean
-	private SeatConfirmationService service;
+	private SeatConfirmationServiceImpl service;
 
 	@Test
 	public void testSeatConfirmation() throws Exception {

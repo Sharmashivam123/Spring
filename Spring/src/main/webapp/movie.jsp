@@ -2,7 +2,8 @@
 	pageEncoding="ISO-8859-1" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>Available Movies</title>
@@ -43,7 +44,7 @@ input[type=submit] {
 <body>
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark w-100">
-		<a class="navbar-brand" href="#"><img src="logo.png" class="w-25" /></a>
+		<a class="navbar-brand" href="#"><img  alt="epam" src="logo.png" class="w-25" /></a>
 		<form action="/logout" method="get" class="ml-auto">
 			<button type="submit" value="logout" class="btn btn-danger my-auto"
 				onclick="clearlogin()">Logout</button>
@@ -52,7 +53,7 @@ input[type=submit] {
 
 	<div class="container-fluid text-center pt-5" id="book">
 		<div class="display-4 d-block mt-4" id="header">Choose from
-			Available Movies</div>
+			available movies</div>
 		<div id="registeration">
 			<form action="theatre" method="get" class="w-50 mx-auto">
 				<select name="movie" class="form-control mt-4">

@@ -15,8 +15,8 @@ class TestBooking {
 		RestAssured.baseURI = "http://localhost:8080/rest/rstbooking";
 		RequestSpecification reqspecs = RestAssured.given();
 		Response response = reqspecs.post();
-		assertEquals(response.getStatusCode(), 415);
-		assertEquals(response.getContentType(), "");
+		assertEquals(415, response.getStatusCode());
+		assertEquals("", response.getContentType());
 	}
 
 }

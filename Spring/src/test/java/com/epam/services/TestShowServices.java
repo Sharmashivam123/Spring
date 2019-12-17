@@ -12,8 +12,8 @@ import org.mockito.MockitoAnnotations;
 
 import com.epam.bean.BookingDetails;
 import com.epam.bean.ShowTimings;
-import com.epam.dao.ShowTimesDao;
-import com.epam.services.servicesImpl.ShowTimingServicesImpl;
+import com.epam.repo.ShowTimesDao;
+import com.epam.services.impl.ShowTimingServicesImpl;
 
 class TestShowServices {
 	@InjectMocks

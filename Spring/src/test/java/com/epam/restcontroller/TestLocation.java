@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-
 import io.restassured.path.json.JsonPath;
 
 import io.restassured.RestAssured;
@@ -23,8 +22,8 @@ class TestLocation {
 		RestAssured.baseURI = "http://localhost:8080/rest/rstlocation/1";
 		RequestSpecification reqspecs = RestAssured.given();
 		Response response = reqspecs.get();
-		assertEquals(response.getStatusCode(), 200);
-		assertEquals(response.getContentType(), "application/json");
+		assertEquals(200, response.getStatusCode());
+		assertEquals("application/json", response.getContentType());
 		JsonPath jsonPath = response.jsonPath();
 		List<Integer> areaList = new ArrayList<>(Arrays.asList(500081, 500082, 500083, 500084, 500085));
 		List<Integer> jsonLocation = jsonPath.getList("pin");

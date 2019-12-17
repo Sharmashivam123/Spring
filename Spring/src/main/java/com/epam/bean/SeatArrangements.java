@@ -25,7 +25,7 @@ public class SeatArrangements implements Comparable<SeatArrangements> {
 	}
 
 	public void setTier(String tier) {
-		this.tier = tier;
+		this.tier = tier; 
 	}
 
 	public double getCost() {
@@ -40,4 +40,5 @@ public class SeatArrangements implements Comparable<SeatArrangements> {
 	public int compareTo(SeatArrangements o) {
 		return this.seatId.compareTo(o.seatId);
 	}
+
 }

@@ -21,20 +21,19 @@ public class MovieController {
 	private BookingDetails bookingDetails;
 	@Autowired
 	private RestClientService services;
-	private List<Movie> listMovie;
+
 	@Autowired
 	Credentials credentials;
 
 	@GetMapping("/movie")
 	public ModelAndView doGet(HttpSession session, @RequestParam int location) {
 		ModelAndView model = new ModelAndView();
-
+		List<Movie> listMovie;
 		bookingDetails.setPincode(location);
 		listMovie = services.getAllMoviesAtLocation(location);
 		model.addObject("movies", listMovie);
 
 		model.setViewName("movie");
-
 		return model;
 	}
 }

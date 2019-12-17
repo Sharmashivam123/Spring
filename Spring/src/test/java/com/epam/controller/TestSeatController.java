@@ -21,10 +21,11 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.epam.bean.BookingDetails;
 import com.epam.bean.SeatArrangements;
-import com.epam.services.SeatsServices;
-@WithMockUser("Spring")
+import com.epam.services.impl.SeatsServicesImpl;
+
 @SpringBootTest
 @AutoConfigureMockMvc
+@WithMockUser("Spring")
 class TestSeatController {
 
 	@Autowired
@@ -32,7 +33,7 @@ class TestSeatController {
 	@MockBean
 	private BookingDetails bookingDetails;
 	@MockBean
-	private SeatsServices service;
+	private SeatsServicesImpl service;
 
 	@Test
 	public void testSeatController() throws Exception {

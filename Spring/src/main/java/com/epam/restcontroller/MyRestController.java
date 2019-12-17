@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.epam.ExceptionHandler.Exception.ServiceLayerException;
 import com.epam.bean.Bookings;
 import com.epam.bean.City;
 import com.epam.bean.Location;
@@ -23,6 +21,7 @@ import com.epam.bean.Movie;
 import com.epam.bean.SeatArrangements;
 import com.epam.bean.Theatre;
 import com.epam.bean.TicketsDetails;
+import com.epam.exceptions.handlers.ServiceLayerException;
 import com.epam.services.BookingServices;
 import com.epam.services.CityServices;
 import com.epam.services.DateServices;
@@ -57,9 +56,8 @@ public class MyRestController {
 	private BookingServices bookingServices;
 
 	@GetMapping(value = "/rstcity", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public ResponseEntity<List<City>> getAllCities() throws RuntimeException {
-		System.out.println(cityServices.getAvailableCities());
-		return new ResponseEntity<List<City>>(cityServices.getAvailableCities(), HttpStatus.OK);
+	public List<City> getAllCities() {
+		return cityServices.getAvailableCities();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -78,7 +76,7 @@ public class MyRestController {
 	@SuppressWarnings("unchecked")
 	@GetMapping(value = "/rstmovie/{location}", produces = { MediaType.APPLICATION_JSON_VALUE,
 			MediaType.APPLICATION_XML_VALUE })
-	public ResponseEntity<List<Movie>> getAllMoviesAtLocation(@PathVariable int location) throws RuntimeException {
+	public ResponseEntity<List<Movie>> getAllMoviesAtLocation(@PathVariable int location)  {
 		List<Movie> movieList = movieServices.getMoviesAtLocation(location);
 		try {
 			return ResponseEntity.ok(movieList);
@@ -90,7 +88,7 @@ public class MyRestController {
 	@SuppressWarnings("unchecked")
 	@GetMapping(value = "/rsttheatre/{movieId}", produces = { MediaType.APPLICATION_JSON_VALUE,
 			MediaType.APPLICATION_XML_VALUE })
-	public ResponseEntity<List<Theatre>> getAllTheatresForMovie(@PathVariable int movieId) throws RuntimeException {
+	public ResponseEntity<List<Theatre>> getAllTheatresForMovie(@PathVariable int movieId) {
 		List<Theatre> theatreList = theatreServices.getTheatreListByMovie(movieId);
 		try {
 			return ResponseEntity.ok(theatreList);
@@ -101,7 +99,7 @@ public class MyRestController {
 
 	@SuppressWarnings("unchecked")
 	@GetMapping(value = "/rstdate", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public ResponseEntity<String[]> getAllDatesForMovie() throws RuntimeException {
+	public ResponseEntity<String[]> getAllDatesForMovie() {
 		String[] dateArray = (String[]) dateServices.getAvailableDates()
 				.toArray(new String[dateServices.getAvailableDates().size()]);
 		try {
@@ -114,7 +112,7 @@ public class MyRestController {
 	@SuppressWarnings("unchecked")
 	@GetMapping(value = "/rsttiming12/{movieId}/{theatreId}/{date}")
 	public ResponseEntity<String[]> getAllTimingsForShows(@PathVariable String movieId, @PathVariable String theatreId,
-			@PathVariable String date) throws RuntimeException {
+			@PathVariable String date) {
 		List<String> list = showTimingServices.getShowTiming(Integer.parseInt(movieId), Integer.parseInt(theatreId),
 				LocalDate.parse(date));
 		String[] timeList = (String[]) list.toArray(new String[list.size()]);
@@ -125,30 +123,24 @@ public class MyRestController {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@GetMapping(value = "/rstseats/{tier}")
-	public ResponseEntity<Map<SeatArrangements, Boolean>> getSeats(@PathVariable String tier) throws RuntimeException {
-		try {
-			ResponseEntity<Map<SeatArrangements, Boolean>> response = new ResponseEntity<Map<SeatArrangements, Boolean>>(
-					seatServices.getSeatRanges(tier), HttpStatus.OK);
-			return response;
-		} catch (ServiceLayerException e) {
-			return (ResponseEntity<Map<SeatArrangements, Boolean>>) ResponseEntity.badRequest();
-		}
+	public Map<SeatArrangements, Boolean> getSeats(@PathVariable String tier) {
+
+		return seatServices.getSeatRanges(tier);
 	}
 
 	@PostMapping(value = "/rstbooking")
-	public ResponseEntity<String> getBookingStatus(@RequestBody Bookings booking) throws RuntimeException {
+	public String getBookingStatus(@RequestBody Bookings booking) {
 		boolean status = bookingServices.processBooking(booking);
 		String bookingStatus = "false";
 		if (status)
 			bookingStatus = "true";
-		return new ResponseEntity<String>(bookingStatus, HttpStatus.OK);
+		return bookingStatus;
 	}
 
 	@SuppressWarnings("unchecked")
 	@GetMapping(value = "/rsttickets", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public ResponseEntity<TicketsDetails> getTicketDetails() throws RuntimeException {
+	public ResponseEntity<TicketsDetails> getTicketDetails() {
 		TicketsDetails ticketsDetails = ticketServices.getTicketDetails();
 		try {
 			return ResponseEntity.ok(ticketsDetails);

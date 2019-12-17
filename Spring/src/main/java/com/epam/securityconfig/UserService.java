@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.epam.bean.Credentials;
-import com.epam.dao.UserDao;
+import com.epam.repo.UserDao;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -18,7 +18,7 @@ public class UserService implements UserDetailsService {
 	UserDao userRepo;
 
 	@Override
-	public UserDetails loadUserByUsername(String user) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String user)  {
 		Optional<Credentials> userw = userRepo.findById(user);
 		return new MyUserDetails(userw.orElseThrow(() -> new UsernameNotFoundException("User not found!!!")));
 

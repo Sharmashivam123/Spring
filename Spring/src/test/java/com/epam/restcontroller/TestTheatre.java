@@ -20,8 +20,8 @@ class TestTheatre {
 		RestAssured.baseURI = "http://localhost:8080/rest/rsttheatre/1";
 		RequestSpecification reqspecs = RestAssured.given();
 		Response response = reqspecs.get();
-		assertEquals(response.getStatusCode(), 200);
-		assertEquals(response.getContentType(), "application/json");
+		assertEquals(200, response.getStatusCode());
+		assertEquals("application/json", response.getContentType());
 		JsonPath jsonPath = response.jsonPath();
 		List<String> theatreList = new ArrayList<>();
 		theatreList.add("pvr cyberabad");

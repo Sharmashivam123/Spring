@@ -12,8 +12,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.epam.bean.TicketsDetails;
-import com.epam.dao.TicketDetailsDao;
-import com.epam.services.servicesImpl.TicketServicesImpl;
+import com.epam.repo.TicketDetailsDao;
+import com.epam.services.impl.TicketServicesImpl;
 
 class TestTicketDetailsService {
 

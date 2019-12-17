@@ -20,7 +20,7 @@ public class UserDetails {
 	}
 
 	public void setUserId(int userId) {
-		this.userId = userId;
+		this.userId = userId; 
 	}
 
 	private String phone;

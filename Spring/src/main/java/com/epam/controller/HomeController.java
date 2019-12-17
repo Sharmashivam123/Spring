@@ -13,7 +13,7 @@ public class HomeController {
 	Credentials credentials;
 
 	@GetMapping(value = "/home")
-	public ModelAndView Get() {
+	public ModelAndView getData() {
 		ModelAndView model = new ModelAndView();
 
 		model.setViewName("index");

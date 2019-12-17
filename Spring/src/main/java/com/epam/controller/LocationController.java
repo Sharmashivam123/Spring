@@ -1,7 +1,5 @@
 package com.epam.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,9 +20,8 @@ public class LocationController {
 	Credentials credentials;
 
 	@GetMapping(value = "/location")
-	public ModelAndView doGet(HttpSession session, @RequestParam int city) {
+	public ModelAndView doGet(@RequestParam(required = false) int city) {
 		ModelAndView model = new ModelAndView();
-
 		bookingDetails.setCityId(city);
 		model.addObject("locations", service.getAreaPincodeByCity(city));
 

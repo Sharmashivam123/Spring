@@ -20,8 +20,8 @@ class TestDate {
 		RestAssured.baseURI = "http://localhost:8080/rest/rstdate";
 		RequestSpecification reqspecs = RestAssured.given();
 		Response response = reqspecs.get();
-		assertEquals(response.getStatusCode(), 200);
-		assertEquals(response.getContentType(), "application/json");
+		assertEquals(200, response.getStatusCode());
+		assertEquals("application/json", response.getContentType());
 		JsonPath jsonPath = response.jsonPath();
 		String[] date = new String[3];
 		date[0] = (LocalDate.now()).toString();

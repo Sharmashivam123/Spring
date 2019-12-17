@@ -14,8 +14,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.epam.bean.City;
-import com.epam.dao.CityDao;
-import com.epam.services.servicesImpl.CityServicesImpl;
+import com.epam.repo.CityDao;
+import com.epam.services.impl.CityServicesImpl;
 
 class TestCityServices {
 

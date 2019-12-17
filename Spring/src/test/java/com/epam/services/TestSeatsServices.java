@@ -15,9 +15,9 @@ import org.mockito.MockitoAnnotations;
 
 import com.epam.bean.BookingDetails;
 import com.epam.bean.SeatArrangements;
-import com.epam.dao.BookingsDao;
-import com.epam.dao.SeatArrangementsDao;
-import com.epam.services.servicesImpl.SeatsServicesImpl;
+import com.epam.repo.BookingsDao;
+import com.epam.repo.SeatArrangementsDao;
+import com.epam.services.impl.SeatsServicesImpl;
 
 class TestSeatsServices {
 	@InjectMocks

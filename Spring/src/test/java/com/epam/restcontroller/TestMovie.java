@@ -20,8 +20,8 @@ class TestMovie {
 		RestAssured.baseURI = "http://localhost:8080/rest/rstmovie/1";
 		RequestSpecification reqspecs = RestAssured.given();
 		Response response = reqspecs.get();
-		assertEquals(response.getStatusCode(), 200);
-		assertEquals(response.getContentType(), "application/json");
+		assertEquals(200, response.getStatusCode());
+		assertEquals("application/json", response.getContentType());
 		JsonPath jsonPath = response.jsonPath();
 		List<String> movieList = new ArrayList<>();
 		movieList.add("war");

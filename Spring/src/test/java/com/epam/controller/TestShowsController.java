@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.epam.bean.BookingDetails;
 import com.epam.services.RestClientService;
+
 @WithMockUser("Spring")
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -44,10 +46,10 @@ class TestShowsController {
 		timeList.add(1, time2);
 		timeList.add(2, time3);
 		timeList.add(3, time4);
-
-		when(service.getAllTimings(1, 1, LocalDate.now())).thenReturn(timeList);
-		mockmvc.perform(get("/timings")).andExpect(status().isOk()).andExpect(model().attribute("shows", timeList))
-				.andExpect((forwardedUrl("shows.jsp")));
+		when(service.getAllTimings(Mockito.anyInt(), Mockito.anyInt(), Mockito.any(LocalDate.class)))
+				.thenReturn(timeList);
+		mockmvc.perform(get("/timings?date=2019-12-13")).andExpect(status().isOk())
+				.andExpect(model().attribute("shows", timeList)).andExpect((forwardedUrl("shows.jsp")));
 	}
 
 }

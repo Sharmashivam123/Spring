@@ -13,8 +13,8 @@ import org.mockito.MockitoAnnotations;
 
 import com.epam.bean.BookingDetails;
 import com.epam.bean.Theatre;
-import com.epam.dao.TheatreDao;
-import com.epam.services.servicesImpl.TheatreServicesImpl;
+import com.epam.repo.TheatreDao;
+import com.epam.services.impl.TheatreServicesImpl;
 
 class TestTheatreServices {
 	@InjectMocks

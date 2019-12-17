@@ -8,7 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.epam.services.servicesImpl.PriceCalculationServicesImpl;
+import com.epam.services.impl.PriceCalculationServicesImpl;
 import com.epam.util.PriceCalculation;
 
 class TestPriceCalculationService {

@@ -2,7 +2,8 @@
 	pageEncoding="ISO-8859-1" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>Available Seats</title>
@@ -40,6 +41,10 @@ else
 	text-align: center;
 }
 
+#tableheader {
+	display: none;
+}
+
 input[type=submit] {
 	font-size: 1.2rem;
 }
@@ -65,12 +70,17 @@ input[type=checkbox] {
 .myClass {
 	text-align: center;
 }
+
+*::after, *::before {
+	display: none !important;
+}
 </style>
 
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark w-100">
-		<a class="navbar-brand" href="#"><img src="logo.png" class="w-25" /></a>
+		<a class="navbar-brand" href="#"><img alt="epam" src="logo.png"
+			class="w-25" /></a>
 		<form action="/logout" method="get" class="ml-auto">
 			<button type="submit" value="logout" class="btn btn-danger my-auto"
 				onclick="clearlogin()">Logout</button>
@@ -87,6 +97,8 @@ input[type=checkbox] {
 				<br> <br>
 				<div class="check text-justify d-flex align-content-center  py-2">
 					<table>
+						<caption></caption>
+						<th id="tableheader"></th>
 						<tr>
 							<td class="myClass p-3"><span class="h5">Silver </span></td>
 						</tr>
@@ -94,6 +106,8 @@ input[type=checkbox] {
 					<c:forEach var="silver" items="${silverSeats}">
 						<c:if test="${not silver.value}">
 							<table>
+								<caption></caption>
+								<th id="tableheader"></th>
 								<tr>
 									<td class="myClass"><input type="checkbox" name="seats"
 										class="custom-control custom-checkbox"
@@ -107,6 +121,8 @@ input[type=checkbox] {
 						<c:if test="${silver.value}">
 
 							<table>
+								<caption></caption>
+								<th id="tableheader"></th>
 								<tr>
 									<td class="myClass"><input type="checkbox" name="seats"
 										class="custom-control custom-checkbox mt-1"
@@ -122,6 +138,8 @@ input[type=checkbox] {
 				</div>
 				<div class="check text-justify d-flex align-content-center  py-2">
 					<table>
+						<caption></caption>
+						<th id="tableheader"></th>
 						<tr>
 							<td class="myClass  p-3"><span class="h5">Gold </span></td>
 						</tr>
@@ -129,6 +147,8 @@ input[type=checkbox] {
 					<c:forEach var="gold" items="${goldSeats}">
 						<c:if test="${not gold.value}">
 							<table>
+								<caption></caption>
+								<th id="tableheader"></th>
 								<tr>
 									<td class="myClass"><input type="checkbox" name="seats"
 										class="custom-control custom-checkbox"
@@ -142,14 +162,17 @@ input[type=checkbox] {
 						<c:if test="${gold.value}">
 
 							<table>
+								<caption></caption>
+								<th id="tableheader"></th>
 								<tr>
 									<td class="myClass"><input type="checkbox" name="seats"
 										class="custom-control custom-checkbox mt-1"
-										value="${gold.key.seatId} ${gold.key.cost}"> <label
-										class="custom-control-label text-white" for="customCheck1"
-										disabled>${gold.key.seatId}</label>
+										value="${gold.key.seatId} ${gold.key.cost}" disabled>
+										<label class="custom-control-label text-white"
+										for="customCheck1">${gold.key.seatId}</label>
 										<div class="text-white">${gold.key.cost}</div></td>
 								</tr>
+								</th>
 							</table>
 
 						</c:if>
@@ -158,6 +181,8 @@ input[type=checkbox] {
 				<div class="check text-justify d-flex align-content-center py-2">
 
 					<table>
+						<caption></caption>
+						<th id="tableheader"></th>
 						<tr>
 							<td class="myClass  p-3"><span class="h5">Platinum </span></td>
 						</tr>
@@ -165,10 +190,13 @@ input[type=checkbox] {
 					<c:forEach var="platinum" items="${platinumSeats}">
 						<c:if test="${not platinum.value}">
 							<table>
+								<caption></caption>
+								<th id="tableheader"></th>
 								<tr>
 									<td class="myClass"><input type="checkbox" name="seats"
 										class="custom-control custom-checkbox"
-										value="${platinum.key.seatId} ${platinum.key.cost}"> <label
+										value="${platinum.key.seatId} ${platinum.key.cost}"
+										id="customCheck1"> <label
 										class="custom-control-label text-white" for="customCheck1">${platinum.key.seatId}</label>
 										<div class="text-white">${platinum.key.cost}</div></td>
 								</tr>
@@ -178,12 +206,14 @@ input[type=checkbox] {
 						<c:if test="${platinum.value}">
 
 							<table>
+								<caption></caption>
+								<th id="tableheader"></th>
 								<tr>
 									<td class="myClass"><input type="checkbox" name="seats"
 										class="custom-control custom-checkbox mt-1"
-										value="${platinum.key.seatId} ${platinum.key.cost}" disabled>
-										<label class="custom-control-label text-white"
-										for="customCheck1">${platinum.key.seatId}</label>
+										value="${platinum.key.seatId} ${platinum.key.cost}"
+										id="customCheck1" disabled> <label
+										class="custom-control-label text-white" for="customCheck1">${platinum.key.seatId}</label>
 										<div class="text-white">${platinum.key.cost}</div></td>
 								</tr>
 							</table>
@@ -232,23 +262,4 @@ input[type=checkbox] {
 	</script>
 </body>
 </html>
-
-
-<!-- input type="checkbox" name="seats" class="custom-control custom-checkbox"
-								value="${silver.key.seatId} ${silver.key.cost}">
-								 <label class="custom-control-label" for="customCheck1">${silver.key.seatId}</label>
-
-
-
-
-
-<table>
-	    <tr>
-			<td class="myClass">
-				<label class="custom-control-label" for="customCheck1">${silver.key.seatId}</label>
-					<input type="checkbox" name="seats" class="custom-control custom-checkbox"
-							value="${silver.key.seatId} ${silver.key.cost}">
-			</td>
-		</tr>
-</table-->
 

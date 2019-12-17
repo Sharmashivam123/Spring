@@ -20,8 +20,8 @@ class TestShowTimes {
 		RestAssured.baseURI = "http://localhost:8080/rest/rsttiming12/1/1/" + LocalDate.now();
 		RequestSpecification reqspecs = RestAssured.given();
 		Response response = reqspecs.get();
-		assertEquals(response.getStatusCode(), 200);
-		assertEquals(response.getContentType(), "application/json");
+		assertEquals(200, response.getStatusCode());
+		assertEquals("application/json", response.getContentType());
 		JsonPath jsonPath = response.jsonPath();
 		List<String> showTime = new ArrayList<>();
 		showTime.add("10:00");

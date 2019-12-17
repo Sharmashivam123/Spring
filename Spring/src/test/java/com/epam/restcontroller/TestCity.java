@@ -21,8 +21,8 @@ class TestCity {
 		RestAssured.baseURI = "http://localhost:8080/rest/rstcity";
 		RequestSpecification reqspecs = RestAssured.given();
 		Response response = reqspecs.get();
-		assertEquals(response.getStatusCode(), 200);
-		assertEquals(response.getContentType(), "application/json");
+		assertEquals(200,response.getStatusCode());
+		assertEquals("application/json",response.getContentType());
 		JsonPath jsonPath = response.jsonPath();
 		List<String> city = new ArrayList<>();
 		city.add("Hyderabad");

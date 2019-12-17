@@ -21,11 +21,9 @@ public class TicketsDetailController {
 	@GetMapping("/tickets")
 	public ModelAndView doGet() {
 		ModelAndView model = new ModelAndView();
-
 		ticketDetails = service.getTicketDetails();
 		model.addObject("tickets", ticketDetails);
 		model.setViewName("ticket");
-
 		return model;
 	}
 }

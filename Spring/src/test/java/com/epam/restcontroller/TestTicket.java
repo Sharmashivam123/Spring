@@ -22,8 +22,8 @@ class TestTicket {
 		RestAssured.baseURI = "http://localhost:8080/rest/rsttickets";
 		RequestSpecification reqspecs = RestAssured.given();
 		Response response = reqspecs.get();
-		assertEquals(response.getStatusCode(), 200);
-		assertEquals(response.getContentType(), "application/json");
+		assertEquals(200,response.getStatusCode());
+		assertEquals("application/json", response.getContentType());
 		JsonPath jsonPath = response.jsonPath();
 		String jsonName = jsonPath.getString("phone");
 		String phone = "8446274825";
