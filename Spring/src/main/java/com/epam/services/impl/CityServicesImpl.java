@@ -14,7 +14,7 @@ public class CityServicesImpl implements CityServices {
 	@Autowired
 	private CityDao cityDao;
 
-	public List<City> getAvailableCities()  {
+	public List<City> getAvailableCities() {
 		return (List<City>) cityDao.findAll();
 	}
 

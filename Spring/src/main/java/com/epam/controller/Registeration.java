@@ -12,13 +12,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.epam.bean.Credentials;
 import com.epam.mailconfig.MailService;
 import com.epam.securityconfig.MyUserDetails;
-import com.epam.services.UserService;
+import com.epam.services.RestClientService;
 import com.epam.util.Constants;
 
 @Controller
 public class Registeration {
 	@Autowired
-	UserService userService;
+	RestClientService service;
 	@Autowired
 	Credentials credential;
 	@Autowired
@@ -56,14 +56,14 @@ public class Registeration {
 			int rand = random.nextInt(100000) + 999999;
 			cred.setStatus(0);
 			cred.setMyhash(String.valueOf(rand));
-			cred = userService.registerUser(cred);
+			cred = service.registerUser(cred);
 			if (cred == null) {
 				model.addObject("msg", "username present");
 				model.addObject("status", 0);
 			} else {
 				model.addObject("msg", "Registeration Successful waiting for confirmation");
 				model.addObject("status", 1);
-				mailService.sendVerificationMail();
+				mailService.sendVerificationMail(cred.getUser(),cred.getMyhash());
 			}
 			model.setViewName("confirmation");
 		} catch (Exception e) {
@@ -71,7 +71,7 @@ public class Registeration {
 			if (s > 1)
 				model.setViewName("register");
 		}
-		return model;
+ 		return model;
 	}
 
 	@GetMapping("/confirm")
@@ -87,7 +87,7 @@ public class Registeration {
 			else
 				throw new Exception();
 
-			credential = userService.getUserData(username);
+			credential = service.getUserData(username);
 			status = credential.getStatus();
 			if (status == 1) {
 				model.setViewName(Constants.INDEX);
@@ -116,7 +116,7 @@ public class Registeration {
 				username = ((MyUserDetails) principal).getUsername();
 			else
 				throw new Exception();
-			credential = userService.getUserData(username);
+			credential = service.getUserData(username);
 			if (credential.getStatus() == 1)
 				throw new Exception();
 			if (!credential.getMyhash().equals(otp)) {
@@ -126,7 +126,7 @@ public class Registeration {
 			} else {
 
 				credential.setStatus(1);
-				credential = userService.update(credential);
+				credential = service.update(credential);
 				model.addObject("status", credential.getStatus());
 				model.setViewName(Constants.INDEX);
 			}

@@ -13,27 +13,26 @@ public class MailService {
 	private static final Logger log = Logger.getLogger(MailConfig.class);
 	@Autowired
 	Credentials cred;
-
 	@Autowired
 	private JavaMailSender javaMailSender;
 
-	public void sendVerificationMail() {
+	public void sendVerificationMail(String user, String otp) {
 		log.info("inside mail");
 		try {
 			SimpleMailMessage email = new SimpleMailMessage();
-			email.setTo(cred.getUser());
+			email.setTo(user);
 			email.setFrom("shivamwayword@gmail.com");
 			email.setSubject("Confirmation Mail");
-			email.setText(getConfirmationMailBody());
+			email.setText(getConfirmationMailBody(otp));
 			javaMailSender.send(email);
 		} catch (Exception e) {
 			return;
 		}
 	}
 
-	public String getConfirmationMailBody() {
+	public String getConfirmationMailBody(String otp) {
 		String header = "Please carry the otp for activating your account\n\n";
-		String activationLink = "your OTP is :: " + cred.getMyhash();
+		String activationLink = "your OTP is :: " + otp;
 		return header + "\n\n" + activationLink;
 	}
 }

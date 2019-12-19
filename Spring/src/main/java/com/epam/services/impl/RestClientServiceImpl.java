@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.epam.bean.Bookings;
 import com.epam.bean.City;
+import com.epam.bean.Credentials;
 import com.epam.bean.Location;
 import com.epam.bean.Movie;
 import com.epam.bean.SeatArrangements;
@@ -101,6 +102,25 @@ public class RestClientServiceImpl implements RestClientService {
 
 	public TicketsDetails getTicketDetails() {
 		return rest.getForObject(Constants.TICKET_URL, TicketsDetails.class);
+	}
+
+	@Override
+	public Credentials getUserData(String user) {
+		StringBuilder str = new StringBuilder();
+		str.append(Constants.GET_USER_URL);
+		str.append(user);
+		return rest.getForObject(str.toString(), Credentials.class);
+	}
+
+	@Override
+	public Credentials update(Credentials credentials) {
+		return rest.postForObject(Constants.UPDATE_URL, credentials, Credentials.class);
+	}
+
+	@Override
+	public Credentials registerUser(Credentials credentials) {
+		log.info("inside registeration user in restclient");
+		return rest.postForObject(Constants.REGISTER_URL, credentials, Credentials.class);
 	}
 
 }

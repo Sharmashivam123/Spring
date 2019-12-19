@@ -28,10 +28,8 @@ public class SeatConfirmController {
 
 	@GetMapping("/confirmation")
 	public ModelAndView doGet(@RequestParam String seats) {
-		ModelAndView model = new ModelAndView();
 		String username = "";
-		Optional<String> seatsOptional = Optional.ofNullable(seats);
-		service.setSeatIdAndCostList(seatsOptional);
+		ModelAndView model = new ModelAndView();
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (principal instanceof MyUserDetails)
 			username = ((MyUserDetails) principal).getUsername();
@@ -39,11 +37,19 @@ public class SeatConfirmController {
 			username = principal.toString();
 		}
 		credentials = user.getUserData(username);
-		model.addObject("user", credentials.getUser());
-		model.addObject("phone", credentials.getPhone());
-		model.addObject("bookings", bookingDetails);
-		model.setViewName("user");
-
+		try {
+			if (credentials.getStatus() == 0)
+				throw new Exception();
+			Optional<String> seatsOptional = Optional.ofNullable(seats);
+			service.setSeatIdAndCostList(seatsOptional);
+			model.addObject("user", credentials.getUser());
+			model.addObject("phone", credentials.getPhone());
+			model.addObject("bookings", bookingDetails);
+			model.setViewName("user");
+		} catch (Exception e) {
+			model.addObject("status", credentials.getStatus());
+			model.setViewName("index");
+		}
 		return model;
 	}
 }

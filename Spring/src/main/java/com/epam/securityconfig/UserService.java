@@ -18,8 +18,9 @@ public class UserService implements UserDetailsService {
 	UserDao userRepo;
 
 	@Override
-	public UserDetails loadUserByUsername(String user)  {
-		Optional<Credentials> userw = userRepo.findById(user);
+	public UserDetails loadUserByUsername(String username)  {
+		
+		Optional<Credentials> userw = userRepo.findById(username);
 		return new MyUserDetails(userw.orElseThrow(() -> new UsernameNotFoundException("User not found!!!")));
 
 	}

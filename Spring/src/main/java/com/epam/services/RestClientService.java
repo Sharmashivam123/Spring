@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.epam.bean.Bookings;
 import com.epam.bean.City;
+import com.epam.bean.Credentials;
 import com.epam.bean.Location;
 import com.epam.bean.Movie;
 import com.epam.bean.SeatArrangements;
@@ -25,9 +26,15 @@ public interface RestClientService {
 
 	public List<String> getAllTimings(int movieId, int theatreId, LocalDate selectedDate);
 
-	public Map<SeatArrangements, Boolean> getSeatRanges(String tier) ;
+	public Map<SeatArrangements, Boolean> getSeatRanges(String tier);
 
 	public String processBooking(Bookings bookings);
 
 	public TicketsDetails getTicketDetails();
+
+	public Credentials getUserData(String user);
+
+	public Credentials update(Credentials credentials);
+
+	public Credentials registerUser(Credentials credential);
 }
