@@ -23,4 +23,9 @@ public class LocationServicesImpl implements LocationServices {
 				() -> new ServiceLayerException(ApplicationConstants.SELECTED_ELEMENT_NOT_FOUND.toString()));
 
 	}
+
+	@Override
+	public List<Location> getAll() {
+		return (List<Location>) areaDao.findAll();
+	}
 }

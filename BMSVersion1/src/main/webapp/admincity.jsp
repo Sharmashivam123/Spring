@@ -8,22 +8,7 @@
 <title>BMS Admin</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<script>
-	var storage = window.sessionStorage;
-	window.onload = check();
-	function check() {
-		if (!storage.getItem('path'))
-			window.location.replace('home.jsp');
-		var path = JSON.parse(storage.getItem('path'));
-		if (!path.includes('home.jsp'))
-			window.location.replace(path[path.length - 1]);
-		else {
-			path.push('admincity.jsp');
-			storage.setItem('path', JSON.stringify(path));
-		}
 
-	}
-</script>
 
 <style>
 #book {
@@ -50,26 +35,38 @@ input[type=submit] {
 		</form>
 	</nav>
 	<div class="container-fluid text-center pt-5" id="book">
-		<div class="display-4 d-block mt-4" id="header">Choose from
-			Available cities</div>
+		<div class="display-4 d-block mt-4" id="header">Cities</div>
 		<div id="registeration">
-			<form action="location" method="get" class="w-50 mx-auto">
-				<table name="city" class="form-control mt-4">
+			<table name="city" class="form-control mt-4">
+				<tr>
+					<th>City Id</th>
+					<th>City Name</th>
+					<th>update</th>
+					<th>delete</th>
+				</tr>
+				<c:forEach var="city" items="${cityList}">
 					<tr>
-						<th>City Id</th>
-						<th>City Name</th>
+						<form action="admincityupdt" method="get" class="w-50 mx-auto">
+						<td><input type="text" name="cityId" value="${city.cityId}"></td>
+						<td><input type="text" name="cityName"
+							value="${city.cityName}"></td>
+						<td><input type="submit" name="update" value="update"></td>
+						</form>
+						<form action="admincitydlt" method="get" class="w-50 mx-auto">
+							<input type="hidden" value="${city.cityId}" name="cityId">
+							<td><input type="submit" name="delete" value="delete"></td>
+						</form>
 					</tr>
-					<c:forEach var="city" items="${cityList}">
-						<tr>
-							<td>"${city.cityId}"</td>
-							<td>"${city.cityName}"</td>
-						</tr>
-					</c:forEach>
-				</table>
-				<input type="submit" value="Next" class="btn btn-dark mt-5 w-50">
-			</form>
+				</c:forEach>
+				<tr>
+					<form action="admincityadd" method="get" class="w-50 mx-auto">
+						<td><input type="text" name="cityId" value="" required></td>
+						<td><input type="text" name="cityName" value="" required></td>
+						<td><input type="submit" name="add" value="add"></td>
+					</form>
+				</tr>
+			</table>
 		</div>
-
 	</div>
 
 	<footer class="w-100 bg-dark text-white p-4 text-center fixed-bottom">

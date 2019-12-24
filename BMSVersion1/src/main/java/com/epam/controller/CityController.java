@@ -48,32 +48,4 @@ public class CityController {
 		return model;
 	}
 
-	@GetMapping("/admin/city")
-	public ModelAndView adminCity() {
-
-		String username = "";
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		ModelAndView model = new ModelAndView();
-		if (principal instanceof MyUserDetails)
-			username = ((MyUserDetails) principal).getUsername();
-		else {
-			username = principal.toString();
-		}
-		credentials = user.getUserData(username);
-		try {
-			if (credentials.getStatus() == 0)
-				throw new Exception();
-			List<City> cityList;
-			cityList = rest.getAllCities();
-			System.out.println("agya admin city m");
-			model.setViewName("admincity");
-			model.addObject("cityList", cityList);
-		} catch (Exception e) {
-			model.addObject("status", credentials.getStatus());
-			model.setViewName("home");
-		}
-
-		return model;
-	}
-
 }

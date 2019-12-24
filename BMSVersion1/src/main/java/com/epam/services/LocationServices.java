@@ -6,4 +6,6 @@ import com.epam.bean.Location;
 
 public interface LocationServices {
 	public List<Location> getAreaPinInCity(int cityId);
+
+	public List<Location> getAll();
 }

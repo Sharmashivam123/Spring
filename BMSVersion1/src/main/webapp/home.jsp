@@ -8,23 +8,7 @@
 <title>BMS</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<script>
-	var storage = window.sessionStorage;
-	window.onload = check();
-	function check() {
-		if (storage.getItem('path'))
-			storage.removeItem('path');
-	}
 
-	function set() {
-		var path = [ 'home.jsp' ];
-		storage.setItem('path', JSON.stringify(path));
-	}
-
-	function clearlogin() {
-		storage.removeItem('login');
-	}
-</script>
 <style>
 #book {
 	background-color: #76cdd8;
@@ -55,28 +39,28 @@
 		</form>
 	</nav>
 	<nav class="navbar navbar-expand-lg navbar-dark  w-100">
-		<form action="/admin/city" method="get" class="ml-auto">
+		<form action="/admincity" method="get" class="ml-auto">
 			<button type="submit" value="city" class="btn btn-danger">city</button>
 		</form>
-		<form action="/admin/location" method="get" class="ml-auto">
+		<form action="/adminlocation" method="get" class="ml-auto">
 			<button type="submit" value="location" class="btn btn-danger">location</button>
 		</form>
-		<form action="/admin/movie" method="get" class="ml-auto">
+		<form action="/adminmovie" method="get" class="ml-auto">
 			<button type="submit" value="movie" class="btn btn-danger">movie</button>
 		</form>
-		<form action="/admin/theatre" method="get" class="ml-auto">
+		<form action="/admintheatre" method="get" class="ml-auto">
 			<button type="submit" value="theatre" class="btn btn-danger">theatre</button>
 		</form>
-		<form action="/admin/timings" method="get" class="ml-auto">
+		<form action="/admintimings" method="get" class="ml-auto">
 			<button type="submit" value="timings" class="btn btn-danger">timings</button>
 		</form>
-		<form action="/admin/movielocation" method="get" class="ml-auto">
+		<form action="/adminmovielocation" method="get" class="ml-auto">
 			<button type="submit" value="movie-location" class="btn btn-danger">movie-location</button>
 		</form>
-		<form action="/admin/theatremovie" method="get" class="ml-auto">
+		<form action="/admintheatremovie" method="get" class="ml-auto">
 			<button type="submit" value="theatre-movie" class="btn btn-danger">theatre-movie</button>
 		</form>
-		<form action="/admin/seats" method="get" class="ml-auto">
+		<form action="/adminseats" method="get" class="ml-auto">
 			<button type="submit" value="screen" class="btn btn-danger">screen</button>
 		</form>
 	</nav>
