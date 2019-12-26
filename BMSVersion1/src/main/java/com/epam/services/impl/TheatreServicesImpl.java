@@ -22,4 +22,24 @@ public class TheatreServicesImpl implements TheatreServices {
 				() -> new ServiceLayerException(ApplicationConstants.SELECTED_ELEMENT_NOT_FOUND.toString()));
 
 	}
+
+	@Override
+	public List<Theatre> getAllTheatre() {
+		return (List<Theatre>) theatreDao.findAll();
+	}
+
+	@Override
+	public Theatre update(Theatre theatre) {
+
+		Optional<Theatre> optional = theatreDao.findById(theatre.getTheatreId());
+		if (optional.isPresent()) {
+			theatre = theatreDao.save(theatre);
+		}
+		return theatre;
+	}
+
+	@Override
+	public void delete(int theatreId) {
+		theatreDao.deleteById(theatreId);
+	}
 }

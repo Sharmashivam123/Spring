@@ -8,27 +8,27 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Entity
-@Table(name="location")
+@Table(name = "location")
 public class Location {
 	@Id
-	private int pincode;
+	private int locationId;
 	private int cityId;
-	private String areaName;
+	private String locationName;
 
-	public int getPin() {
-		return pincode;
+	public int getLocationId() {
+		return locationId;
 	}
 
-	public void setPin(int pincode) {
-		this.pincode = pincode;
+	public void setLocationId(int pincode) {
+		this.locationId = pincode;
 	}
 
-	public String getAreaName() {
-		return areaName;
+	public String getLocationName() {
+		return locationName;
 	}
 
-	public void setAreaName(String areaName) {
-		this.areaName = areaName;
+	public void setLocationName(String areaName) {
+		this.locationName = areaName;
 	}
 
 	public int getCityId() {
@@ -38,7 +38,5 @@ public class Location {
 	public void setCityId(int cityId) {
 		this.cityId = cityId;
 	}
-	
-	
 
 }

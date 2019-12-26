@@ -38,24 +38,24 @@ public class TestLocationController {
 	public void testLocation() throws Exception {
 		doNothing().when(bookingDetails).setCityId(1);
 		Location area1 = new Location();
-		area1.setPin(500081);
-		area1.setAreaName("Gachibowli");
+		area1.setLocationId(500081);
+		area1.setLocationName("Gachibowli");
 
 		Location area2 = new Location();
-		area2.setPin(500082);
-		area2.setAreaName("Madhapur");
+		area2.setLocationId(500082);
+		area2.setLocationName("Madhapur");
 
 		Location area3 = new Location();
-		area3.setPin(500083);
-		area3.setAreaName("Raidurgam");
+		area3.setLocationId(500083);
+		area3.setLocationName("Raidurgam");
 
 		Location area4 = new Location();
-		area4.setPin(500084);
-		area4.setAreaName("Kukatpally");
+		area4.setLocationId(500084);
+		area4.setLocationName("Kukatpally");
 
 		Location area5 = new Location();
-		area5.setPin(500085);
-		area5.setAreaName("Ameerpet");
+		area5.setLocationId(500085);
+		area5.setLocationName("Ameerpet");
 		List<Location> areaList = new ArrayList<>(Arrays.asList(area1, area2, area3, area4, area5));
 
 		when(service.getAreaPincodeByCity(1)).thenReturn(areaList);

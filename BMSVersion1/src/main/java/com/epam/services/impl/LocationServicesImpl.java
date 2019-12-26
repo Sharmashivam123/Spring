@@ -28,4 +28,24 @@ public class LocationServicesImpl implements LocationServices {
 	public List<Location> getAll() {
 		return (List<Location>) areaDao.findAll();
 	}
+
+	@Override
+	public Location update(Location location) {
+		Optional<Location> optional = areaDao.findById(location.getLocationId());
+		if (optional.isPresent()) {
+			location = areaDao.save(location);
+		}
+		return location;
+
+	}
+
+	@Override
+	public void delete(int locationId) {
+		areaDao.deleteById(locationId);
+	}
+
+	@Override
+	public Location addLocation(Location location) {
+		return areaDao.save(location);
+	}
 }

@@ -18,9 +18,31 @@ public class MovieServicesImpl implements MovieServices {
 	private MovieDao movieDao;
 
 	public List<Movie> getMoviesAtLocation(int locationId) {
-		
 		return Optional.ofNullable(movieDao.findAllByLocationId(locationId)).orElseThrow(
 				() -> new ServiceLayerException(ApplicationConstants.SELECTED_ELEMENT_NOT_FOUND.toString()));
-		
 	}
+
+	@Override
+	public List<Movie> getAllMovies() {
+		return (List<Movie>) movieDao.findAll();
+	}
+
+	@Override
+	public Movie update(Movie movie) {
+		Optional<Movie> optional = movieDao.findById(movie.getMovieId());
+		if (optional.isPresent()) {
+			movie = movieDao.save(movie);
+		}
+		return movie;
+	}
+
+	public void delete(int movieId) {
+		movieDao.deleteById(movieId);
+	}
+
+	@Override
+	public Movie addMovie(Movie movie) {
+		return movieDao.save(movie);
+	}
+
 }

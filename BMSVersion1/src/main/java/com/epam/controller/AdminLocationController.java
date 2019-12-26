@@ -9,13 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.epam.bean.City;
 import com.epam.bean.Credentials;
 import com.epam.bean.Location;
 import com.epam.securityconfig.MyUserDetails;
-import com.epam.services.CityServices;
 import com.epam.services.LocationServices;
-import com.epam.services.RestClientService;
 import com.epam.services.UserService;
 
 @Controller
@@ -45,7 +42,7 @@ public class AdminLocationController {
 				throw new Exception();
 			List<Location> locationList;
 			locationList = service.getAll();
-			model.setViewName("admincity");
+			model.setViewName("adminlocation");
 			model.addObject("locationList", locationList);
 		} catch (Exception e) {
 			model.addObject("status", credentials.getStatus());
@@ -56,38 +53,44 @@ public class AdminLocationController {
 	}
 
 	@GetMapping("/adminlocationupdt")
-	public ModelAndView cityManipulation(@RequestParam(required = false) int locationId, String locationName,int cityId) {
+	public ModelAndView cityManipulation(@RequestParam(required = false) int locationId, String locationName,
+			int cityId) {
+		Location location = new Location();
+		location.setLocationId(locationId);
+		location.setCityId(cityId);
+		location.setLocationName(locationName);
+		;
+		service.update(location);
+		List<Location> locationList;
+		locationList = service.getAll();
+		ModelAndView model = new ModelAndView();
+		model.setViewName("adminlocation");
+		model.addObject("locationList", locationList);
+		return model;
+	}
+
+	@GetMapping("/adminlocationdlt")
+	public ModelAndView deleteCity(@RequestParam(required = false) int locationId) {
+		service.delete(locationId);
+		List<Location> locationList;
+		locationList = service.getAll();
+		ModelAndView model = new ModelAndView();
+		model.setViewName("adminlocation");
+		model.addObject("locationList", locationList);
+		return model;
+	}
+
+	@GetMapping("/adminlocationadd")
+	public ModelAndView addCity(@RequestParam(required = false) int locationId, String locationName, int cityId) {
 		Location location = new Location();
 		location.setCityId(cityId);
-		location.setLocation(cityName);
-		service.update(city);
-		List<City> cityList = service.getAvailableCities();
+		location.setLocationName(locationName);
+		service.addLocation(location);
+		List<Location> locationList;
+		locationList = service.getAll();
 		ModelAndView model = new ModelAndView();
-		model.setViewName("admincity");
-		model.addObject("cityList", cityList);
-		return model;
-	}
-
-	@GetMapping("/admincitydlt")
-	public ModelAndView deleteCity(@RequestParam(required = false) int cityId) {
-		service.delete(cityId);
-		List<City> cityList = service.getAvailableCities();
-		ModelAndView model = new ModelAndView();
-		model.setViewName("admincity");
-		model.addObject("cityList", cityList);
-		return model;
-	}
-
-	@GetMapping("/admincityadd")
-	public ModelAndView addCity(@RequestParam(required = false) int cityId, String cityName) {
-		City city = new City();
-		city.setCityId(cityId);
-		city.setCityName(cityName);
-		service.addCity(city);
-		List<City> cityList = service.getAvailableCities();
-		ModelAndView model = new ModelAndView();
-		model.setViewName("admincity");
-		model.addObject("cityList", cityList);
+		model.setViewName("adminlocation");
+		model.addObject("locationList", locationList);
 		return model;
 	}
 

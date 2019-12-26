@@ -38,8 +38,8 @@ public class MovieController {
 			username = ((MyUserDetails) principal).getUsername();
 		else {
 			username = principal.toString();
-		}
-		credentials = user.getUserData(username);
+		} 
+		credentials = user.getUserData(username); 
 		try {
 			if (credentials.getStatus() == 0)
 				throw new Exception();

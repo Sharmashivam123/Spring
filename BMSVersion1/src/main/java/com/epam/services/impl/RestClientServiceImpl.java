@@ -39,7 +39,7 @@ public class RestClientServiceImpl implements RestClientService {
 
 	public List<Location> getAreaPincodeByCity(int cityId) {
 		StringBuilder str = new StringBuilder();
-		str.append(Constants.LOCATION_URL);
+		str.append(Constants.LOCATION_URL); 
 		str.append(cityId);
 
 		ResponseEntity<List<Location>> responseList = rest.exchange(str.toString(), HttpMethod.GET, null,

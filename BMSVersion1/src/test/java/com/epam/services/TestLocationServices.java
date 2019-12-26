@@ -34,20 +34,25 @@ class TestLocationServices {
 	public void testCity() {
 		MockitoAnnotations.initMocks(this);
 		when(bookingDetails.getCityId()).thenReturn(1);
-		area1.setPin(500081);
-		area1.setAreaName("Gachibowli");
+		Location area1 = new Location();
+		area1.setLocationId(500081);
+		area1.setLocationName("Gachibowli");
 
-		area2.setPin(500082);
-		area2.setAreaName("Madhapur");
+		Location area2 = new Location();
+		area2.setLocationId(500082);
+		area2.setLocationName("Madhapur");
 
-		area3.setPin(500083);
-		area3.setAreaName("Raidurgam");
+		Location area3 = new Location();
+		area3.setLocationId(500083);
+		area3.setLocationName("Raidurgam");
 
-		area4.setPin(500084);
-		area4.setAreaName("Kukatpally");
+		Location area4 = new Location();
+		area4.setLocationId(500084);
+		area4.setLocationName("Kukatpally");
 
-		area5.setPin(500085);
-		area5.setAreaName("Ameerpet");
+		Location area5 = new Location();
+		area5.setLocationId(500085);
+		area5.setLocationName("Ameerpet");
 		List<Location> areaList = new ArrayList<>(Arrays.asList(area1, area2, area3, area4, area5));
 		when(areaDao.findAllByCityId(1)).thenReturn(areaList);
 		assertEquals(areaList, areaDao.findAllByCityId(1));

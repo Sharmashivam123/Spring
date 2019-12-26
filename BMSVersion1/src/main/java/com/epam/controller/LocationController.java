@@ -26,7 +26,7 @@ public class LocationController {
 
 	@GetMapping(value = "/location")
 	public ModelAndView doGet(@RequestParam(required = false) int city) {
-		String username = "";
+		String username = ""; 
 		ModelAndView model = new ModelAndView();
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (principal instanceof MyUserDetails)

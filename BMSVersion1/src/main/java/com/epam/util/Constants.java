@@ -5,7 +5,7 @@ public class Constants {
 	}
 
 	public static final String MOVIE_BY_LOCATION_QUERY = "SELECT * from movie"
-			+ " WHERE movieId IN (SELECT movieId from moviebylocation WHERE pincode =?1)";
+			+ " WHERE movieId IN (SELECT movieId from moviebylocation WHERE locationId =?1)";
 	public static final String SELECTED_SEATID_QUERY = "select seatId from bookings "
 			+ "where movieId=?1 and theatreId=?2 and showtiming=?3 and showdate=?4";
 

@@ -59,7 +59,7 @@ input[type=submit] {
 			<form action="movie" method="get" class="w-50 mx-auto">
 				<select name="location" class="form-control mt-4">
 					<c:forEach var="location" items="${locations}">
-						<option value="${location.pin}">${location.areaName}</option>
+						<option value="${location.locationId}">${location.locationName}</option>
 
 					</c:forEach>
 				</select> <input type="submit" value="Next" class="btn btn-dark mt-5 w-50">
