@@ -1,9 +1,9 @@
 package com.epam.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.epam.bean.BookingDetails;
 import com.epam.bean.Credentials;
 import com.epam.bean.Theatre;
-import com.epam.securityconfig.MyUserDetails;
 import com.epam.services.RestClientService;
 import com.epam.services.UserService;
 
@@ -28,16 +27,9 @@ public class TheatreController {
 	Credentials credentials;
 
 	@GetMapping("/theatre")
-	public ModelAndView doGet(@RequestParam String movie) {
-		String username = "";
+	public ModelAndView doGet(@RequestParam String movie, Principal principal) {
 		ModelAndView model = new ModelAndView();
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (principal instanceof MyUserDetails)
-			username = ((MyUserDetails) principal).getUsername();
-		else {
-			username = principal.toString();
-		}
-		credentials = user.getUserData(username);
+		credentials = user.getUserData(principal.getName());
 		try {
 			if (credentials.getStatus() == 0)
 				throw new Exception();

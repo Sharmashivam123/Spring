@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.security.Principal;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +26,7 @@ import com.epam.services.impl.SeatsServicesImpl;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@WithMockUser("Spring")
+@WithMockUser("shivamsharma.js@gmail.com")
 class TestSeatController {
 
 	@Autowired
@@ -37,6 +38,13 @@ class TestSeatController {
 
 	@Test
 	public void testSeatController() throws Exception {
+		Principal principal = new Principal() {
+
+			@Override
+			public String getName() {
+				return "shivamsharma.js@gmail.com";
+			}
+		};
 		doNothing().when(bookingDetails).setTime(LocalTime.parse("22:15"));
 		Map<SeatArrangements, Boolean> silverList = new HashMap<>();
 
@@ -47,7 +55,7 @@ class TestSeatController {
 		when(service.getSeatRanges("silver")).thenReturn(silverList);
 		when(service.getSeatRanges("gold")).thenReturn(goldList);
 		when(service.getSeatRanges("platinum")).thenReturn(platinumList);
-		mockmvc.perform(get("/seats?showTime=22:15")).andExpect(status().isOk()) 
+		mockmvc.perform(get("/seats?showTime=22:15").principal(principal)).andExpect(status().isOk())
 				.andExpect(model().attribute("silverSeats", silverList))
 				.andExpect(model().attribute("goldSeats", goldList))
 				.andExpect(model().attribute("platinumSeats", platinumList)).andExpect((forwardedUrl("seats.jsp")));

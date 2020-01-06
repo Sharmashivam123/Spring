@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.security.Principal;
 import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.epam.bean.TicketsDetails;
 import com.epam.services.RestClientService;
-@WithMockUser("Spring")
+
+@WithMockUser("shivamsharma.js@gmail.com")
 @SpringBootTest
 @AutoConfigureMockMvc
 class TestTicketDetailsController {
@@ -32,6 +34,13 @@ class TestTicketDetailsController {
 
 	@Test
 	public void testTicketController() throws Exception {
+		Principal principal = new Principal() {
+
+			@Override
+			public String getName() {
+				return "shivamsharma.js@gmail.com";
+			}
+		};
 		ticketDetails.setBookingId(100);
 		ticketDetails.setFullName("shivam");
 		ticketDetails.setMovieName("war");
@@ -43,7 +52,7 @@ class TestTicketDetailsController {
 		ticketDetails.setTotalCost(1087);
 
 		when(service.getTicketDetails()).thenReturn(ticketDetails);
-		mockmvc.perform(get("/tickets?bookingStatus=true")).andExpect(status().isOk())
+		mockmvc.perform(get("/tickets?bookingStatus=true").principal(principal)).andExpect(status().isOk())
 				.andExpect(model().attribute("tickets", ticketDetails)).andExpect((forwardedUrl("ticket.jsp")));
 	}
 

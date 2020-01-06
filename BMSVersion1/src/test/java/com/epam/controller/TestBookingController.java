@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -38,6 +39,13 @@ class TestBookingController {
 
 	@Test
 	public void testBooking() throws Exception {
+		Principal principal = new Principal() {
+
+			@Override
+			public String getName() {
+				return "shivamsharma.js@gmail.com";
+			}
+		};
 		booking.setMovieId(1);
 		booking.setSeatId("A1");
 		booking.setShowdate(LocalDate.now());
@@ -47,7 +55,7 @@ class TestBookingController {
 		doNothing().when(bookingDetails).setUserName("shivam");
 		doNothing().when(bookingDetails).setPhone("9691061996");
 		when(service.processBooking(booking)).thenReturn("true");
-		mockmvc.perform(get("/booking")).andExpect(status().isBadRequest());
+		mockmvc.perform(get("/booking").principal(principal)).andExpect(status().isBadRequest());
 	}
 
 }

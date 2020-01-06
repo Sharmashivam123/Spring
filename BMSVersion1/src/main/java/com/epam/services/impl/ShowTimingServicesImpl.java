@@ -42,8 +42,32 @@ public class ShowTimingServicesImpl implements ShowTimingServices {
 			} else
 				timeIndexList.add(index++, time.toString());
 		}
-		
+
 		return Optional.ofNullable(timeIndexList).orElseThrow(
 				() -> new ServiceLayerException(ApplicationConstants.SELECTED_ELEMENT_NOT_FOUND.toString()));
+	}
+
+	@Override
+	public List<ShowTimings> getAllTimings() {
+		return (List<ShowTimings>) showTimesDao.findAll();
+	}
+
+	@Override
+	public ShowTimings update(ShowTimings timing) {
+		Optional<ShowTimings> optional = showTimesDao.findById(timing.getTimingId());
+		if (optional.isPresent()) {
+			timing = showTimesDao.save(timing);
+		}
+		return timing;
+	}
+
+	@Override
+	public void delete(int timingId) {
+		showTimesDao.deleteById(timingId);
+	}
+
+	@Override
+	public ShowTimings add(ShowTimings timing) {
+		return showTimesDao.save(timing);
 	}
 }

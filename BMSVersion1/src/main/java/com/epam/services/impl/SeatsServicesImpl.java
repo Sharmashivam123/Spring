@@ -45,7 +45,7 @@ public class SeatsServicesImpl implements SeatsServices {
 		seats = seats.substring(1, len - 1);
 		seats = seats.replace(",", "");
 		seats = seats.replace("  ", " ");
-		seats = seats.replace("  ", " "); 
+		seats = seats.replace("  ", " ");
 		seatArray = seats.split(" ");
 		List<SeatArrangements> seatList = seatArrangementsDao.findAllByTier(tier);
 		List<SeatArrangements> unBookedSeatsList = new ArrayList<>();
@@ -69,5 +69,28 @@ public class SeatsServicesImpl implements SeatsServices {
 		for (SeatArrangements seat : unBookedSeatsList)
 			seatStatusMap.put(seat, false);
 		return seatStatusMap;
+	}
+
+	public List<SeatArrangements> getSeatData() {
+		return (List<SeatArrangements>) seatArrangementsDao.findAll();
+	}
+
+	public SeatArrangements update(SeatArrangements seatarrangements) {
+		Optional<SeatArrangements> optional = seatArrangementsDao.findBySeatId(seatarrangements.getSeatId());
+		if (optional.isPresent()) {
+			seatarrangements = seatArrangementsDao.save(seatarrangements);
+		}
+		return seatarrangements;
+	}
+
+	@Override
+	public void delete(String seatId) {
+		seatArrangementsDao.deleteById(seatId);
+	}
+
+	@Override
+	public void insert(SeatArrangements seatarrangements) {
+		seatArrangementsDao.save(seatarrangements);
+
 	}
 }

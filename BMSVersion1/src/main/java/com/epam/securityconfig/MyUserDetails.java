@@ -1,8 +1,7 @@
 package com.epam.securityconfig;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collections;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,10 +22,7 @@ public class MyUserDetails implements org.springframework.security.core.userdeta
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		Set<SimpleGrantedAuthority> list = new HashSet<>();
-		list.add(new SimpleGrantedAuthority("USER"));
-		list.add(new SimpleGrantedAuthority("ADMIN"));
-		return list;  
+		return Collections.singleton(new SimpleGrantedAuthority(credential.getRole()));
 	}
 
 	@Override

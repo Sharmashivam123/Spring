@@ -45,8 +45,7 @@ public class AdminMovieController {
 	public ModelAndView deleteCity(@RequestParam(required = false) int movieId) {
 		services.delete(movieId);
 		ModelAndView model = new ModelAndView();
-		List<Movie> movieList;
-		movieList = services.getAllMovies();
+		List<Movie> movieList = services.getAllMovies();
 		model.addObject("movieList", movieList);
 		model.setViewName("adminmovie");
 		return model;

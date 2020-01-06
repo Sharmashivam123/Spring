@@ -1,16 +1,15 @@
 package com.epam.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.epam.bean.City;
 import com.epam.bean.Credentials;
-import com.epam.securityconfig.MyUserDetails;
 import com.epam.services.RestClientService;
 import com.epam.services.UserService;
 
@@ -24,16 +23,10 @@ public class CityController {
 	UserService user;
 
 	@GetMapping(value = "city")
-	public ModelAndView doGet() {
-		String username = "";
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	public ModelAndView doGet(Principal principal) {
+
 		ModelAndView model = new ModelAndView();
-		if (principal instanceof MyUserDetails)
-			username = ((MyUserDetails) principal).getUsername();
-		else {
-			username = principal.toString();
-		}
-		credentials = user.getUserData(username);
+		credentials = user.getUserData(principal.getName());
 		try {
 			if (credentials.getStatus() == 0)
 				throw new Exception();

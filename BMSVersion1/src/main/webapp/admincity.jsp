@@ -46,21 +46,20 @@ input[type=submit] {
 				</tr>
 				<c:forEach var="city" items="${cityList}">
 					<tr>
-						<form action="admincityupdt" method="get" class="w-50 mx-auto">
+						<form action="/admincityupdt" method="get" class="w-50 mx-auto">
 						<td><input type="text" name="cityId" value="${city.cityId}"></td>
 						<td><input type="text" name="cityName"
 							value="${city.cityName}"></td>
 						<td><input type="submit" name="update" value="update"></td>
 						</form>
-						<form action="admincitydlt" method="get" class="w-50 mx-auto">
+						<form action="/admincitydlt" method="get" class="w-50 mx-auto">
 							<input type="hidden" value="${city.cityId}" name="cityId">
 							<td><input type="submit" name="delete" value="delete"></td>
 						</form>
 					</tr>
 				</c:forEach>
 				<tr>
-					<form action="admincityadd" method="get" class="w-50 mx-auto">
-						<td><input type="text" name="cityId" value="" required></td>
+					<form action="/admincityadd" method="get" class="w-50 mx-auto">
 						<td><input type="text" name="cityName" value="" required></td>
 						<td><input type="submit" name="add" value="add"></td>
 					</form>

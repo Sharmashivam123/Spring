@@ -79,9 +79,8 @@ public class AdminCityController {
 	}
 
 	@GetMapping("/admincityadd")
-	public ModelAndView addCity(@RequestParam(required = false) int cityId, String cityName) {
+	public ModelAndView addCity(@RequestParam(required = false)String cityName) {
 		City city = new City();
-		city.setCityId(cityId);
 		city.setCityName(cityName);
 		service.addCity(city);
 		List<City> cityList = service.getAvailableCities();

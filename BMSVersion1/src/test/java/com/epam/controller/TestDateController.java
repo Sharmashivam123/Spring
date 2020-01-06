@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.epam.bean.BookingDetails;
 import com.epam.services.RestClientService;
 
-@WithMockUser("Spring")
+@WithMockUser("shivamsharma.js@gmail.com")
 @SpringBootTest
 @AutoConfigureMockMvc
 class TestDateController {
@@ -35,13 +36,20 @@ class TestDateController {
 
 	@Test
 	public void testDate() throws Exception {
+		Principal principal = new Principal() {
+
+			@Override
+			public String getName() {
+				return "shivamsharma.js@gmail.com";
+			}
+		};
 		doNothing().when(bookingDetails).setTheatreId(1);
 		List<String> datesMap = new ArrayList<>();
 		datesMap.add(0, LocalDate.now().toString());
 		datesMap.add(1, LocalDate.now().plusDays(1).toString());
-		datesMap.add(2, LocalDate.now().plusDays(2).toString()); 
+		datesMap.add(2, LocalDate.now().plusDays(2).toString());
 		when(service.getAllDates()).thenReturn(datesMap);
-		mockmvc.perform(get("/date?theatre=1")).andExpect(status().isOk()) 
+		mockmvc.perform(get("/date?theatre=1").principal(principal)).andExpect(status().isOk())
 				.andExpect(model().attribute("dates", datesMap)).andExpect((forwardedUrl("date.jsp")));
 	}
 }

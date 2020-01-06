@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,7 +24,7 @@ import com.epam.bean.BookingDetails;
 import com.epam.bean.Location;
 import com.epam.services.RestClientService;
 
-@WithMockUser("Spring")
+@WithMockUser("shivamsharma.js@gmail.com")
 @SpringBootTest
 @AutoConfigureMockMvc
 public class TestLocationController {
@@ -36,6 +37,13 @@ public class TestLocationController {
 
 	@Test
 	public void testLocation() throws Exception {
+		Principal principal = new Principal() {
+
+			@Override
+			public String getName() {
+				return "shivamsharma.js@gmail.com";
+			}
+		};
 		doNothing().when(bookingDetails).setCityId(1);
 		Location area1 = new Location();
 		area1.setLocationId(500081);
@@ -59,7 +67,7 @@ public class TestLocationController {
 		List<Location> areaList = new ArrayList<>(Arrays.asList(area1, area2, area3, area4, area5));
 
 		when(service.getAreaPincodeByCity(1)).thenReturn(areaList);
-		mockmvc.perform(get("/location?city=1")).andExpect(status().isOk())
+		mockmvc.perform(get("/location?city=1").principal(principal)).andExpect(status().isOk())
 				.andExpect(model().attribute("locations", areaList)).andExpect((forwardedUrl("location.jsp")));
 	}
 

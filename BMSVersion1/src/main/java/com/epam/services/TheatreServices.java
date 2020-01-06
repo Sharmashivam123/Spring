@@ -12,4 +12,6 @@ public interface TheatreServices {
 	public Theatre update(Theatre theatre);
 
 	public void delete(int movieId);
+
+	public void add(Theatre theatre);
 }

@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.epam.bean.BookingDetails;
 import com.epam.services.RestClientService;
 
-@WithMockUser("Spring")
+@WithMockUser("shivamsharma.js@gmail.com")
 @SpringBootTest
 @AutoConfigureMockMvc
 class TestShowsController {
@@ -36,6 +37,13 @@ class TestShowsController {
 
 	@Test
 	public void testTime() throws Exception {
+		Principal principal = new Principal() {
+
+			@Override
+			public String getName() {
+				return "shivamsharma.js@gmail.com";
+			}
+		};
 		doNothing().when(bookingDetails).setDate(LocalDate.now());
 		String time1 = ("12:00");
 		String time2 = ("15:00");
@@ -48,7 +56,7 @@ class TestShowsController {
 		timeList.add(3, time4);
 		when(service.getAllTimings(Mockito.anyInt(), Mockito.anyInt(), Mockito.any(LocalDate.class)))
 				.thenReturn(timeList);
-		mockmvc.perform(get("/timings?date=2019-12-13")).andExpect(status().isOk())
+		mockmvc.perform(get("/timings?date=2019-12-13").principal(principal)).andExpect(status().isOk())
 				.andExpect(model().attribute("shows", timeList)).andExpect((forwardedUrl("shows.jsp")));
 	}
 

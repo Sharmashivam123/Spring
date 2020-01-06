@@ -60,7 +60,7 @@
 		<form action="/admintheatremovie" method="get" class="ml-auto">
 			<button type="submit" value="theatre-movie" class="btn btn-danger">theatre-movie</button>
 		</form>
-		<form action="/adminseats" method="get" class="ml-auto">
+		<form action="/adminscreen" method="get" class="ml-auto">
 			<button type="submit" value="screen" class="btn btn-danger">screen</button>
 		</form>
 	</nav>

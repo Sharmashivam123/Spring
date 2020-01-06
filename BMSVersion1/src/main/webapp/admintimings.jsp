@@ -35,39 +35,47 @@ input[type=submit] {
 		</form>
 	</nav>
 	<div class="container-fluid text-center pt-5" id="book">
-		<div class="display-4 d-block mt-4" id="header">Locations</div>
+		<div class="display-4 d-block mt-4" id="header">Showtimings</div>
 		<div id="registeration">
-			<table name="location" class="form-control mt-4">
+			<table name="theatre" class="form-control mt-4">
 				<tr>
-					<th>Location Id</th>
-					<th>Location Name</th>
-					<th>City ID</th>
+					<th>Timing Id</th>
+					<th>Show 1</th>
+					<th>Show 2</th>
+					<th>Show 3</th>
+					<th>Show 4</th>
 					<th>update</th>
 					<th>delete</th>
 				</tr>
-				<c:forEach var="location" items="${locationList}">
+				<c:forEach var="timing" items="${showsList}">
 					<tr>
-						<form action="/adminlocationupdt" method="get" class="w-50 mx-auto">
-							<td><input type="text" name="locationId"
-								value="${location.locationId}"></td>
-							<td><input type="text" name="locationName"
-								value="${location.locationName}"></td>
-							<td><input type="text" name="cityId"
-								value="${location.cityId}"></td>
+						<form action="/admintimingupdt" method="get" class="w-50 mx-auto">
+							<td><input type="text" name="timingId"
+								value="${timing.timingId}"></td>
+							<td><input type="text" name="show1"
+								value="${timing.show1}"></td>
+							<td><input type="text" name="show2"
+								value="${timing.show2}"></td>
+							<td><input type="text" name="show3"
+								value="${timing.show3}"></td>
+							<td><input type="text" name="show4"
+								value="${timing.show4}"></td>
 							<td><input type="submit" name="update" value="update"></td>
+
 						</form>
-						<form action="/adminlocationdlt" method="get" class="w-50 mx-auto">
-							<input type="hidden" value="${location.locationId}"
-								name="locationId">
+						<form action="/admintimingdlt" method="get" class="w-50 mx-auto">
+							<input type="hidden" value="${timing.timingId}" name=timingId>
 							<td><input type="submit" name="delete" value="delete"></td>
 						</form>
 					</tr>
 				</c:forEach>
 				<tr>
-					<form action="/adminlocationadd" method="get" class="w-50 mx-auto">
-						<td><input type="text" name="locationId" value="" required></td>
-						<td><input type="text" name="locationName" value="" required></td>
-						<td><input type="text" name="cityId" value="" required></td>
+					<form action="/admintimingadd" method="get" class="w-50 mx-auto">
+						<td><input type="text" name="timingId" value="" required></td>
+						<td><input type="text" name="show1"></td>
+						<td><input type="text" name="show2"></td>
+						<td><input type="text" name="show3"></td>
+						<td><input type="text" name="show4"></td>
 						<td><input type="submit" name="add" value="add"></td>
 					</form>
 				</tr>
@@ -78,4 +86,5 @@ input[type=submit] {
 	<footer class="w-100 bg-dark text-white p-4 text-center fixed-bottom">
 		&copy;EPAM Systems </footer>
 </body>
+
 </html>

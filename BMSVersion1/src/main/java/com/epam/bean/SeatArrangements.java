@@ -8,7 +8,7 @@ import javax.persistence.Table;
 @Table(name = "seatarrangements")
 public class SeatArrangements implements Comparable<SeatArrangements> {
 	@Id
-	private String seatId;
+	private String seatId; 
 	private String tier;
 	private double cost;
 

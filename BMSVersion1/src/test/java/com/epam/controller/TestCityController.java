@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.epam.bean.City;
 import com.epam.services.RestClientService;
 
-@WithMockUser("Spring")
+@WithMockUser("shivamsharma.js@gmail.com")
 @SpringBootTest
 @AutoConfigureMockMvc
 public class TestCityController {
@@ -34,13 +35,20 @@ public class TestCityController {
 	public void testCity() throws Exception {
 		List<City> expectedCity = new ArrayList<>();
 		City hyderabadCity = new City();
+		Principal principal = new Principal() {
+
+			@Override
+			public String getName() {
+				return "shivamsharma.js@gmail.com";
+			}
+		};
 		hyderabadCity.setCityId(1);
 		hyderabadCity.setCityName("Hyderabad");
 		expectedCity.add(hyderabadCity);
 		when(service.getAllCities()).thenReturn(expectedCity);
 
-		mockmvc.perform(get("/city")).andExpect(status().isOk()).andExpect(model().attribute("cityList", expectedCity))
-				.andExpect((forwardedUrl("city.jsp")));
+		mockmvc.perform(get("/city").principal(principal)).andExpect(status().isOk())
+				.andExpect(model().attribute("cityList", expectedCity)).andExpect((forwardedUrl("city.jsp")));
 
 	}
 }

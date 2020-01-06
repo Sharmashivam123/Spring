@@ -42,4 +42,10 @@ public class TheatreServicesImpl implements TheatreServices {
 	public void delete(int theatreId) {
 		theatreDao.deleteById(theatreId);
 	}
+
+	@Override
+	public void add(Theatre theatre) {
+		theatreDao.save(theatre);
+	}
+
 }

@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,7 +22,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.epam.bean.BookingDetails;
 import com.epam.bean.Theatre;
 import com.epam.services.RestClientService;
-@WithMockUser("Spring")
+
+@WithMockUser("shivamsharma.js@gmail.com")
 @SpringBootTest
 @AutoConfigureMockMvc
 class TestTheatreController {
@@ -34,6 +36,13 @@ class TestTheatreController {
 
 	@Test
 	public void testTheatre() throws Exception {
+		Principal principal = new Principal() {
+
+			@Override
+			public String getName() {
+				return "shivamsharma.js@gmail.com";
+			}
+		};
 		doNothing().when(bookingDetails).setMovieId(1);
 		doNothing().when(bookingDetails).setMovieName("war");
 		Theatre theatre1 = new Theatre();
@@ -53,8 +62,8 @@ class TestTheatreController {
 		theatre4.setName("PVR Inorbit Mall");
 
 		List<Theatre> theatreList = Arrays.asList(theatre1, theatre2, theatre3, theatre4);
-		when(service.getAllTheatresForMovieSelected(1)).thenReturn(theatreList); 
-		mockmvc.perform(get("/theatre?movie=1,war")).andExpect(status().isOk())
+		when(service.getAllTheatresForMovieSelected(1)).thenReturn(theatreList);
+		mockmvc.perform(get("/theatre?movie=1,war").principal(principal)).andExpect(status().isOk())
 				.andExpect(model().attribute("theatres", theatreList)).andExpect((forwardedUrl("theatre.jsp")));
 	}
 

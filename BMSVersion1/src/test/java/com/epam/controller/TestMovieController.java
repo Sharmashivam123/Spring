@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,7 +22,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.epam.bean.BookingDetails;
 import com.epam.bean.Movie;
 import com.epam.services.RestClientService;
-@WithMockUser("Spring")
+
+@WithMockUser("shivamsharma.js@gmail.com")
 @SpringBootTest
 @AutoConfigureMockMvc
 class TestMovieController {
@@ -34,6 +36,13 @@ class TestMovieController {
 
 	@Test
 	public void testMovie() throws Exception {
+		Principal principal = new Principal() {
+
+			@Override
+			public String getName() {
+				return "shivamsharma.js@gmail.com";
+			}
+		};
 		doNothing().when(bookingDetails).setPincode(500081);
 		Movie movie1 = new Movie();
 		movie1.setMovieId(1);
@@ -54,7 +63,7 @@ class TestMovieController {
 		List<Movie> movieList = Arrays.asList(movie1, movie2, movie3, movie4);
 
 		when(service.getAllMoviesAtLocation(1)).thenReturn(movieList);
-		mockmvc.perform(get("/movie?location=1")).andExpect(status().isOk())
+		mockmvc.perform(get("/movie?location=1").principal(principal)).andExpect(status().isOk())
 				.andExpect(model().attribute("movies", movieList)).andExpect((forwardedUrl("movie.jsp")));
 	}
 }

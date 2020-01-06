@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.security.Principal;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.epam.bean.BookingDetails;
 import com.epam.services.impl.SeatConfirmationServiceImpl;
-@WithMockUser("Spring")
+
+@WithMockUser("shivamsharma.js@gmail.com")
 @SpringBootTest
 @AutoConfigureMockMvc
 class TestSeatConfirmation {
@@ -31,10 +33,18 @@ class TestSeatConfirmation {
 
 	@Test
 	public void testSeatConfirmation() throws Exception {
+		Principal principal = new Principal() {
+
+			@Override
+			public String getName() {
+				return "shivamsharma.js@gmail.com";
+			}
+		};
 		String silverSeatAndCost = "A1 150";
-	Optional<String> silverOptional = Optional.ofNullable(silverSeatAndCost);
-	
+		Optional<String> silverOptional = Optional.ofNullable(silverSeatAndCost);
+
 		doNothing().when(service).setSeatIdAndCostList(silverOptional);
-		mockmvc.perform(get("/confirmation")).andExpect(status().isOk()).andExpect((forwardedUrl("user.jsp")));
+		mockmvc.perform(get("/confirmation").principal(principal)).andExpect(status().isOk())
+				.andExpect((forwardedUrl("user.jsp")));
 	}
 }
