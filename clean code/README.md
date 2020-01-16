@@ -1,1 +1,0 @@
-#This project has the clean code examples of every basic programming aspects.
