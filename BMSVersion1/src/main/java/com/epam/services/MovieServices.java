@@ -9,9 +9,9 @@ public interface MovieServices {
 
 	public List<Movie> getAllMovies();
 
-	public Movie update(Movie movie);
-	
-	public Movie addMovie(Movie movie);
+	public Movie addMovie(Movie movie, int[] theatreSelected);
 
 	public void delete(int movieId);
+
+	public void update(int movieId, String movieName, int[] theatreSelected);
 }

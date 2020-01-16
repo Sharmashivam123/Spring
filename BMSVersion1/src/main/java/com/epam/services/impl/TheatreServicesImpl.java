@@ -29,16 +29,6 @@ public class TheatreServicesImpl implements TheatreServices {
 	}
 
 	@Override
-	public Theatre update(Theatre theatre) {
-
-		Optional<Theatre> optional = theatreDao.findById(theatre.getTheatreId());
-		if (optional.isPresent()) {
-			theatre = theatreDao.save(theatre);
-		}
-		return theatre;
-	}
-
-	@Override
 	public void delete(int theatreId) {
 		theatreDao.deleteById(theatreId);
 	}
@@ -46,6 +36,18 @@ public class TheatreServicesImpl implements TheatreServices {
 	@Override
 	public void add(Theatre theatre) {
 		theatreDao.save(theatre);
+	}
+
+	@Override
+	public void update(int theatreId, String theatreName) {
+		Theatre theatre = new Theatre();
+		theatre.setTheatreId(theatreId);
+		Optional<Theatre> optional = theatreDao.findById(theatre.getTheatreId());
+		if (optional.isPresent()) {
+			theatre.setName(theatreName);
+			theatreDao.save(theatre);
+		}
+
 	}
 
 }

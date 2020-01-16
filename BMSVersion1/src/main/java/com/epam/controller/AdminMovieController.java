@@ -10,56 +10,60 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.epam.bean.Movie;
 import com.epam.services.MovieServices;
+import com.epam.services.TheatreServices;
 
 @Controller
 public class AdminMovieController {
 
 	@Autowired
 	MovieServices services;
+	@Autowired
+	TheatreServices theatreServices;
 
-	@GetMapping("/adminmovie")
+	@GetMapping("/admin/movie")
 	public ModelAndView getAllMovies() {
 		ModelAndView model = new ModelAndView();
 		List<Movie> movieList;
 		movieList = services.getAllMovies();
 		model.addObject("movieList", movieList);
+		model.addObject("theatreList", theatreServices.getAllTheatre());
 		model.setViewName("adminmovie");
 		return model;
 	}
 
-	@GetMapping("/adminmovieupdt")
-	public ModelAndView updateMovie(@RequestParam(required = false) int movieId, String movieName) {
-		Movie movie = new Movie();
-		movie.setMovieId(movieId);
-		movie.setMovieName(movieName);
-		services.update(movie);
+	@GetMapping("/admin/movieupdt")
+	public ModelAndView updateMovie(@RequestParam(required = false) int movieId, String movieName,
+			int[] theatreSelected) {
+		services.update(movieId, movieName, theatreSelected);
 		ModelAndView model = new ModelAndView();
 		List<Movie> movieList;
 		movieList = services.getAllMovies();
 		model.addObject("movieList", movieList);
+		model.addObject("theatreList", theatreServices.getAllTheatre());
 		model.setViewName("adminmovie");
 		return model;
 	}
 
-	@GetMapping("/adminmoviedlt")
+	@GetMapping("/admin/moviedlt")
 	public ModelAndView deleteCity(@RequestParam(required = false) int movieId) {
 		services.delete(movieId);
 		ModelAndView model = new ModelAndView();
 		List<Movie> movieList = services.getAllMovies();
+		model.addObject("theatreList", theatreServices.getAllTheatre());
 		model.addObject("movieList", movieList);
 		model.setViewName("adminmovie");
 		return model;
 	}
 
-	@GetMapping("/adminmovieadd")
-	public ModelAndView addMovie(@RequestParam(required = false) int movieId, String movieName) {
+	@GetMapping("/admin/movieadd")
+	public ModelAndView addMovie(@RequestParam(required = false) String movieName, int[] theatreSelected) {
 		Movie movie = new Movie();
-		movie.setMovieId(movieId);
 		movie.setMovieName(movieName);
-		services.addMovie(movie);
+		services.addMovie(movie, theatreSelected);
 		List<Movie> movieList;
 		movieList = services.getAllMovies();
 		ModelAndView model = new ModelAndView();
+		model.addObject("theatreList", theatreServices.getAllTheatre());
 		model.addObject("movieList", movieList);
 		model.setViewName("adminmovie");
 		return model;

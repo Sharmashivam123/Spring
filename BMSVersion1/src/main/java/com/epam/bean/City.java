@@ -1,9 +1,12 @@
 package com.epam.bean;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -31,4 +34,15 @@ public class City {
 		this.cityName = cityName;
 	}
 
+	@OneToMany(targetEntity = Location.class)
+	private List<Location> locationList;
+
+	public List<Location> getLocationList() {
+		return locationList;
+	}
+
+	public void setLocationList(List<Location> locationList) {
+		this.locationList = locationList;
+	}
+	
 }

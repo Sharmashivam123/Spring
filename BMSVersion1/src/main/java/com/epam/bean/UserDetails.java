@@ -10,17 +10,18 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Entity
-@Table(name ="userdetails")
+@Table(name = "userdetails")
 public class UserDetails {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int userId;
+
 	public int getUserId() {
 		return userId;
 	}
 
 	public void setUserId(int userId) {
-		this.userId = userId; 
+		this.userId = userId;
 	}
 
 	private String phone;

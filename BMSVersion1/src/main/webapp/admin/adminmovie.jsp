@@ -29,51 +29,50 @@ input[type=submit] {
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark w-100">
 		<a class="navbar-brand" href="/confirm"><img alt="epam"
 			src="logo.png" class="w-25" /></a>
+
 		<form action="/logout" method="get" class="ml-auto">
 			<button type="submit" value="logout" class="btn btn-danger my-auto"
 				onclick="clearlogin()">Logout</button>
 		</form>
 	</nav>
 	<div class="container-fluid text-center pt-5" id="book">
-		<div class="display-4 d-block mt-4" id="header">Cities</div>
+		<div class="display-4 d-block mt-4" id="header">Movies</div>
 		<div id="registeration">
-			<table name="city" class="form-control mt-4">
+			<table name="movie" class="form-control mt-4">
 				<tr>
-					<th>City Id</th>
-					<th>City Name</th>
-					<th></th>
+					<th>movie Id</th>
+					<th>movie Name</th>
 					<th>update</th>
+					<th></th>
 					<th>delete</th>
 				</tr>
-				<c:forEach var="city" items="${cityList}">
+				<c:forEach var="movie" items="${movieList}">
 					<tr>
-						<form action="/admincityupdt" method="get" class="w-50 mx-auto">
-							<td><input type="text" name="cityId" value="${city.cityId}"
-								readonly></td>
-							<td><input type="text" name="cityName"
-								value="${city.cityName}"></td>
-							<td><c:forEach var="location" items="${city.locationList}">
-									<input type="checkbox" name="locations"
-										value="${location.locationId}" />${location.locationName}
+						<form action="/admin/movieupdt" method="get" class="w-50 mx-auto">
+							<td><input type="text" name="movieId"
+								value="${movie.movieId}" readonly></td>
+							<td><input type="text" name="movieName"
+								value="${movie.movieName}"></td>
+							<td><c:forEach var="theatre" items="${movie.theatreList}">
+									<input type="checkbox" name="theatreSelected"
+										value="${theatre.theatreId}" />${theatre.theatreName}
 						</c:forEach></td>
-						<td><input type="submit" name="update" value="update"></td>
+							<td><input type="submit" name="update" value="update"></td>
 						</form>
-
-						<form action="/admincitydlt" method="get" class="w-50 mx-auto">
-							<input type="hidden" value="${city.cityId}" name="cityId">
+						<form action="/admin/moviedlt" method="get" class="w-50 mx-auto">
+							<input type="hidden" value="${movie.movieId}" name="movieId">
 							<td><input type="submit" name="delete" value="delete"></td>
 						</form>
-					</tr>
 				</c:forEach>
 				<tr>
-					<form action="/admincityadd" method="get" class="w-50 mx-auto">
-						<td>Enter CityName here :</td>
-					<td><input type="text" name="cityName" value="" required></td>
-					<td><c:forEach var="location" items="${locationList}">
-							<input type="checkbox" name="locations"
-								value="${location.locationId}" />${location.locationName}
+					<form action="/admin/movieadd" method="get" class="w-50 mx-auto">
+						<td>Enter movieName:</td>
+						<td><input type="text" name="movieName" value="" required></td>
+						<td><c:forEach var="theatre" items="${theatreList}">
+								<input type="checkbox" name="theatreSelected"
+									value="${theatre.theatreId}" />${theatre.theatreName}
 						</c:forEach></td>
-					<td><input type="submit" name="add" value="add"></td>
+						<td><input type="submit" name="add" value="add"></td>
 					</form>
 				</tr>
 			</table>

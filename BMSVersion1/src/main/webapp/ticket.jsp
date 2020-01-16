@@ -7,7 +7,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Booking Details</title>
-<script>
+<%--<script>
 	var storage = window.sessionStorage;
 	window.onload = check();
 	function check() {
@@ -22,7 +22,7 @@
 		}
 
 	}
-</script>
+</script> --%>
 <style>
 .inner-block {
 	width: 50%;

@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Table(name = "bookings")
 public class Bookings {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int bookingId;
 	private int theatreId;
 	private int movieId;

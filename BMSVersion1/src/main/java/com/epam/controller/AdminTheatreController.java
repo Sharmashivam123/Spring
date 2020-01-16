@@ -16,7 +16,7 @@ public class AdminTheatreController {
 	@Autowired
 	TheatreServices services;
 
-	@GetMapping("/admintheatre")
+	@GetMapping("/admin/theatre")
 	public ModelAndView getAllMovies() {
 		ModelAndView model = new ModelAndView();
 		List<Theatre> theatreList;
@@ -26,12 +26,10 @@ public class AdminTheatreController {
 		return model;
 	}
 
-	@GetMapping("/admintheatreupdt")
+	@GetMapping("/admin/theatreupdt")
 	public ModelAndView updateMovie(@RequestParam(required = false) int theatreId, String theatreName) {
-		Theatre theatre = new Theatre();
-		theatre.setTheatreId(theatreId);
-		theatre.setName(theatreName);
-		services.update(theatre);
+		System.out.println(theatreId);
+		services.update(theatreId, theatreName);
 		ModelAndView model = new ModelAndView();
 		List<Theatre> theatreList;
 		theatreList = services.getAllTheatre();
@@ -40,7 +38,7 @@ public class AdminTheatreController {
 		return model;
 	}
 
-	@GetMapping("/admintheatredlt")
+	@GetMapping("/admin/theatredlt")
 	public ModelAndView deleteCity(@RequestParam(required = false) int theatreId) {
 		services.delete(theatreId);
 		ModelAndView model = new ModelAndView();
@@ -51,10 +49,9 @@ public class AdminTheatreController {
 		return model;
 	}
 
-	@GetMapping("/admintheatreadd")
-	public ModelAndView addMovie(@RequestParam(required = false) int theatreId, String theatreName) {
+	@GetMapping("/admin/theatreadd")
+	public ModelAndView addMovie(@RequestParam(required = false) String theatreName) {
 		Theatre theatre = new Theatre();
-		theatre.setTheatreId(theatreId);
 		theatre.setName(theatreName);
 		services.add(theatre);
 		ModelAndView model = new ModelAndView();

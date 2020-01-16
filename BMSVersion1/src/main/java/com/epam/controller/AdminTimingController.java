@@ -18,7 +18,7 @@ public class AdminTimingController {
 	@Autowired
 	ShowTimingServices services;
 
-	@GetMapping("/admintimings")
+	@GetMapping("/admin/timings")
 	public ModelAndView getAllTimings() {
 
 		List<ShowTimings> availableShows;
@@ -29,7 +29,7 @@ public class AdminTimingController {
 		return model;
 	}
 
-	@GetMapping("/admintimingupdt")
+	@GetMapping("/admin/timingupdt")
 	public ModelAndView updateMovie(@RequestParam(required = false) int timingId, String show1, String show2,
 			String show3, String show4) {
 		ShowTimings timing = new ShowTimings();
@@ -47,7 +47,7 @@ public class AdminTimingController {
 		return model;
 	}
 
-	@GetMapping("/admintimingdlt")
+	@GetMapping("/admin/timingdlt")
 	public ModelAndView deleteCity(@RequestParam(required = false) int timingId) {
 		services.delete(timingId);
 		List<ShowTimings> availableShows;
@@ -58,7 +58,7 @@ public class AdminTimingController {
 		return model;
 	}
 
-	@GetMapping("/admintimingadd")
+	@GetMapping("/admin/timingadd")
 	public ModelAndView addMovie(@RequestParam(required = false) int timingId, String show1, String show2, String show3,
 			String show4) {
 		ShowTimings timing = new ShowTimings();

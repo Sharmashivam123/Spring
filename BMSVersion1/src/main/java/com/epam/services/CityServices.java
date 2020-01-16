@@ -9,7 +9,7 @@ public interface CityServices {
 
 	public void delete(int cityId);
 
-	public City update(City city);
+	public void update(int cityId, String cityName, int[] locations);
 
-	public City addCity(City city);
+	public City addCity(City city, int locations[]);
 }

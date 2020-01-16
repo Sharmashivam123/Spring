@@ -6,7 +6,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Confirmation</title>
-<script>
+<%--<script>
 	var storage = window.sessionStorage;
 	window.onload = check();
 	function check() {
@@ -23,6 +23,7 @@
 		storage.removeItem('login');
 	}
 </script>
+--%>
 </head>
 <body>
 	<c:if test="${status < 1}">${msg}</c:if>

@@ -15,7 +15,7 @@ public class Credentials {
 		return "Credentials [user=" + user + ", pwd=" + pwd + ", phone=" + phone + "]";
 	}
 
-	@Id
+	@Id 
 	private String user;
 	private String pwd;
 	private String phone;

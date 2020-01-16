@@ -9,7 +9,7 @@
 <title>Available Seats</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<script>
+<%--<script>
 var storage = window.sessionStorage;
 window.onload = check();
 function check()
@@ -30,7 +30,7 @@ else
 	}
 	
 }
-</script>
+</script> --%>
 <style>
 #book {
 	background-color: #76cdd8;

@@ -27,51 +27,55 @@ input[type=submit] {
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark w-100">
-		<a class="navbar-brand" href="/confirm"><img alt="epam"
-			src="logo.png" class="w-25" /></a>
-
+		<a class="navbar-brand" href="#"><img alt="epam" src="logo.png"
+			class="w-25" /></a>
 		<form action="/logout" method="get" class="ml-auto">
 			<button type="submit" value="logout" class="btn btn-danger my-auto"
 				onclick="clearlogin()">Logout</button>
 		</form>
 	</nav>
 	<div class="container-fluid text-center pt-5" id="book">
-		<div class="display-4 d-block mt-4" id="header">Movies</div>
+		<div class="display-4 d-block mt-4" id="header">Showtimings</div>
 		<div id="registeration">
-			<table name="movie" class="form-control mt-4">
+			<table name="theatre" class="form-control mt-4">
 				<tr>
-					<th>movie Id</th>
-					<th>movie Name</th>
+					<th>Timing Id</th>
+					<th>Show 1</th>
+					<th>Show 2</th>
+					<th>Show 3</th>
+					<th>Show 4</th>
 					<th>update</th>
-					<th></th>
 					<th>delete</th>
 				</tr>
-				<c:forEach var="movie" items="${movieList}">
+				<c:forEach var="timing" items="${showsList}">
 					<tr>
-						<form action="/adminmovieupdt" method="get" class="w-50 mx-auto">
-							<td><input type="text" name="movieId"
-								value="${movie.movieId}" readonly></td>
-							<td><input type="text" name="movieName"
-								value="${movie.movieName}"></td>
-							<td><c:forEach var="theatre" items="${movie.theatreList}">
-									<input type="checkbox" name="theatreSelected"
-										value="${theatre.theatreId}" />${theatre.theatreName}
-						</c:forEach></td>
+						<form action="/admin/timingupdt" method="get" class="w-50 mx-auto">
+							<td><input type="text" name="timingId"
+								value="${timing.timingId}"></td>
+							<td><input type="text" name="show1"
+								value="${timing.show1}"></td>
+							<td><input type="text" name="show2"
+								value="${timing.show2}"></td>
+							<td><input type="text" name="show3"
+								value="${timing.show3}"></td>
+							<td><input type="text" name="show4"
+								value="${timing.show4}"></td>
 							<td><input type="submit" name="update" value="update"></td>
+
 						</form>
-						<form action="/adminmoviedlt" method="get" class="w-50 mx-auto">
-							<input type="hidden" value="${movie.movieId}" name="movieId">
+						<form action="/admin/timingdlt" method="get" class="w-50 mx-auto">
+							<input type="hidden" value="${timing.timingId}" name=timingId>
 							<td><input type="submit" name="delete" value="delete"></td>
 						</form>
+					</tr>
 				</c:forEach>
 				<tr>
-					<form action="/adminmovieadd" method="get" class="w-50 mx-auto">
-						<td>Enter movieName:</td>
-						<td><input type="text" name="movieName" value="" required></td>
-						<td><c:forEach var="theatre" items="${theatreList}">
-								<input type="checkbox" name="theatreSelected"
-									value="${theatre.theatreId}" />${theatre.theatreName}
-						</c:forEach></td>
+					<form action="/admin/timingadd" method="get" class="w-50 mx-auto">
+						<td><input type="text" name="timingId" value="" required></td>
+						<td><input type="text" name="show1"></td>
+						<td><input type="text" name="show2"></td>
+						<td><input type="text" name="show3"></td>
+						<td><input type="text" name="show4"></td>
 						<td><input type="submit" name="add" value="add"></td>
 					</form>
 				</tr>
@@ -82,4 +86,5 @@ input[type=submit] {
 	<footer class="w-100 bg-dark text-white p-4 text-center fixed-bottom">
 		&copy;EPAM Systems </footer>
 </body>
+
 </html>

@@ -9,9 +9,9 @@ public interface TheatreServices {
 
 	public List<Theatre> getAllTheatre();
 
-	public Theatre update(Theatre theatre);
-
 	public void delete(int movieId);
 
 	public void add(Theatre theatre);
+
+	public void update(int theatreId, String theatreName);
 }

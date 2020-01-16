@@ -3,6 +3,8 @@ package com.epam.bean;
 import java.time.LocalTime;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -10,9 +12,10 @@ import javax.persistence.Table;
 @Table(name = "showtiming")
 public class ShowTimings {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int timingId;
 	private LocalTime show1;
-	private LocalTime show2; 
+	private LocalTime show2;
 	private LocalTime show3;
 	private LocalTime show4;
 

@@ -27,8 +27,8 @@ input[type=submit] {
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark w-100">
-		<a class="navbar-brand" href="#"><img alt="epam" src="logo.png"
-			class="w-25" /></a>
+		<a class="navbar-brand" href="/confirm"><img alt="epam"
+			src="logo.png" class="w-25" /></a>
 		<form action="/logout" method="get" class="ml-auto">
 			<button type="submit" value="logout" class="btn btn-danger my-auto"
 				onclick="clearlogin()">Logout</button>
@@ -41,19 +41,22 @@ input[type=submit] {
 				<tr>
 					<th>Location Id</th>
 					<th>Location Name</th>
-					<th>City ID</th>
+					<th></th>
 					<th>update</th>
 					<th>delete</th>
 				</tr>
 				<c:forEach var="location" items="${locationList}">
 					<tr>
-						<form action="/adminlocationupdt" method="get" class="w-50 mx-auto">
+						<form action="/adminlocationupdt" method="get"
+							class="w-50 mx-auto">
 							<td><input type="text" name="locationId"
-								value="${location.locationId}"></td>
+								value="${location.locationId}" readonly></td>
 							<td><input type="text" name="locationName"
 								value="${location.locationName}"></td>
-							<td><input type="text" name="cityId"
-								value="${location.cityId}"></td>
+							<td><c:forEach var="movie" items="${location.movieList}">
+									<input type="checkbox" name="movies"
+										value="${movie.movieId}" />${movie.movieName}
+						</c:forEach></td>
 							<td><input type="submit" name="update" value="update"></td>
 						</form>
 						<form action="/adminlocationdlt" method="get" class="w-50 mx-auto">
@@ -65,10 +68,13 @@ input[type=submit] {
 				</c:forEach>
 				<tr>
 					<form action="/adminlocationadd" method="get" class="w-50 mx-auto">
-						<td><input type="text" name="locationId" value="" required></td>
+						<td>Enter locationName:</td>
 						<td><input type="text" name="locationName" value="" required></td>
-						<td><input type="text" name="cityId" value="" required></td>
-						<td><input type="submit" name="add" value="add"></td>
+						<td><c:forEach var="movie" items="${movieList}">
+								<input type="checkbox" name="movies"
+									value="${movie.movieId}" />${movie.movieName}
+						</c:forEach></td>
+					<td><input type="submit" name="add" value="add"></td>
 					</form>
 				</tr>
 			</table>

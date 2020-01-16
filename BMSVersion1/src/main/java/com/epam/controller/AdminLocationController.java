@@ -13,6 +13,7 @@ import com.epam.bean.Credentials;
 import com.epam.bean.Location;
 import com.epam.securityconfig.MyUserDetails;
 import com.epam.services.LocationServices;
+import com.epam.services.MovieServices;
 import com.epam.services.UserService;
 
 @Controller
@@ -24,9 +25,11 @@ public class AdminLocationController {
 	Credentials credentials;
 	@Autowired
 	UserService user;
+	@Autowired
+	MovieServices movieServices;
 
-	@GetMapping("/adminlocation")
-	public ModelAndView adminCity() {
+	@GetMapping("/admin/location")
+	public ModelAndView adminLocation() {
 
 		String username = "";
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -44,6 +47,7 @@ public class AdminLocationController {
 			locationList = service.getAll();
 			model.setViewName("adminlocation");
 			model.addObject("locationList", locationList);
+			model.addObject("movieList", movieServices.getAllMovies());
 		} catch (Exception e) {
 			model.addObject("status", credentials.getStatus());
 			model.setViewName("home");
@@ -52,44 +56,41 @@ public class AdminLocationController {
 		return model;
 	}
 
-	@GetMapping("/adminlocationupdt")
-	public ModelAndView cityManipulation(@RequestParam(required = false) int locationId, String locationName,
-			int cityId) {
-		Location location = new Location();
-		location.setLocationId(locationId);
-		location.setCityId(cityId);
-		location.setLocationName(locationName);
-		;
-		service.update(location);
+	@GetMapping("/admin/locationupdt")
+	public ModelAndView locationManipulation(@RequestParam(required = false) int locationId, String locationName,
+			int[] movies) {
+		service.update(locationId, locationName, movies);
 		List<Location> locationList;
 		locationList = service.getAll();
 		ModelAndView model = new ModelAndView();
 		model.setViewName("adminlocation");
+		model.addObject("movieList", movieServices.getAllMovies());
 		model.addObject("locationList", locationList);
 		return model;
 	}
 
-	@GetMapping("/adminlocationdlt")
+	@GetMapping("/admin/locationdlt")
 	public ModelAndView deleteCity(@RequestParam(required = false) int locationId) {
 		service.delete(locationId);
 		List<Location> locationList;
 		locationList = service.getAll();
 		ModelAndView model = new ModelAndView();
 		model.setViewName("adminlocation");
+		model.addObject("movieList", movieServices.getAllMovies());
 		model.addObject("locationList", locationList);
 		return model;
 	}
 
-	@GetMapping("/adminlocationadd")
-	public ModelAndView addCity(@RequestParam(required = false) int locationId, String locationName, int cityId) {
+	@GetMapping("/admin/locationadd")
+	public ModelAndView addCity(@RequestParam(required = false) String locationName, int[] movies) {
 		Location location = new Location();
-		location.setCityId(cityId);
 		location.setLocationName(locationName);
-		service.addLocation(location);
+		service.addLocation(location, movies);
 		List<Location> locationList;
 		locationList = service.getAll();
 		ModelAndView model = new ModelAndView();
 		model.setViewName("adminlocation");
+		model.addObject("movieList", movieServices.getAllMovies());
 		model.addObject("locationList", locationList);
 		return model;
 	}

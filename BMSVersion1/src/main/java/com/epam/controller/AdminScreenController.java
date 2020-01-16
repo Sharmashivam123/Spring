@@ -14,7 +14,7 @@ public class AdminScreenController {
 	@Autowired
 	private SeatsServices service;
 
-	@GetMapping("/adminscreen")
+	@GetMapping("/admin/screen")
 	public ModelAndView getScreenDetails() {
 		ModelAndView model = new ModelAndView();
 		model.addObject("seats", service.getSeatData());
@@ -22,7 +22,7 @@ public class AdminScreenController {
 		return model;
 	}
 
-	@GetMapping("/adminupdtscreen")
+	@GetMapping("/admin/updtscreen")
 	public ModelAndView updateScreenDetails(@RequestParam(required = false) String seatId, String tier, double cost) {
 		SeatArrangements seatarrangements = new SeatArrangements();
 		seatarrangements.setSeatId(seatId);
@@ -35,7 +35,7 @@ public class AdminScreenController {
 		return model;
 	}
 
-	@GetMapping("/admindltscreen")
+	@GetMapping("/admin/dltscreen")
 	public ModelAndView deleteScreenDetails(@RequestParam(required = false) String seatId) {
 		service.delete(seatId);
 		ModelAndView model = new ModelAndView();
@@ -44,7 +44,7 @@ public class AdminScreenController {
 		return model;
 	}
 
-	@GetMapping("/adminaddscreen")
+	@GetMapping("/admin/addscreen")
 	public ModelAndView addScreenDetails(@RequestParam(required = false) String seatId, String tier, double cost) {
 		SeatArrangements seatarrangements = new SeatArrangements();
 		seatarrangements.setSeatId(seatId);

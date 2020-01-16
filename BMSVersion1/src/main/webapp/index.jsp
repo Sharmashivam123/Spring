@@ -8,7 +8,7 @@
 <title>BMS</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<script>
+<%-- <script>
 	var storage = window.sessionStorage;
 	window.onload = check();
 	function check() {
@@ -25,6 +25,7 @@
 		storage.removeItem('login');
 	}
 </script>
+--%>
 <style>
 #book {
 	background-color: #76cdd8;

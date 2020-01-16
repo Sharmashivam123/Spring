@@ -4,15 +4,17 @@ public class Constants {
 	private Constants() {
 	}
 
+	public static final String LOCATION_BY_CITY_QUERY = "select * from location where locationId in(select locationList_locationId from city_location where city_cityId =?1)";
 	public static final String MOVIE_BY_LOCATION_QUERY = "SELECT * from movie"
-			+ " WHERE movieId IN (SELECT movieId from moviebylocation WHERE locationId =?1)";
+			+ " WHERE movieId IN (SELECT movieList_movieId from location_movie WHERE location_locationId =?1)";
 	public static final String SELECTED_SEATID_QUERY = "select seatId from bookings "
 			+ "where movieId=?1 and theatreId=?2 and showtiming=?3 and showdate=?4";
-
 	public static final String SHOW_TIMING_OF_MOVIE_QUERY = "select * from showtiming \r\n"
-			+ "where timingId = (select timingId from theatrebymovie \r\n" + "where theatreId =?1 and movieId =?2)";
+			+ "where timingId = (select timingId from theatreshowtimingmovie \r\n"
+			+ "where theatreId =?1 and movieId =?2)";
 	public static final String THEATRE_BY_MOVIE_QUERY = "select * from theatre "
-			+ "where theatreId in (SELECT theatreId from theatrebymovie WHERE movieId =?1)";
+			+ "where theatreId in (SELECT theatreList_theatreId	 from movie_theatre WHERE movie_movieId =?1)";
+	public static final String UPDATE_THEATRE = "update theatre set theatreName =?1 where theatreId =?2 ";
 
 	public static final String CITY_URL = "http://localhost:8080/rest/rstcity";
 	public static final String LOCATION_URL = "http://localhost:8080/rest/rstlocation/";
@@ -28,4 +30,5 @@ public class Constants {
 	public static final String REGISTER_URL = "http://localhost:8080/rest/rstinsertuser";
 	public static final String INDEX = "index";
 	public static final String LOGIN = "login";
+
 }

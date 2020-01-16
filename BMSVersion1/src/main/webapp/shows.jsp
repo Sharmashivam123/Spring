@@ -3,13 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>Available Shows</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<script>
+<%--<script>
 	var storage = window.sessionStorage;
 	window.onload = check();
 	function check() {
@@ -24,7 +24,7 @@
 		}
 
 	}
-</script>
+</script> --%>
 <style>
 #book {
 	background-color: #76cdd8;
@@ -45,7 +45,8 @@ input[type=submit] {
 <body>
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark w-100">
-		<a class="navbar-brand" href="#"><img  alt="epam" src="logo.png" class="w-25" /></a>
+		<a class="navbar-brand" href="#"><img alt="epam" src="logo.png"
+			class="w-25" /></a>
 		<form action="/logout" method="get" class="ml-auto">
 			<button type="submit" value="logout" class="btn btn-danger my-auto"
 				onclick="clearlogin()">Logout</button>

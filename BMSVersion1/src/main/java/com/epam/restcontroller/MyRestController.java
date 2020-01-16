@@ -74,6 +74,7 @@ public class MyRestController {
 	public ResponseEntity<List<Location>> getAllLocationPinByCity(@PathVariable int cityId) {
 		List<Location> listLocation = locationServices.getAreaPinInCity(cityId);
 		try {
+			System.out.println(listLocation);
 			return ResponseEntity.ok(listLocation);
 		} catch (ServiceLayerException e) {
 			return (ResponseEntity<List<Location>>) ResponseEntity.badRequest();

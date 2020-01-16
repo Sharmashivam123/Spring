@@ -31,36 +31,30 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark w-100">
-		<a class="navbar-brand" href="#"><img alt="epam" src="logo.png"
-			class="w-25" /></a>
+		<a class="navbar-brand" href="/confirm"><img alt="epam"
+			src="logo.png" class="w-25" /></a>
 		<form action="/logout" method="get" class="ml-auto">
 			<button type="submit" value="logout" class="btn btn-danger"
 				onclick="clearlogin()">Logout</button>
 		</form>
 	</nav>
 	<nav class="navbar navbar-expand-lg navbar-dark  w-100">
-		<form action="/admincity" method="get" class="ml-auto">
+		<form action="/admin/city" method="get" class="ml-auto">
 			<button type="submit" value="city" class="btn btn-danger">city</button>
 		</form>
-		<form action="/adminlocation" method="get" class="ml-auto">
+		<form action="/admin/location" method="get" class="ml-auto">
 			<button type="submit" value="location" class="btn btn-danger">location</button>
 		</form>
-		<form action="/adminmovie" method="get" class="ml-auto">
+		<form action="/admin/movie" method="get" class="ml-auto">
 			<button type="submit" value="movie" class="btn btn-danger">movie</button>
 		</form>
-		<form action="/admintheatre" method="get" class="ml-auto">
+		<form action="/admin/theatre" method="get" class="ml-auto">
 			<button type="submit" value="theatre" class="btn btn-danger">theatre</button>
 		</form>
-		<form action="/admintimings" method="get" class="ml-auto">
+		<form action="/admin/timings" method="get" class="ml-auto">
 			<button type="submit" value="timings" class="btn btn-danger">timings</button>
 		</form>
-		<form action="/adminmovielocation" method="get" class="ml-auto">
-			<button type="submit" value="movie-location" class="btn btn-danger">movie-location</button>
-		</form>
-		<form action="/admintheatremovie" method="get" class="ml-auto">
-			<button type="submit" value="theatre-movie" class="btn btn-danger">theatre-movie</button>
-		</form>
-		<form action="/adminscreen" method="get" class="ml-auto">
+		<form action="/admin/screen" method="get" class="ml-auto">
 			<button type="submit" value="screen" class="btn btn-danger">screen</button>
 		</form>
 	</nav>

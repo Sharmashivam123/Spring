@@ -1,7 +1,12 @@
 package com.epam.bean;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
@@ -11,9 +16,11 @@ import org.springframework.stereotype.Component;
 @Table(name = "location")
 public class Location {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int locationId;
-	private int cityId;
 	private String locationName;
+	@ManyToMany(targetEntity = Movie.class)
+	private List<Movie> movieList;
 
 	public int getLocationId() {
 		return locationId;
@@ -31,12 +38,12 @@ public class Location {
 		this.locationName = areaName;
 	}
 
-	public int getCityId() {
-		return cityId;
+	public List<Movie> getMovieList() {
+		return movieList;
 	}
 
-	public void setCityId(int cityId) {
-		this.cityId = cityId;
+	public void setMovieList(List<Movie> movieList) {
+		this.movieList = movieList;
 	}
 
 }

@@ -9,9 +9,9 @@ public interface LocationServices {
 
 	public List<Location> getAll();
 
-	public Location update(Location location);
-
 	public void delete(int locationId);
 
-	public Location addLocation(Location location);
+	public Location addLocation(Location location, int[] movies);
+
+	public void update(int locationId,String locationName, int[] movies);
 }

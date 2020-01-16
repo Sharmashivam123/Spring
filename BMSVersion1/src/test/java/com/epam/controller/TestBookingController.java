@@ -21,7 +21,7 @@ import com.epam.bean.BookingDetails;
 import com.epam.bean.Bookings;
 import com.epam.services.RestClientService;
 
-@WithMockUser("Spring")
+@WithMockUser("shivamsharma.js@gmail.com")
 @SpringBootTest
 @AutoConfigureMockMvc
 class TestBookingController {
