@@ -10,20 +10,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "token")
 public class PasswordResetToken {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String token;
-
+	private LocalDate expiryDate;
 	@OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "userName", nullable = false)
 	private User user;
-
-	private LocalDate expiryDate;
 
 	public String getToken() {
 		return token;

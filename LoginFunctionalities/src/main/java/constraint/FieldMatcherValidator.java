@@ -7,33 +7,33 @@ import org.apache.commons.beanutils.BeanUtils;
 
 public class FieldMatcherValidator implements ConstraintValidator<FieldMatch, Object> {
 
-	private String first;
-	private String second;
-	private String message;
+	String first;
+	String second;
+	String message;
 
 	@Override
-	public void initialize(final FieldMatch constraintAnnotation) {
-		first = constraintAnnotation.first();
-		second = constraintAnnotation.second();
-		message = constraintAnnotation.message();
+	public void initialize(final FieldMatch annotation) {
+		message = annotation.message();
+		first = annotation.first();
+		second = annotation.second();
 	}
 
 	@Override
 	public boolean isValid(Object value, ConstraintValidatorContext context) {
-		boolean valid = true;
+		boolean check = true;
 		try {
 			final Object firstObj = BeanUtils.getProperty(value, first);
 			final Object secondObj = BeanUtils.getProperty(value, second);
-
-			valid = (firstObj == null && secondObj == null) || (firstObj != null && firstObj.equals(secondObj));
-
-		} catch (Exception ignore) {
+			check = (firstObj == null && secondObj == null) || (firstObj != null && firstObj == secondObj);
+		} catch (Exception e) {
 
 		}
-		if (!valid)
+
+		if (!check)
 			context.buildConstraintViolationWithTemplate(message).addPropertyNode(first).addConstraintViolation()
 					.disableDefaultConstraintViolation();
-		return valid;
+
+		return check;
 	}
 
 }

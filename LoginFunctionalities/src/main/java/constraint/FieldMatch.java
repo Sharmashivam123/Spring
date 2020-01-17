@@ -9,12 +9,12 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-@Target(ElementType.ANNOTATION_TYPE)
+@Target({ ElementType.TYPE, ElementType.ANNOTATION_TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = FieldMatcherValidator.class)
 @Documented
 public @interface FieldMatch {
-	String message() default "Confirm Password and Password Doesn't matches";
+	String message() default "Confirm passwrod and password doesn't match";
 
 	Class<?>[] groups() default {};
 
