@@ -1,8 +1,9 @@
-package com.epam.entity;
+package com.epam.Entity;
 
-import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,28 +11,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "token")
 public class PasswordResetToken {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Long id;
+
+	@Column(nullable = false, unique = true)
 	private String token;
-	private LocalDate expiryDate;
+
+	@Column(nullable = false)
+	private Date expiryDate;
+
 	@OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "userName", nullable = false)
-	private User user;
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
+	@JoinColumn(nullable = false, name = "username")
+	User user;
 
 	public User getUser() {
 		return user;
@@ -41,37 +37,38 @@ public class PasswordResetToken {
 		this.user = user;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getName() {
+	public String getToken() {
 		return token;
 	}
 
-	public void setName(String name) {
-		this.token = name;
+	public void setToken(String token) {
+		this.token = token;
 	}
 
-	public LocalDate getExpiryDate() {
+	public Date getExpiryDate() {
 		return expiryDate;
 	}
 
-	public void setExpiryDate(LocalDate expiryDate) {
+	public void setExpiryDate(Date expiryDate) {
 		this.expiryDate = expiryDate;
 	}
 
 	public void setExpiryDate(int minutes) {
 		Calendar now = Calendar.getInstance();
 		now.add(Calendar.MINUTE, minutes);
-		this.expiryDate = LocalDate.parse(now.getTime().toString());
+		this.expiryDate = (Date) now.getTime();
+		System.out.println(expiryDate);
 	}
 
 	public boolean isExpired() {
-		return LocalDate.now().isAfter(expiryDate);
+		return new Date(System.currentTimeMillis()).after(expiryDate);
 	}
 }

@@ -1,8 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1" isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>LoginPage</title>
+<title>Login Functionalities</title>
 <style type="text/css">
 .modal {
 	display: none; /* Hidden by default */
@@ -70,6 +75,8 @@ to {
 }
 </style>
 <script type="text/javascript">
+	<script>
+	//Get the modal
 	var modal = document.getElementById('id01');
 
 	//When the user clicks anywhere outside of the modal, close it
@@ -81,7 +88,6 @@ to {
 </script>
 </head>
 <body>
-
 	<!-- Button to open the modal login form -->
 	<button onclick="document.getElementById('id01').style.display='block'">Login</button>
 
@@ -91,17 +97,16 @@ to {
 			class="close" title="Close Modal">&times;</span>
 
 		<!-- Modal Content -->
-		<form class="modal-content animate" action="/confirm">
+		<form class="modal-content animate" action="/login">
 			<div class="imgcontainer">
 				<img src="img_avatar2.png" alt="Avatar" class="avatar">
 			</div>
 
 			<div class="container">
 				<label for="uname"><b>Username</b></label> <input type="text"
-					placeholder="Enter Username" name="uname" required> <label
-					for="psw"><b>Password</b></label> <input type="password"
-					placeholder="Enter Password" name="psw" required>
-
+					placeholder="Enter Username" name="username" required><br>
+				<label for="pwd"><b>Password</b></label> <input type="password"
+					placeholder="Enter Password" name="pwd" required><br>
 				<button type="submit">Login</button>
 				<label> <input type="checkbox" checked="checked"
 					name="remember"> Remember me

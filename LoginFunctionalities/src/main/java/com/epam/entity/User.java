@@ -1,43 +1,40 @@
-package com.epam.entity;
+package com.epam.Entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name = "user")
 public class User {
 
 	@Id
-	String userName;
-	String firstName;
-	String lastName;
-	String password;
-	String phone;
-	String role;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	@NotEmpty
+	private String username;
+	@NotEmpty
+	private String password;
+	@NotEmpty
+	private String phone;
+	@NotEmpty
+	private String role;
 
-	public String getUserName() {
-		return userName;
+	public Long getId() {
+		return id;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {
@@ -62,6 +59,12 @@ public class User {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", phone=" + phone + ", role="
+				+ role + "]";
 	}
 
 }
