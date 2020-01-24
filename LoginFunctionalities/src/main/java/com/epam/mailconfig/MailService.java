@@ -7,7 +7,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import com.epam.Entity.PasswordResetToken;
+import com.epam.entity.PasswordResetToken;
 
 @Service
 public class MailService {
@@ -28,7 +28,7 @@ public class MailService {
 	private String getBody(HttpServletRequest request, PasswordResetToken token) {
 		String body = "Here's the link for your resetting the password.\n\n";
 		String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-				+ "/reset-password?token=" + token.getToken();
+				+ "/reset?token=" + token.getToken();
 		body += url + "\n";
 		body += "\nThanks and Regards";
 		return body;

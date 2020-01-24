@@ -10,7 +10,7 @@
   <h3>Please enter the correct details</h3>
         <table>
             <tr>
-                <td><a href="/forgot">Retry</a></td>
+                <td><a href="/">Retry</a></td>
             </tr>
         </table>
 </body>

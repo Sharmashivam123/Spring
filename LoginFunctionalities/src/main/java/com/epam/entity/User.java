@@ -1,4 +1,4 @@
-package com.epam.Entity;
+package com.epam.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

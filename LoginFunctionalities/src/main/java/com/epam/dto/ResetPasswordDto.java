@@ -1,7 +1,9 @@
 package com.epam.dto;
 
 import javax.validation.constraints.NotEmpty;
+import com.epam.constraint.*;
 
+@FieldMatch.List({ @FieldMatch(first = "password", second = "confirmPassword", message = "{message.key}") })
 public class ResetPasswordDto {
 
 	@NotEmpty
@@ -34,4 +36,5 @@ public class ResetPasswordDto {
 	public void setToken(String token) {
 		this.token = token;
 	}
+
 }

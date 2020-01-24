@@ -105,7 +105,7 @@ to {
 			<div class="container">
 				<label for="uname"><b>Username</b></label> <input type="text"
 					placeholder="Enter Username" name="username" required><br>
-				<label for="pwd"><b>Password</b></label> <input type="password"
+				<label for="pwd"><strong>Password</strong></label> <input type="password"
 					placeholder="Enter Password" name="pwd" required><br>
 				<button type="submit">Login</button>
 				<label> <input type="checkbox" checked="checked"
@@ -118,6 +118,7 @@ to {
 					onclick="document.getElementById('id01').style.display='none'"
 					class="cancelbtn">Cancel</button>
 				<span class="psw">Forgot <a href="/forgot">password?</a></span>
+				<span>New User <a href="/register">Register</a></span>
 			</div>
 		</form>
 	</div>

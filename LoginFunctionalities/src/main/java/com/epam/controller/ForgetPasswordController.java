@@ -11,13 +11,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.epam.Entity.PasswordResetToken;
-import com.epam.Entity.User;
 import com.epam.dto.ForgetPasswordDto;
+import com.epam.entity.PasswordResetToken;
+import com.epam.entity.User;
 import com.epam.mailconfig.MailService;
 import com.epam.service.PasswordResetTokenService;
 import com.epam.service.UserService;
@@ -33,7 +32,7 @@ public class ForgetPasswordController {
 	@Autowired
 	MailService mailService;
 
-	@ModelAttribute("forgot-password-dto")
+	@ModelAttribute("dto")
 	public ForgetPasswordDto dto() {
 		return new ForgetPasswordDto();
 	}
@@ -44,18 +43,16 @@ public class ForgetPasswordController {
 	}
 
 	@PostMapping
-	public ModelAndView sendMail(@ModelAttribute ForgetPasswordDto dto, BindingResult result, HttpServletRequest request) {
-		System.out.println(dto.getEmail());
+	public ModelAndView sendMail(@ModelAttribute("dto") @Valid ForgetPasswordDto forgetDto, BindingResult result,
+			HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
 		if (result.hasErrors()) {
 			model.setViewName("forgot-password");
-			model.addObject("errors", result);
 			return model;
 		}
-		User user = service.findByUserName(dto);
+		User user = service.findByUserName(forgetDto);
 		if (user == null) {
-			result.rejectValue("username or email", "username or email is not correct.");
-			model.addObject("errors", result);
+			result.rejectValue("email", "", "Email Not Found");
 			model.setViewName("forgot-password");
 			return model;
 		}
