@@ -3,8 +3,8 @@ package com.epam.serviceimpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.epam.entity.User;
 import com.epam.dto.ForgetPasswordDto;
+import com.epam.entity.User;
 import com.epam.repo.UserRepo;
 import com.epam.service.UserService;
 
@@ -22,6 +22,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User saveUser(User user) {
 		return repo.save(user);
+	}
+
+	@Override
+	public void updatePassword(User user, String password) {
+		user.setPassword(password);
+		repo.save(user);
 	}
 
 }

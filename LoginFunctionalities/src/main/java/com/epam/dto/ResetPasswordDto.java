@@ -3,14 +3,15 @@ package com.epam.dto;
 import javax.validation.constraints.NotEmpty;
 import com.epam.constraint.*;
 
-@FieldMatch.List({ @FieldMatch(first = "password", second = "confirmPassword", message = "{message.key}") })
+@FieldMatch.List({
+		@FieldMatch(first = "password", second = "confirmPassword", message = "Password Does'nt Matches the Confirm Password.") })
 public class ResetPasswordDto {
 
-	@NotEmpty
+	@NotEmpty(message = "password cann't be null")
 	private String password;
-	@NotEmpty
+	@NotEmpty(message = "confirm Passwword cant be null")
 	private String confirmPassword;
-	@NotEmpty
+	@NotEmpty(message = "token cant be null")
 	private String token;
 
 	public String getPassword() {

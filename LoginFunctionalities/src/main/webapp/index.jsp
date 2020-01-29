@@ -97,15 +97,17 @@ to {
 			class="close" title="Close Modal">&times;</span>
 
 		<!-- Modal Content -->
-		<form class="modal-content animate" action="/login">
+		<form class="modal-content animate" action="/success" method="post">
 			<div class="imgcontainer">
 				<img src="img_avatar2.png" alt="Avatar" class="avatar">
 			</div>
 
 			<div class="container">
-				<label for="uname"><b>Username</b></label> <input type="text"
+				<label for="uname"><b>Username</b></label> 
+				<input type="text"
 					placeholder="Enter Username" name="username" required><br>
-				<label for="pwd"><strong>Password</strong></label> <input type="password"
+				<label for="pwd"><strong>Password</strong></label> 
+				<input type="password"
 					placeholder="Enter Password" name="pwd" required><br>
 				<button type="submit">Login</button>
 				<label> <input type="checkbox" checked="checked"
